@@ -23,7 +23,7 @@ public class Empleado {
     private String passwordConfirm;
 
     @OneToMany(mappedBy="empleado", cascade = CascadeType.ALL)
-    private Set<Trayecto> trayectos;
+    private Set<Trayecto> trayectos = new HashSet<>();
 
     public Empleado() {}
 
@@ -107,5 +107,12 @@ public class Empleado {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+    }
+
+    public void iniciarTrayecto(Vehiculo vehiculo) {
+        if(vehiculo.tieneTrayectoEnCurso()){
+            throw new IllegalStateException("El vehículo seleccionado tiene un trayecto en curso");
+        }
+        trayectos.add(new Trayecto(this, vehiculo));
     }
 }
