@@ -15,7 +15,6 @@ public class Empleado {
     private String dni;
     private String nombre;
     private String apellidos;
-    private String username;
     private String role;
     private String password;
 
@@ -27,13 +26,10 @@ public class Empleado {
 
     public Empleado() {}
 
-    public Empleado(String dni, String nombre, String apellidos, String username, String role, String password) {
+    public Empleado(String dni, String nombre, String apellidos) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.username = username;
-        this.role = role;
-        this.password = password;
     }
 
     public String getApellidos() {
@@ -52,7 +48,7 @@ public class Empleado {
         this.dni = dni;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -82,14 +78,6 @@ public class Empleado {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public Set<Trayecto> getTrayectos() {
