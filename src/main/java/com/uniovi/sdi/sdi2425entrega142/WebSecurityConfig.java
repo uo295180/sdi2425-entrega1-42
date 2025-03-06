@@ -1,7 +1,5 @@
 package com.uniovi.sdi.sdi2425entrega142;
 
-import com.uniovi.sdi.sdi2425entrega142.handlers.CustomAuthenticationSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +13,6 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     @Override
