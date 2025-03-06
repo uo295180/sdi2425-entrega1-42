@@ -38,4 +38,10 @@ public class EmpleadosService {
     }
 
 
+    public List<Empleado> searchEmpleados(String searchText) {
+        if(searchText != null && !searchText.trim().isEmpty()) {
+            return empleadosRepository.searchByNameOrSurname(searchText);
+        }
+        return getEmpleados();
+    }
 }
