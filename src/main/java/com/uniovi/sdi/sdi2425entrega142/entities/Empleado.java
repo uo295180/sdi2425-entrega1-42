@@ -110,7 +110,7 @@ public class Empleado {
     }
 
     public void iniciarTrayecto(Vehiculo vehiculo) {
-        if(vehiculo.tieneTrayectoEnCurso()){
+        if(!vehiculo.isEstadoVehiculo()){
             throw new IllegalStateException("El vehículo seleccionado tiene un trayecto en curso");
         }
         trayectos.add(new Trayecto(this, vehiculo));

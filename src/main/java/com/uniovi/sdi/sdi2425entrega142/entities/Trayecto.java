@@ -36,6 +36,7 @@ public class Trayecto {
         this.fechaInicioTrayecto = new Timestamp(System.currentTimeMillis());
         this.odometroInicio = vehiculo.getOdometro();
         this.estadoTrayecto = true;
+        vehiculo.setEstadoVehiculo(false);
     }
 
     public double getDistanciaTrayecto() {
@@ -111,13 +112,22 @@ public class Trayecto {
         this.vehiculo = vehiculo;
     }
 
+    public Timestamp getFechaFinTrayecto() {
+        return fechaFinTrayecto;
+    }
+
+    public void setFechaFinTrayecto(Timestamp fechaFinTrayecto) {
+        this.fechaFinTrayecto = fechaFinTrayecto;
+    }
+
     public void endTrayecto(double odometroFin, String observaciones) {
         if(estadoTrayecto) {
             setEstadoTrayecto(false);
             setObservaciones(observaciones);
             setOdometroFin(odometroFin);
-            this.fechaFinTrayecto = new Timestamp(System.currentTimeMillis());
+            setFechaFinTrayecto(new Timestamp(System.currentTimeMillis()));
             setDuracionTrayecto(fechaFinTrayecto.getTime() - fechaInicioTrayecto.getTime());
+            vehiculo.setEstadoVehiculo(true);
         } else {
             throw new IllegalStateException("Esta función no debe ser ejecutada en un trayecto que no esté en curso");
         }
