@@ -3,7 +3,9 @@ package com.uniovi.sdi.sdi2425entrega142;
 import com.uniovi.sdi.sdi2425entrega142.pageobjects.PO_HomeView;
 import com.uniovi.sdi.sdi2425entrega142.pageobjects.PO_LoginView;
 import com.uniovi.sdi.sdi2425entrega142.pageobjects.PO_View;
+import com.uniovi.sdi.sdi2425entrega142.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -83,5 +85,38 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
+
+    @Test
+    @Order(5)
+    public void Prueba5() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/home");
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+        // When the user logs out, the app redirects him to /login?logout
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/login?logout", currentUrl);
+        // When the user is not authenticated, trying to reach /home will redirect him to /login
+        driver.navigate().to("http://localhost:8090/home");
+        currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/login", currentUrl);
+    }
+
+    @Test
+    @Order(6)
+    public void Prueba6() {
+
+        boolean isLogoutButtonRendered = driver.findElements(By.xpath("//a[@href='/logout']")).size() > 0;
+        Assertions.assertFalse(isLogoutButtonRendered);
+
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/home");
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+        isLogoutButtonRendered = driver.findElements(By.xpath("//a[@href='/logout']")).size() > 0;
+        Assertions.assertFalse(isLogoutButtonRendered);
+    }
+
 
 }
