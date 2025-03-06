@@ -15,6 +15,7 @@ public class Vehiculo {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique=true)
     private String matricula;
     private String numeroBastidor;
     private String marca;
