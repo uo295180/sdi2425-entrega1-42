@@ -2,6 +2,8 @@ package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,19 +25,24 @@ public class EmpleadosService {
     @PostConstruct
     public void init() {
     }
-    public List<Empleado> getEmpleados() {
-        List<Empleado> empleados = new ArrayList<Empleado>();
-        empleadosRepository.findAll().forEach(empleados::add);
-        return empleados;
+
+    public Page<Empleado> getEmpleados(Pageable pageable) {
+        return empleadosRepository.findAll(pageable);
     }
+
     public Empleado getEmpleado(Long id) { return empleadosRepository.findById(id).get();}
+
+    public Empleado getEmpleadoByDni(String dni) {
+        return empleadosRepository.findByDni(dni);
+    }
+
+
     public void addEmpleado(Empleado empleado) {
         empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
         empleadosRepository.save(empleado);
     }
+
     public void deleteEmpleado(Long id) {
         empleadosRepository.deleteById(id);
     }
-
-
 }

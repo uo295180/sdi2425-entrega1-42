@@ -1,20 +1,24 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
+import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
+import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
 @Service
-public class InserSampleDataService {
+public class InsertSampleDataService {
 
     private final EmpleadosService empleadosService;
     private final RolesService rolesService;
+    private final TrayectosService trayectosService;
 
-    public InserSampleDataService(EmpleadosService empleadosService, RolesService rolesService) {
+    public InsertSampleDataService(EmpleadosService empleadosService, RolesService rolesService, TrayectosService trayectosService) {
         this.empleadosService = empleadosService;
         this.rolesService = rolesService;
+        this.trayectosService = trayectosService;
     }
 
     @PostConstruct
@@ -44,5 +48,15 @@ public class InserSampleDataService {
         empleadosService.addEmpleado(empleado3);
         empleadosService.addEmpleado(empleado4);
         empleadosService.addEmpleado(administrador);
+
+        Vehiculo vehiculo1 = new Vehiculo(100.0, 6.5, "Renault", "1234ZZZ", "Captur", "123456789abcdefgh", Vehiculo.TipoCombustible.DIESEL);
+        Vehiculo vehiculo2 = new Vehiculo(124.0, 7.4, "Mercedes", "0000BCD", "GLE", "000000000abcdefgh", Vehiculo.TipoCombustible.HIBRIDO);
+        Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234LLL", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
+        Vehiculo vehiculo4 = new Vehiculo(80.0, 8.5, "Ford", "4444KKK", "Mustang GT", "444400000kkkkkkkk", Vehiculo.TipoCombustible.DIESEL);
+        Vehiculo vehiculo5 = new Vehiculo(58.0, 4.5, "Citroen", "1111ZZZ", "C15", "111111111abcdefgh", Vehiculo.TipoCombustible.GASOLINA);
+
+        Trayecto trayecto1 = new Trayecto(empleado3, vehiculo4);
+
+        trayectosService.addTrayecto(trayecto1);
     }
 }

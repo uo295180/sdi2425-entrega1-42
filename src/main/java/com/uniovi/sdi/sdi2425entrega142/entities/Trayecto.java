@@ -24,7 +24,7 @@ public class Trayecto {
     @OneToMany(mappedBy="trayecto", cascade=CascadeType.ALL)
     private Set<Incidencia> incidencias = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_id")
     private Empleado empleado;
 
