@@ -2,13 +2,11 @@ package com.uniovi.sdi.sdi2425entrega142.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,11 +15,12 @@ public class SecurityService {
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
-    public SecurityService(AuthenticationManager authenticationManager, UserDetailsService
-            userDetailsService) {
+
+    public SecurityService(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
     }
+
     public String findLoggedInDni() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
@@ -29,6 +28,7 @@ public class SecurityService {
         }
         return null;
     }
+
     public void autoLogin(String dni, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(dni);
         UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(
@@ -39,5 +39,4 @@ public class SecurityService {
             logger.debug(String.format("Auto login %s successfully!", dni));
         }
     }
-
 }

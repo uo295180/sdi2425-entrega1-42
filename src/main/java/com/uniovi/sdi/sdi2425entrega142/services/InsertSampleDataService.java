@@ -12,11 +12,13 @@ import javax.annotation.PostConstruct;
 public class InsertSampleDataService {
 
     private final EmpleadosService empleadosService;
+    private final VehiculosService vehiculosService;
     private final RolesService rolesService;
     private final TrayectosService trayectosService;
 
-    public InsertSampleDataService(EmpleadosService empleadosService, RolesService rolesService, TrayectosService trayectosService) {
+    public InsertSampleDataService(EmpleadosService empleadosService, VehiculosService vehiculosService, RolesService rolesService, TrayectosService trayectosService) {
         this.empleadosService = empleadosService;
+        this.vehiculosService = vehiculosService;
         this.rolesService = rolesService;
         this.trayectosService = trayectosService;
     }
@@ -54,6 +56,12 @@ public class InsertSampleDataService {
         Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234LLL", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
         Vehiculo vehiculo4 = new Vehiculo(80.0, 8.5, "Ford", "4444KKK", "Mustang GT", "444400000kkkkkkkk", Vehiculo.TipoCombustible.DIESEL);
         Vehiculo vehiculo5 = new Vehiculo(58.0, 4.5, "Citroen", "1111ZZZ", "C15", "111111111abcdefgh", Vehiculo.TipoCombustible.GASOLINA);
+
+        vehiculosService.addVehiculo(vehiculo1);
+        vehiculosService.addVehiculo(vehiculo2);
+        vehiculosService.addVehiculo(vehiculo3);
+        vehiculosService.addVehiculo(vehiculo4);
+        vehiculosService.addVehiculo(vehiculo5);
 
         Trayecto trayecto1 = new Trayecto(empleado3, vehiculo4);
 

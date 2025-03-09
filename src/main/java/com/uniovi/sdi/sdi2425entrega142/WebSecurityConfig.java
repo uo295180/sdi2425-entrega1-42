@@ -13,7 +13,6 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

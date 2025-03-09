@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="Vehiculos")
+@Table(name="Vehiculo")
 public class Vehiculo {
 
     public enum TipoCombustible {
@@ -29,9 +29,9 @@ public class Vehiculo {
     private boolean estadoVehiculo;
 
 
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.MERGE)
     private Set<Trayecto> trayectos = new HashSet<>();
-    @OneToMany(mappedBy = "vehiculo", cascade  = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehiculo", cascade  = CascadeType.MERGE)
     private Set<Repostaje> repostajes = new HashSet<>();
 
     public Vehiculo() {}
@@ -47,6 +47,14 @@ public class Vehiculo {
         this.estadoVehiculo = true;
         this.cantidadTanque = cantidadMaximaTanque;
         this.odometro = 0;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getCantidadMaximaTanque() {

@@ -18,7 +18,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/trayecto/list">Ver Trayectos</a>
-                    <a class="dropdown-item" href="/trayecto/add" sec:authorize="hasAnyRole('ROLE_EMPLEADO','ROLE_ADMIN')">Agregar Trayecto</a>
+                    <a class="dropdown-item" href="/trayecto/add" sec:authorize="hasAnyRole('ROLE_ESTANDAR','ROLE_ADMIN')">Agregar Trayecto</a>
                 </div>
             </li>
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -28,6 +28,15 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/empleado/list">Ver empleados</a>
                     <a class="dropdown-item" href="/empleado/add">Agregar empleado</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="vehiculoDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Gestión de vehículos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/vehiculo/list">Ver vehículos</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/add">Agregar vehículo</a>
                 </div>
             </li>
             <li class="nav-item dropdown">

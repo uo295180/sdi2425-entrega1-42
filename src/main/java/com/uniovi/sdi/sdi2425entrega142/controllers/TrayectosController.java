@@ -2,8 +2,11 @@ package com.uniovi.sdi.sdi2425entrega142.controllers;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
+import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.services.EmpleadosService;
 import com.uniovi.sdi.sdi2425entrega142.services.TrayectosService;
+import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
+import com.uniovi.sdi.sdi2425entrega142.validators.AddTrayectoValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -13,16 +16,21 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class TrayectosController {
 
     private final TrayectosService trayectosService;
     private final EmpleadosService empleadosService;
+    private final VehiculosService vehiculosService;
+    private final AddTrayectoValidator addTrayectoValidator;
 
-    public TrayectosController(TrayectosService trayectosService, EmpleadosService empleadosService) {
+    public TrayectosController(TrayectosService trayectosService, EmpleadosService empleadosService, VehiculosService vehiculosService, AddTrayectoValidator addTrayectoValidator) {
         this.trayectosService = trayectosService;
         this.empleadosService = empleadosService;
+        this.vehiculosService = vehiculosService;
+        this.addTrayectoValidator = addTrayectoValidator;
     }
 
     @RequestMapping("/trayecto/list")
@@ -38,6 +46,10 @@ public class TrayectosController {
 
     @RequestMapping(value="/trayecto/add", method= RequestMethod.POST)
     public String setTrayecto(@Validated Trayecto trayecto, BindingResult result) {
+        addTrayectoValidator.validate(trayecto, result);
+        if(result.hasErrors()) {
+            return "trayecto/add";
+        }
         trayectosService.addTrayecto(trayecto);
         return "redirect:/trayecto/list";
     }
@@ -50,7 +62,7 @@ public class TrayectosController {
 
     @RequestMapping(value="/trayecto/add")
     public String getTrayecto(Model model, Pageable pageable) {
-        model.addAttribute("empleadosList", empleadosService.getEmpleados(pageable));
+        model.addAttribute("vehiculosList", vehiculosService.getVehiculosDisponibles(pageable));
         return "trayecto/add";
     }
 

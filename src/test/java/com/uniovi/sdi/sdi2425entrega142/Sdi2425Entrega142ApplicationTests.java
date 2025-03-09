@@ -119,4 +119,18 @@ class Sdi2425Entrega142ApplicationTests {
     }
 
 
+    @Test
+    @Order(39)
+    public void Prueba39() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/home");
+        // Pinchamos en la opción de menú de Vehículos:
+        List<WebElement> elements = PO_View.accessPath(driver, "//*[@id='myNavbar']/ul[1]/li[4]", 0);
+        // Pinchamos en la opción de lista de vehículos.
+        PO_View.accessPath(driver, "//a[contains(@href, 'vehiculo/list')]", 0);
+        List<WebElement> vehiculosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(2, vehiculosList.size()); // TODO: CAMBIAR TAMAÑO LISTA SEGÚN CORRESPONDA
+    }
 }
