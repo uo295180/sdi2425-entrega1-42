@@ -63,10 +63,4 @@ public class EmpleadosService {
         return passwordGeneratorService.generateStrongPassword(PASSWORD_LENGTH);
     }
 
-    public Page<Empleado> searchEmpleados(Pageable pageable, String searchText) {
-        if(searchText != null && !searchText.trim().isEmpty()) {
-            return empleadosRepository.searchByNameOrSurname(pageable, searchText);
-        }
-        return getEmpleados(pageable);
-    }
 }

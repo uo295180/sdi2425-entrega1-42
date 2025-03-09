@@ -15,10 +15,6 @@ public interface EmpleadosRepository extends CrudRepository<Empleado, Long> {
 
     Page<Empleado> findAll(Pageable pageable);
 
-    @Query("SELECT u FROM Empleado u WHERE (LOWER(u.nombre) LIKE LOWER(CONCAT('%', ?1, '%')) " +
-            "OR LOWER(u.apellidos) LIKE LOWER(CONCAT('%', ?1, '%')))")
-    Page<Empleado> searchByNameOrSurname(Pageable pageable, String searchText);
-
     @Query("SELECT u FROM Empleado u WHERE u.dni = ?1")
     Optional<Empleado> getByDni(String dni);
 }

@@ -42,20 +42,12 @@ public class UserController {
 
 
     @RequestMapping("/empleado/list")
-    public String getListado(Model model,
-                             @RequestParam(value = "searchText", required = false) String searchText,
-                             @RequestParam(value = "page", defaultValue = "0") int page) {
+    public String getListado(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 
         int pageSize = 5;
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Page<Empleado> empleados;
-
-        if (searchText != null && !searchText.isEmpty()) {
-            empleados = empleadosService.searchEmpleados(pageable, searchText);
-        } else {
-            empleados = empleadosService.getEmpleados(pageable);
-        }
+        Page<Empleado> empleados = empleadosService.getEmpleados(pageable);
 
         int totalPages = empleados.getTotalPages();
         if (totalPages < 3) {
@@ -66,7 +58,6 @@ public class UserController {
         model.addAttribute("empleadosList", empleados.getContent());
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
-        model.addAttribute("searchText", searchText);
 
         return "empleado/list";
     }
