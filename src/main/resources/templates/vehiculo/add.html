@@ -1,0 +1,64 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2>Agregar vehículo</h2>
+    <form class="form-horizontal" method="post" action="/vehiculo/add" th:object="${vehiculo}">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="matricula">Matricula:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Ejemplo 1234AAA"
+                       required="true" th:value="${vehiculo.matricula}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('matricula')}" th:errors="*{matricula}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="numeroBastidor">Nº Bastidor:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="numeroBastidor" name="numeroBastidor" placeholder="Ejemplo ppppppppppppppppp"
+                       required="true" th:value="${vehiculo.numeroBastidor}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('numeroBastidor')}" th:errors="*{numeroBastidor}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="marca">Marca:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="marca" name="marca" placeholder="Ejemplo Mercedes"
+                       required="true" th:value="${vehiculo.marca}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="modelo">Modelo:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ejemplo M4"
+                       required="true" th:value="${vehiculo.modelo}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="tipoCombustible">Tipo Combustible:</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="tipoCombustible" name="tipoCombustible" required>
+                    <option value="GASOLINA" th:selected="${vehiculo.tipoCombustible == 'GASOLINA'}">Gasolina</option>
+                    <option value="DIESEL" th:selected="${vehiculo.tipoCombustible == 'DIESEL'}">Diesel</option>
+                    <option value="MICROHIBRIDO" th:selected="${vehiculo.tipoCombustible == 'MICROHIBRIDO'}">MicroHíbrido</option>
+                    <option value="HIBRIDO" th:selected="${vehiculo.tipoCombustible == 'HIBRIDO'}">Híbrido</option>
+                    <option value="ELECTRICO" th:selected="${vehiculo.tipoCombustible == 'ELECTRICO'}">Eléctrico</option>
+                    <option value="GLP" th:selected="${vehiculo.tipoCombustible == 'GLP'}">GLP</option>
+                    <option value="GNR" th:selected="${vehiculo.tipoCombustible == 'GNR'}">GNR</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Agregar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>
