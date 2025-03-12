@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -37,31 +36,44 @@ public class TrayectosController {
     public String getList(Model model, Pageable pageable, Principal principal) {
         String dni = principal.getName(); // DNI es el "name" de la autenticación
         Empleado empleado = empleadosService.getEmpleadoByDni(dni);
-        Page<Trayecto> trayectos;
-        trayectos = trayectosService.getTrayectosDelEmpleado(pageable, empleado);
+        Page<Trayecto> trayectos = trayectosService.getTrayectosDelEmpleado(pageable, empleado);
         model.addAttribute("trayectosList", trayectos.getContent());
         model.addAttribute("page", trayectos);
         return "trayecto/list";
     }
 
-    @RequestMapping(value="/trayecto/add", method= RequestMethod.POST)
-    public String setTrayecto(@Validated Trayecto trayecto, BindingResult result) {
+    @RequestMapping(value="/trayecto/add", method=RequestMethod.POST)
+    public String setTrayecto(@ModelAttribute Trayecto trayecto, BindingResult result, Principal principal) {
+        String dni = principal.getName(); // El empleado que registra el trayecto es el empleado en sesión
+        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        if (empleado == null) { // Solo lanzará error si la sesión es inválida (si algún problema ocurre)
+            return "redirect:/login";
+        }
+        trayecto.setEmpleado(empleado);
+
+        // Verifica que el vehículo se esté recibiendo y asigna el vehículo correspondiente
+        if (trayecto.getVehiculo() != null) {
+            Vehiculo vehiculo = vehiculosService.getVehiculo(trayecto.getVehiculo().getId());
+            trayecto.setVehiculo(vehiculo); // Asigna el vehículo correspondiente
+        }
+
         addTrayectoValidator.validate(trayecto, result);
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "trayecto/add";
         }
         trayectosService.addTrayecto(trayecto);
         return "redirect:/trayecto/list";
     }
 
-    @RequestMapping(value="/trayecto/add", method=RequestMethod.GET)
-    public String setTrayecto(Model model) {
-        model.addAttribute("trayecto", new Trayecto());
-        return "trayecto/add";
-    }
 
-    @RequestMapping(value="/trayecto/add")
-    public String getTrayecto(Model model, Pageable pageable) {
+    @RequestMapping(value="/trayecto/add", method=RequestMethod.GET)
+    public String getTrayecto(Model model, Pageable pageable, Principal principal) {
+        String dni = principal.getName(); // DNI es el "name" de la autenticación
+        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        Trayecto trayecto = new Trayecto();
+        trayecto.setEmpleado(empleado);
+
+        model.addAttribute("trayecto", trayecto);
         model.addAttribute("vehiculosList", vehiculosService.getVehiculosDisponibles(pageable));
         return "trayecto/add";
     }

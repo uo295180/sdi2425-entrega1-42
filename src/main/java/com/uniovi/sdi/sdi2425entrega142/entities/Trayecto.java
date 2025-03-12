@@ -47,7 +47,7 @@ public class Trayecto {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -133,7 +133,7 @@ public class Trayecto {
     }
 
     public void endTrayecto(double odometroFin, String observaciones) {
-        if(estadoTrayecto) {
+        if (estadoTrayecto) {
             setEstadoTrayecto(false);
             setObservaciones(observaciones);
             setOdometroFin(odometroFin);

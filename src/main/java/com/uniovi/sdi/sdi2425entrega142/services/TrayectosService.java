@@ -34,8 +34,8 @@ public class TrayectosService {
 
     public Page<Trayecto> getTrayectosDelEmpleado(Pageable pageable, Empleado empleado) {
         Page<Trayecto> trayectos = new PageImpl<>(new LinkedList<>());
-        if (empleado.getRole().equals("ROLE_EMPLEADO")) {
-            trayectos = trayectosRepository.findAllByEmpleado(pageable, empleado);
+        if (empleado.getRole().equals("ROLE_ESTANDAR")) {
+            trayectos = trayectosRepository.findAllByEmpleadoId(pageable, empleado.getId());
         }
         if (empleado.getRole().equals("ROLE_ADMIN")) {
             trayectos = getTrayectos(pageable);

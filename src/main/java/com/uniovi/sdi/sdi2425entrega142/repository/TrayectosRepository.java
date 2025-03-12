@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TrayectosRepository extends CrudRepository<Trayecto, Long> {
-    @Query("SELECT t FROM Trayecto t WHERE t.empleado = ?1 ORDER BY t.id ASC")
-    Page<Trayecto> findAllByEmpleado(Pageable pageable, Empleado empleado);
+    @Query("SELECT t FROM Trayecto t WHERE t.empleado.id = ?1 ORDER BY t.id ASC")
+    Page<Trayecto> findAllByEmpleadoId(Pageable pageable, Long id);
 
     Page<Trayecto> findAll(Pageable pageable);
 }

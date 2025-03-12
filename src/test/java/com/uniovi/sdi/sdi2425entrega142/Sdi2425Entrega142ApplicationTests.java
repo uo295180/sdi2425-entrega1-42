@@ -46,11 +46,9 @@ class Sdi2425Entrega142ApplicationTests {
         driver.quit();
     }
 
-
     @Test
     @Order(1)
     public void Prueba1() {
-
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         String currentUrl = driver.getCurrentUrl();
@@ -120,6 +118,22 @@ class Sdi2425Entrega142ApplicationTests {
 
 
     @Test
+    @Order(24)
+    public void Prueba24() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/home");
+        // Pinchamos en la opción de menú de Trayectos:
+        List<WebElement> elements = PO_View.accessPath(driver, "//*[@id='mynavbar']/ul[1]/li[2]/div/a[1]", 0); // TODO solve the crash here
+        // Pinchamos en la opción de lista de trayectos.
+        PO_View.accessPath(driver, "//a[contains(@href, 'trayecto/list')]", 0);
+        List<WebElement> trayectosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(1, trayectosList.size());
+    }
+
+
+    @Test
     @Order(39)
     public void Prueba39() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -131,6 +145,6 @@ class Sdi2425Entrega142ApplicationTests {
         PO_View.accessPath(driver, "//a[contains(@href, 'vehiculo/list')]", 0);
         List<WebElement> vehiculosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(2, vehiculosList.size()); // TODO: CAMBIAR TAMAÑO LISTA SEGÚN CORRESPONDA
+        Assertions.assertEquals(5, vehiculosList.size());
     }
 }
