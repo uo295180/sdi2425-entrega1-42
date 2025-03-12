@@ -1,9 +1,6 @@
 package com.uniovi.sdi.sdi2425entrega142;
 
-import com.uniovi.sdi.sdi2425entrega142.pageobjects.PO_HomeView;
-import com.uniovi.sdi.sdi2425entrega142.pageobjects.PO_LoginView;
-import com.uniovi.sdi.sdi2425entrega142.pageobjects.PO_View;
-import com.uniovi.sdi.sdi2425entrega142.util.SeleniumUtils;
+import com.uniovi.sdi.sdi2425entrega142.pageobjects.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +14,7 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
 
@@ -117,6 +114,173 @@ class Sdi2425Entrega142ApplicationTests {
         isLogoutButtonRendered = driver.findElements(By.xpath("//a[@href='/logout']")).size() > 0;
         Assertions.assertFalse(isLogoutButtonRendered);
     }
+    @Test
+    @Order(11)
+    public void PR11() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "ppppppppppppppppp",
+                "Mercedes", "A4", "Diesel");
+        //Comprobamos que el vehículo se ha creado y entramos en vista de la lista de vehículos
+        PO_PrivateView.findText(driver, "1234AAB");
+        String checkText = "Vehículos";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+    @Test
+    @Order(12)
+    public void PR12() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "", "",
+                "", "", "Diesel");
 
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+    }
+    @Test
+    @Order(13)
+    public void PR13() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "1234AABA", "ppppppppppppppppp",
+                "Mercedes", "A4", "Diesel");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
 
+        //String checkText = PO_HomeView.getP().getString("Error.vehiculo.matricula.format",
+        //        PO_Properties.getSPANISH());
+        //PO_PrivateView.findText(driver, checkText);
+
+        //String checkText2 = "Agregar vehículo";
+        //List<WebElement> result2 = PO_View.checkElementBy(driver, "text", checkText2);
+        //Assertions.assertEquals(checkText2, result2.get(0).getText());
+        //Esto no va nose por que
+    }
+    @Test
+    @Order(14)
+    public void PR14() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "ppppppppp",
+                "Mercedes", "A4", "Diesel");
+
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+    }
+    @Test
+    @Order(15)
+    public void PR15() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "1234AAA", "ppppppppppppppppp",
+                "Mercedes", "A4", "Diesel");
+
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+    }
+    @Test
+    @Order(16)
+    public void PR16() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "pppppppppppppppaa",
+                "Mercedes", "A4", "Diesel");
+
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+    }
+    @Test
+    @Order(20)
+    public void PR20() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+
+        // Obtener la lista de vehículos mostrados en la tabla
+        List<WebElement> vehicles = driver.findElements(By.cssSelector("tbody tr"));
+
+        // Verificar que hay al menos un vehículo en la tabla
+        Assertions.assertFalse(vehicles.isEmpty());
+
+        // Verificar que cada vehículo tiene los datos esperados (Matrícula, Bastidor, etc.)
+        for (WebElement vehicleRow : vehicles) {
+            List<WebElement> columns = vehicleRow.findElements(By.tagName("td"));
+            Assertions.assertTrue(columns.size() >= 7); // 7 columnas
+        }
+
+        // Comprobar que el sistema de paginación existe
+        List<WebElement> pagination = driver.findElements(By.cssSelector("footer"));
+        Assertions.assertFalse(pagination.isEmpty());
+    }
+    @Test
+    @Order(21)
+    public void PR21() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+
+        // Seleccionar el primer vehículo de la lista
+        List<WebElement> checkboxes = driver.findElements(By.name("vehiculosSeleccionados"));
+        checkboxes.get(0).click();
+
+        // Pulsar el botón de eliminar
+        driver.findElement(By.id("deleteButton")).click();
+
+        // Comprobar que la lista se actualiza y que el vehículo ha sido eliminado
+        driver.navigate().refresh();
+        List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
+        Assertions.assertTrue(updatedCheckboxes.size() < checkboxes.size());
+    }
+    @Test
+    @Order(22)
+    public void PR22() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+
+        // Seleccionar el último vehículo de la lista
+        List<WebElement> checkboxes = driver.findElements(By.name("vehiculosSeleccionados"));
+        checkboxes.get(checkboxes.size() - 2).click();
+
+        // Pulsar el botón de eliminar
+        driver.findElement(By.id("deleteButton")).click();
+
+        // Comprobar que la lista se actualiza y que el vehículo ha sido eliminado
+        driver.navigate().refresh();
+        List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
+        Assertions.assertTrue(updatedCheckboxes.size() < checkboxes.size());
+    }
+    @Test
+    @Order(23)
+    public void PR23() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+
+        // Seleccionar los tres primeros vehículos de la lista
+        List<WebElement> checkboxes = driver.findElements(By.name("vehiculosSeleccionados"));
+        int initialSize = checkboxes.size();
+        checkboxes.get(0).click();
+        checkboxes.get(1).click();
+        checkboxes.get(2).click();
+
+        // Pulsar el botón de eliminar
+        driver.findElement(By.id("deleteButton")).click();
+
+        // Comprobar que la lista se actualiza y que los vehículos han sido eliminados
+        driver.navigate().refresh();
+        List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
+        Assertions.assertTrue(updatedCheckboxes.size() < initialSize - 2); // Comprobar que se eliminaron 3
+    }
 }
