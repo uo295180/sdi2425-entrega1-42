@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"> Lista de empleados </head>
 <body>
   <!-- Barra de Navegación superior -->
@@ -7,15 +8,6 @@
 
   <div class="container">
     <h2>Empleados del sistema</h2>
-
-    <!-- Formulario de búsqueda de empleados -->
-    <form class="form-inline" action="/empleado/list">
-      <div class="form-group">
-        <input name="searchText" type="text" class="form-control" size="50"
-               placeholder="Buscar por nombre o apellidos">
-      </div>
-      <button type="submit" class="btn btn-primary">Buscar</button>
-    </form>
 
     <p>Los empleados que actualmente figuran en el sistema son las siguientes:</p>
     <button type="button" id="updateButton" class="btn btn-primary">Actualizar</button>
@@ -48,8 +40,8 @@
           <td th:text="${empleado.nombre}">Nombre del empleado</td>
           <td th:text="${empleado.apellidos}">Apellidos del empleado</td>
           <td><a th:href="${'/empleado/details/' + empleado.id}">detalles</a></td>
-          <td><a th:href="${'/empleado/edit/' + empleado.id}">modificar</a></td>
-          <td><a th:href="${'/empleado/delete/' + empleado.id}">eliminar</a></td>
+          <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/empleado/edit/' + empleado.id}">modificar</a></td>
+          <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/empleado/delete/' + empleado.id}">eliminar</a></td>
         </tr>
         <tr th:if="${#lists.isEmpty(empleadosList)}">
           <td colspan="6" class="text-center">No hay empleados</td>
@@ -57,7 +49,7 @@
         </tbody>
       </table>
     </div>
-
+    <footer th:replace="fragments/pagination"></footer>
   </div>
   <footer th:replace="fragments/footer"></footer>
 

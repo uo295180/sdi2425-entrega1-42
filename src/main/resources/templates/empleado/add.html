@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head th:replace="fragments/head"> Añadir empleado</head>
-<body>
-    <!-- Barra de Navegación superior -->
-    <nav th:replace="fragments/nav"></nav>
 
-    <div class="container">
-        <h2>Agregar empleado</h2>
-        <form class="form-horizontal" method="post" action="/empleado/add">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dni">DNI:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="dni" name="dni"
-                           placeholder="99999999Y" required="required"/>
-                </div>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"></nav>
+
+<div class="container">
+    <h2>Agregar empleado</h2>
+    <form class="form-horizontal" method="post" action="/empleado/add" th:object="${empleado}">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="dni">DNI:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="dni" name="dni"
+                       placeholder="99999999Y" required="required"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="nombre">Nombre:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nombre" name="nombre"
-                           placeholder="Ejemplo: Juan" required="required"/>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="nombre">Nombre:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="nombre" name="nombre"
+                       placeholder="Ejemplo: Juan" required="required"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="apellidos">Apellidos:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="apellidos" name="apellidos"
-                           placeholder="Ejemplo: Peréz Almonte" required="required"/>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="apellidos">Apellidos:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="apellidos" name="apellidos"
+                       placeholder="Ejemplo: Peréz Almonte" required="required"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for=
-                        "role">Rol:</label>
-                <div class="col-sm-10">
-                    <select id="role" class="form-control" name="role">
-                        <option th:each="role : ${rolesList}"
-                                th:value="${role}"
-                                th:text="${role}">
-                        </option>
-                    </select>
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" id="submitButton" class="btn btn-primary">Enviar</button>
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="password">Contraseña</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Ejemplo: 123456" required="required"/>
-                </div>
+        </div>
+        <!-- Hidden input for password -->
+        <input type="hidden" th:field="*{password}" />
+
+        <!-- Password Card (Initially Hidden) -->
+        <div id="passwordCard" class="card">
+            <div class="card-header">Contraseña propuesta para el empleado</div>
+            <div class="card-body">
+                <p class="card-text" id="passwordText" th:text="${empleado.password}">Contraseña</p>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <footer th:replace="fragments/footer"></footer>
+        </div>
+
+        <!-- Refresh Link (Initially Hidden) -->
+        <div class="form-group" id="refreshLink" style="display: none; margin-top: 10px;">
+            <a href="/empleado/add" class="btn btn-secondary">Añadir otro empleado</a>
+        </div>
+
+    </form>
+</div>
+
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>

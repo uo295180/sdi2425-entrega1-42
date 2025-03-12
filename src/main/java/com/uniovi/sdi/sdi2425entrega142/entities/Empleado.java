@@ -27,6 +27,7 @@ public class Empleado {
     public Empleado() {}
 
     public Empleado(String dni, String nombre, String apellidos) {
+        super();
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
