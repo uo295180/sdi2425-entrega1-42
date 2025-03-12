@@ -34,7 +34,7 @@ public class Vehiculo {
     @OneToMany(mappedBy = "vehiculo", cascade  = CascadeType.ALL)
     private Set<Repostaje> repostajes = new HashSet<>();
 
-    public Vehiculo() {}
+    public Vehiculo() {estadoVehiculo = true;}
 
     public Vehiculo(double cantidadMaximaTanque, double consumoMedio, String marca, String matricula, String modelo, String numeroBastidor, TipoCombustible tipoCombustible) {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
@@ -57,6 +57,12 @@ public class Vehiculo {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
     }
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public double getCantidadTanque() {
         return cantidadTanque;
     }
@@ -165,5 +171,12 @@ public class Vehiculo {
         repostajes.add(repostaje);
         setCantidadTanque(this.cantidadTanque + repostaje.getCantidadRepostada());
         setOdometro(repostaje.getOdometro());
+    }
+
+    public String getEstadoFormulario() {
+        if (estadoVehiculo) {
+            return "LIBRE";
+        }
+        return "OCUPADO";
     }
 }
