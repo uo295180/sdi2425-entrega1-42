@@ -19,7 +19,6 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/empleado/list">Ver Empleados</a>
                     <a class="dropdown-item" href="/empleado/add" sec:authorize="hasAnyRole('ROLE_ADMIN')">Agregar empleado</a>
-
                 </div>
             </li>
 
@@ -30,6 +29,15 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/list">Ver vehiculos</a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/add">Agregar vehiculo</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="repostajeDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Repostajes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/repostajes/add">Agregar repostajes</a>
                 </div>
             </li>
         </ul>

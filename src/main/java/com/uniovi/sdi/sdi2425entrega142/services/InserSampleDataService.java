@@ -1,6 +1,7 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
+import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.stereotype.Service;
@@ -52,13 +53,13 @@ public class InserSampleDataService {
         Vehiculo v4 = new Vehiculo(1000, 50, "Ford", "1234LLL",
                 "M3", "aaaaaaaaaaaaaaaff", Vehiculo.TipoCombustible.HIBRIDO);
 
+        Trayecto t1 = new Trayecto(empleado1, v1);
         empleadosService.addEmpleado(empleado1);
         empleadosService.addEmpleado(empleado2);
         empleadosService.addEmpleado(empleado3);
         empleadosService.addEmpleado(empleado4);
         empleadosService.addEmpleado(administrador);
 
-        vehiculosService.addVehiculo(v1);
         vehiculosService.addVehiculo(v2);
         vehiculosService.addVehiculo(v3);
         vehiculosService.addVehiculo(v4);

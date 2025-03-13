@@ -1,6 +1,8 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
+import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
+import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadosService {
@@ -44,4 +47,9 @@ public class EmpleadosService {
         }
         return getEmpleados();
     }
+
+    public Optional<Empleado> findEmpleadoByDni(String dni) {
+        return empleadosRepository.findEmpleadoByDni(dni);
+    }
+
 }
