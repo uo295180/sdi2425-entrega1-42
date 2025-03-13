@@ -54,15 +54,24 @@ public class InsertSampleDataService {
         Vehiculo v4 = new Vehiculo(1000, 50, "Ford", "1234LLL",
                 "M3", "aaaaaaaaaaaaaaaff", Vehiculo.TipoCombustible.HIBRIDO);
 
+        Trayecto t1 = new Trayecto(empleado1, v1);
+
         empleadosService.addEmpleado(empleado1);
         empleadosService.addEmpleado(empleado2);
         empleadosService.addEmpleado(empleado3);
         empleadosService.addEmpleado(empleado4);
         empleadosService.addEmpleado(administrador);
 
-        Vehiculo vehiculo1 = new Vehiculo(100.0, 6.5, "Renault", "1234ZZZ", "Captur", "123456789abcdefgh", Vehiculo.TipoCombustible.DIESEL);
+        vehiculosService.addVehiculo(v1);
+        vehiculosService.addVehiculo(v2);
+        vehiculosService.addVehiculo(v3);
+        vehiculosService.addVehiculo(v4);
+
+        trayectosService.addTrayecto(t1);
+
+        Vehiculo vehiculo1 = new Vehiculo(100.0, 6.5, "Renault", "1234BBB", "Captur", "123456789abcdefgh", Vehiculo.TipoCombustible.DIESEL);
         Vehiculo vehiculo2 = new Vehiculo(124.0, 7.4, "Mercedes", "0000BCD", "GLE", "000000000abcdefgh", Vehiculo.TipoCombustible.HIBRIDO);
-        Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234LLL", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
+        Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234CCC", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
         Vehiculo vehiculo4 = new Vehiculo(80.0, 8.5, "Ford", "4444KKK", "Mustang GT", "444400000kkkkkkkk", Vehiculo.TipoCombustible.DIESEL);
         Vehiculo vehiculo5 = new Vehiculo(58.0, 4.5, "Citroen", "1111ZZZ", "C15", "111111111abcdefgh", Vehiculo.TipoCombustible.GASOLINA);
 
@@ -75,5 +84,6 @@ public class InsertSampleDataService {
         Trayecto trayecto1 = new Trayecto(empleado3, vehiculo4);
 
         trayectosService.addTrayecto(trayecto1);
+
     }
 }
