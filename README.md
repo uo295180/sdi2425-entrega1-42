@@ -19,8 +19,8 @@ Este archivo enumera los requisitos funcionales del proyecto, clasificados en ob
 ### Empleado Estándar. Los usuarios Estándar tendrán acceso a las siguientes funcionalidades:
 9. **Consultar el listado de los últimos trayectos realizados por él mismo** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
 10. **Registrar el inicio de un nuevo trayecto con un vehículo disponible** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
-11. **Registrar un repostaje realizado en el vehículo que tenga asignado** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
-12. **Finalizar un trayecto con el vehículo que tenga en uso** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+11. **Registrar un repostaje realizado en el vehículo que tenga asignado** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
+12. **Finalizar un trayecto con el vehículo que tenga en uso** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
 13. **Consultar el historial de trayectos de un vehículo** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
 14. **Consultar el historial de repostajes de un vehículo** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
 15. **Consultar el listado de vehículos disponibles en la empresa** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
