@@ -33,6 +33,7 @@ public class VehiculosService {
     public Page<Vehiculo> getVehiculosDisponibles(Pageable pageable) {
         return vehiculosRepository.findByAvailability(pageable);
     }
+
     public void deleteVehiculo(Long id) {
         vehiculosRepository.deleteById(id);
     }
