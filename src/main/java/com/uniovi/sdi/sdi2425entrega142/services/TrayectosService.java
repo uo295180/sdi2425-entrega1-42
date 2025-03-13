@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.LinkedList;
 
 @Service
@@ -28,7 +29,6 @@ public class TrayectosService {
     }
 
     public void addTrayecto(Trayecto trayecto) {
-        // Si el ID es null le asignamos el último de la lista + 1
         trayectosRepository.save(trayecto);
     }
 
@@ -41,5 +41,9 @@ public class TrayectosService {
             trayectos = getTrayectos(pageable);
         }
         return trayectos;
+    }
+
+    public Optional<Trayecto> findTrayectoActivoByUser(Empleado empleado) {
+        return trayectosRepository.findTrayectoActivoByUser(empleado);
     }
 }

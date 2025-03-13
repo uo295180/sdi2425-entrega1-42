@@ -103,4 +103,8 @@ public class Empleado {
         }
         trayectos.add(new Trayecto(this, vehiculo));
     }
+
+    public void addTrayecto(Trayecto trayecto) {
+        trayectos.add(trayecto);
+    }
 }

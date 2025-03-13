@@ -10,11 +10,11 @@ Este archivo enumera los requisitos funcionales del proyecto, clasificados en ob
 
 ### Administrador: Un usuario Administrador podrá:
 3. **Registrar nuevos empleados en el sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
-4. **Añadir nuevos vehículos al sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+4. **Añadir nuevos vehículos al sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 5. **Consultar el listado de los empleados del sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
 6. **Editar usuarios del sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
-7. **Consultar el listado de todos los vehículos en la empresa** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
-8. **Borrar múltiples vehículos del sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+7. **Consultar el listado de todos los vehículos en la empresa** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
+8. **Borrar múltiples vehículos del sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Empleado Estándar. Los usuarios Estándar tendrán acceso a las siguientes funcionalidades:
 9. **Consultar el listado de los últimos trayectos realizados por él mismo** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
