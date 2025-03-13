@@ -64,11 +64,11 @@ public class EmpleadosService {
         return empleadosRepository.getByDni(dni).isPresent();
     }
 
-    public List<Empleado> searchEmpleados(String searchText) {
+    public Page<Empleado> searchEmpleados(Pageable pageable, String searchText) {
         if(searchText != null && !searchText.trim().isEmpty()) {
-            return empleadosRepository.searchByNameOrSurname(searchText);
+            return empleadosRepository.searchByNameOrSurname(pageable, searchText);
         }
-        return getEmpleados();
+        return getEmpleados(pageable);
     }
 
     public String generatePassword() {

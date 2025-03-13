@@ -103,7 +103,6 @@ public class Repostaje {
 
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-        vehiculo.respostar(this);
     }
 
     public void calculatePrecioTotal() {

@@ -8,27 +8,30 @@
 <div class="container">
     <h2>Registrar repostaje</h2>
     <h2 th:text="${vehiculo.matricula}"></h2>
-    <form class="form-horizontal" method="post" action="/repostajes/add">
+    <form class="form-horizontal" method="post" action="/repostajes/add" th:object="${repostaje}">
         <div class="form-group">
             <label class="control-label col-sm-2" for="nombreEstacion">Nombre de la estación de servicio:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="nombreEstacion" name="nombreEstacion"
-                       placeholder="Nombre estación" required="required"/>
+                       placeholder="Nombre estación"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('nombreEstacion')}" th:errors="*{nombreEstacion}"></span>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="precio">Precio (€/u):</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="precio" name="precio"
-                       placeholder="0.0" step="0.01" min="0.0" required="required"/>
+                       placeholder="0.0" step="0.01" required/>
+                <span class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
+
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="cantidadRepostada">Cantidad repostada:</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="cantidadRepostada" name="cantidadRepostada"
-                       placeholder="0.0" step="0.01" min="0.0"
-                       required="required"/>
+                       placeholder="0.0" step="0.01" required/>
+                <span class="text-danger" th:if="${#fields.hasErrors('cantidadRepostada')}" th:errors="*{cantidadRepostada}"></span>
             </div>
         </div>
         <div class="form-group">
@@ -41,8 +44,9 @@
             <label class="control-label col-sm-2" for="odometro">Odometro:</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="odometro" name="odometro"
-                       th:placeholder="${vehiculo.odometro}" step="0.01" th:min="${vehiculo.odometro}"
-                       required="required"/>
+                       th:placeholder="${vehiculo.odometro}" step="0.01" required/>
+                <span class="text-danger" th:if="${#fields.hasErrors('odometro')}" th:errors="*{odometro}"></span>
+
             </div>
         </div>
         <div class="form-group">

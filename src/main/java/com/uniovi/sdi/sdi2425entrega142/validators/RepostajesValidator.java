@@ -28,8 +28,18 @@ public class RepostajesValidator implements Validator {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cantidadRepostada", "Error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "odometro", "Error.empty");
 
-
-
-
+        if (repostaje.getNombreEstacion() != null && !repostaje.getNombreEstacion().matches("^[^\\s].*[^\\s]$")) {
+            errors.rejectValue("nombreEstacion", "Error.whitespace", "Nombre estación incorrecta");
+        }
+        if (repostaje.getPrecio() < 0) {
+            errors.rejectValue("precio", "Error.repostaje.negativePrice", "Precio invalido");
+        }
+        if(!repostaje.isRepostajeCompleto())
+            if (repostaje.getCantidadRepostada() < 0) {
+                errors.rejectValue("cantidadRepostada", "Error.repostaje.negativeQuantity", "Cantidad invalida");
+            }
+        if (repostaje.getOdometro() <= repostaje.getVehiculo().getOdometro()) {
+            errors.rejectValue("odometro", "Error.repostaje.invalidOdometer", "Odometro invalido");
+        }
     }
 }
