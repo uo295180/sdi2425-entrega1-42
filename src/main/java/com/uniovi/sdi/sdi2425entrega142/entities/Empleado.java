@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Empleados")
+@Table(name = "Empleado")
 public class Empleado {
 
     @Id
@@ -21,12 +21,13 @@ public class Empleado {
     @Transient
     private String passwordConfirm;
 
-    @OneToMany(mappedBy="empleado", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="empleado", cascade = CascadeType.MERGE)
     private Set<Trayecto> trayectos = new HashSet<>();
 
     public Empleado() {}
 
     public Empleado(String dni, String nombre, String apellidos) {
+        super();
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -82,7 +83,6 @@ public class Empleado {
 
     public Set<Trayecto> getTrayectos() {
         return new HashSet<Trayecto>(trayectos);
-
     }
 
     public void setTrayectos(Set<Trayecto> trayectos) {

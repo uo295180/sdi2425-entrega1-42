@@ -2,60 +2,35 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
 <head th:replace="fragments/head"></head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title>Gestión de flotas</title></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
     <h2>Vehículos</h2>
     <p>Los vehículos que actualmente figuran en el sistema son las siguientes:</p>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Matricula</th>
-                <th scope="col">Nº Bastidor</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">Combustible</th>
-                <th scope="col">Kilometraje</th>
-                <th scope="col">Estado Vehiculo</th>
-                <th scope="col">Eliminar</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="vehiculo : ${vehiculosList}">
-                <td scope="row" th:text="${vehiculo.matricula}"> 55555555A</td>
-                <td th:text="${vehiculo.numeroBastidor}"> ppppppppppppppppp</td>
-                <td th:text="${vehiculo.marca}">Mercedes</td>
-                <td th:text="${vehiculo.modelo}"> M4</td>
-                <td th:text="${vehiculo.tipoCombustible}">Diesel</td>
-                <td th:text="${vehiculo.odometro}">0</td>
-                <td th:text="${vehiculo.getEstadoFormulario()}">LIBRE</td>
-                <td><input type="checkbox" name="vehiculosSeleccionados" th:value="${vehiculo.id}"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+
     <div th:if="${#lists.isEmpty(vehiculosList)}">No hay vehículos</div>
     <button type="button" id="deleteButton" class="btn btn-primary">Eliminar</button>
     <form id="deleteForm" action="/vehiculo/delete" method="post" style="display: none;">
         <input type="hidden" name="vehiculosSeleccionados" id="vehiculosSeleccionados" />
     </form>
+    <p>Los vehículos actualmente registrados en el sistema son los siguientes:</p>
+    <button type="button" id="updateButton" class="btn btn-primary">Actualizar</button>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        $("#deleteButton").click(function() {
-            let selectedVehicles = $("input[name='vehiculosSeleccionados']:checked")
-                .map(function() { return this.value; }).get(); // Obtener IDs seleccionados
-            // Establecer los valores en el campo oculto
-            $("#vehiculosSeleccionados").val(selectedVehicles.join(','));
-
-            // Enviar el formulario con los datos
-            $("#deleteForm").submit();
-        });
-        $("#selectAll").change(function () {
-            $("input[name='vehiculosSeleccionados']").prop('checked', this.checked);
+        $("#updateButton").click(function() {
+            let numberPage = [[${param.page}]] || 0;
+            let urlUpdate = '/vehiculo/list/update';
+            if (numberPage != null) {
+                urlUpdate += "?page=" + numberPage[0];
+            }
+            $("#vehiculosTable").load(urlUpdate);
         });
         /*]]>*/
     </script>
+    <div th:replace="fragments/vehiculosTable"></div>
+    <div th:if="${#lists.isEmpty(vehiculosList)}">No hay vehículos</div>
     <footer th:replace="fragments/pagination"></footer>
 </div>
 <footer th:replace="fragments/footer"></footer>

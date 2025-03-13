@@ -56,5 +56,7 @@ public class PO_NavView extends PO_View{
     public static void clickOnPath(WebDriver driver, String xpath, int index) {
         PO_View.checkElementBy(driver, "free", xpath).get(index).click();
     }
+
+
 }
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="Repostajes")
+@Table(name="Repostaje")
 public class Repostaje {
 
     @Id
@@ -19,7 +19,7 @@ public class Repostaje {
     private double odometro;
     private double precioTotal;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "vehiculo_matricula")
     private Vehiculo vehiculo;
 
@@ -102,7 +102,6 @@ public class Repostaje {
     }
 
     public void setVehiculo(Vehiculo vehiculo) {
-
         this.vehiculo = vehiculo;
         vehiculo.respostar(this);
     }

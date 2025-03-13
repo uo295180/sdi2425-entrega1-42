@@ -50,4 +50,10 @@ public class PO_View {
 	static public List<WebElement> checkElementBy(WebDriver driver, String type, String text) {
 		return  SeleniumUtils.waitLoadElementsBy(driver, type, text, getTimeout());
 	}
+
+	static public List<WebElement> accessPath(WebDriver driver, String xPath, int index) {
+		List<WebElement> elements = PO_View.checkElementBy(driver, "free", xPath);
+		elements.get(index).click();
+		return elements;
+	}
 }
