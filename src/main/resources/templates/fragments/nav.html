@@ -12,40 +12,24 @@
             <li class="nav-item ">
                 <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Gestión de trayectos
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/trayecto/list">Ver Trayectos</a>
-                    <a class="dropdown-item" href="/trayecto/add" sec:authorize="hasAnyRole('ROLE_ESTANDAR','ROLE_ADMIN')">Agregar Trayecto</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
-                    Gestión de empleados
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/empleado/list">Ver empleados</a>
-                    <a class="dropdown-item" href="/empleado/add">Agregar empleado</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="vehiculoDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Gestión de vehículos
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/vehiculo/list">Ver vehículos</a>
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/add">Agregar vehículo</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="empleadoDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Gestión de empleados
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/empleado/list">Ver empleados</a>
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/empleado/add">Agregar empleado</a>
+                    <a class="dropdown-item" href="/empleado/list">Ver Empleados</a>
+                    <a class="dropdown-item" href="/empleado/add" sec:authorize="hasAnyRole('ROLE_ADMIN')">Agregar empleado</a>
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profesorDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Gestión de vehiculos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/vehiculo/list">Ver vehiculos</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/add">Agregar vehiculo</a>
                 </div>
             </li>
         </ul>
@@ -63,10 +47,6 @@
                     <a class="dropdown-item" id="btnSpanish" value="ES">
                         <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
                         <span th:text="#{language.es}">Español</span>
-                    </a>
-                    <a class="dropdown-item" id="btnFrench" value="FR">
-                        <img th:src="@{/images/if_france_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-                        <span th:text="#{language.fr}">Francés</span>
                     </a>
                 </div>
             </li>
