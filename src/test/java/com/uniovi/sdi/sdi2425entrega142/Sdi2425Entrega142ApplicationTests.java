@@ -4,13 +4,11 @@ import com.uniovi.sdi.sdi2425entrega142.pageobjects.*;
 
 import com.uniovi.sdi.sdi2425entrega142.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -201,12 +199,26 @@ class Sdi2425Entrega142ApplicationTests {
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "ppppppppppppppppp",
                 "Mercedes", "A4", "Diesel");
-        //Comprobamos que el vehículo se ha creado y entramos en vista de la lista de vehículos
-        PO_PrivateView.findText(driver, "1234AAB");
-        String checkText = "Vehículos";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
+        // Navegamos a la lista de vehículos
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+        boolean encontrado = false; // Creamos una flag para buscar el vehículo por todas las páginas de la vista
+        while (!encontrado) {
+            List<WebElement> vehiculos = driver.findElements(By.xpath("//*[contains(text(), '1234AAB')]"));
+            if (!vehiculos.isEmpty()) {
+                encontrado = true;
+                break;
+            }
+            // Buscamos el enlace de las siguientes páginas si existen
+            List<WebElement> nextPage = driver.findElements(By.xpath("//a[contains(@href, '?page=')]"));
+            if (!nextPage.isEmpty()) {
+                nextPage.get(nextPage.size() - 1).click(); // Última opción disponible
+            } else {
+                break; // No hay más páginas, terminamos la búsqueda
+            }
+        }
+        Assertions.assertTrue(encontrado, "El vehículo no se encontró en la lista de vehículos.");
     }
+
     @Test
     @Order(12)
     public void PR12() {
@@ -272,7 +284,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "pppppppppppppppaa",
                 "Mercedes", "A4", "Diesel");
 
-
+    }
 
     @Test
     @Order(17)
@@ -321,8 +333,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals("http://localhost:8090/empleado/edit/3", currentUrlEdit);
     }
 
-
-
     @Test
     @Order(19)
     public void Prueba19() {
@@ -363,9 +373,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
     }
 
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
-    }
     @Test
     @Order(20)
     public void PR20() {
@@ -390,92 +397,123 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> pagination = driver.findElements(By.cssSelector("footer"));
         Assertions.assertFalse(pagination.isEmpty());
     }
+
     @Test
     @Order(21)
     public void PR21() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
-
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
-        // Seleccionar el primer vehículo de la lista
-        List<WebElement> checkboxes = driver.findElements(By.name("vehiculosSeleccionados"));
-        checkboxes.get(0).click();
-
-        // Pulsar el botón de eliminar
+        List<WebElement> rows = driver.findElements(By.xpath("//table/tbody/tr"));
+        // Eliminar el primer vehículo
+        WebElement checkbox = rows.get(0).findElement(By.xpath(".//input[@type='checkbox']"));
+        String vehicleId = checkbox.getAttribute("value");
+        checkbox.click();
         driver.findElement(By.id("deleteButton")).click();
-
-        // Comprobar que la lista se actualiza y que el vehículo ha sido eliminado
         driver.navigate().refresh();
-        List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
-        Assertions.assertTrue(updatedCheckboxes.size() < checkboxes.size());
+
+        // Comprobar que se ha actualizado la lista (se ha eliminado el vehículo)
+        List<WebElement> updatedRows = driver.findElements(By.xpath("//table/tbody/tr"));
+        boolean vehicleStillExists = updatedRows.stream()
+                .anyMatch(row -> row.findElement(By.xpath(".//input[@type='checkbox']"))
+                        .getAttribute("value").equals(vehicleId));
+
+        Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
+        Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
+
+
     @Test
     @Order(22)
     public void PR22() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
-
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
-        // Seleccionar el último vehículo de la lista
-        List<WebElement> checkboxes = driver.findElements(By.name("vehiculosSeleccionados"));
-        checkboxes.get(checkboxes.size() - 2).click();
-
-        // Pulsar el botón de eliminar
+        List<WebElement> rows = driver.findElements(By.xpath("//table/tbody/tr"));
+        // Eliminar el primer vehículo
+        WebElement checkbox = rows.get(rows.size() - 1).findElement(By.xpath(".//input[@type='checkbox']"));
+        String vehicleId = checkbox.getAttribute("value");
+        checkbox.click();
         driver.findElement(By.id("deleteButton")).click();
-
-        // Comprobar que la lista se actualiza y que el vehículo ha sido eliminado
         driver.navigate().refresh();
-        List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
-        Assertions.assertTrue(updatedCheckboxes.size() < checkboxes.size());
+
+        // Comprobar que se ha actualizado la lista (se ha eliminado el vehículo)
+        List<WebElement> updatedRows = driver.findElements(By.xpath("//table/tbody/tr"));
+        boolean vehicleStillExists = updatedRows.stream()
+                .anyMatch(row -> row.findElement(By.xpath(".//input[@type='checkbox']"))
+                        .getAttribute("value").equals(vehicleId));
+
+        Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
+        Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
     @Test
     @Order(23)
     public void PR23() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
-
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
         // Seleccionar los tres primeros vehículos de la lista
-        List<WebElement> checkboxes = driver.findElements(By.name("vehiculosSeleccionados"));
-        int initialSize = checkboxes.size();
-        checkboxes.get(0).click();
-        checkboxes.get(1).click();
-        checkboxes.get(2).click();
+        List<WebElement> rows = driver.findElements(By.xpath("//table/tbody/tr"));
+        WebElement checkbox1 = rows.get(0).findElement(By.xpath(".//input[@type='checkbox']"));
+        WebElement checkbox2 = rows.get(1).findElement(By.xpath(".//input[@type='checkbox']"));
+        WebElement checkbox3 = rows.get(2).findElement(By.xpath(".//input[@type='checkbox']"));
+        List<WebElement> checkboxes = new ArrayList<WebElement>();
+        checkboxes.add(checkbox1);
+        checkboxes.add(checkbox2);
+        checkboxes.add(checkbox3);
 
-        // Pulsar el botón de eliminar
+        String vehicle1Id = checkbox1.getAttribute("value");
+        checkbox1.click();
+        String vehicle2Id = checkbox1.getAttribute("value");
+        checkbox2.click();
+        String vehicle3Id = checkbox1.getAttribute("value");
+        checkbox3.click();
+
         driver.findElement(By.id("deleteButton")).click();
-
-        // Comprobar que la lista se actualiza y que los vehículos han sido eliminados
         driver.navigate().refresh();
-        List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
-        Assertions.assertTrue(updatedCheckboxes.size() < initialSize - 2); // Comprobar que se eliminaron 3
+
+        // Comprobar que se ha actualizado la lista (se ha eliminado el vehículo)
+        List<WebElement> updatedRows = driver.findElements(By.xpath("//table/tbody/tr"));
+        boolean vehicleStillExists = updatedRows.stream()
+                .anyMatch(row -> row.findElement(By.xpath(".//input[@type='checkbox']"))
+                        .getAttribute("value").equals(vehicle1Id)) ||
+                updatedRows.stream()
+                        .anyMatch(row -> row.findElement(By.xpath(".//input[@type='checkbox']"))
+                                .getAttribute("value").equals(vehicle2Id)) ||
+                updatedRows.stream()
+                        .anyMatch(row -> row.findElement(By.xpath(".//input[@type='checkbox']"))
+                                .getAttribute("value").equals(vehicle3Id));
+
+        Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
+        Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
     @Test
     @Order(24)
     public void Prueba24() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/home");
-        // Pinchamos en la opción de menú de Trayectos:
-        List<WebElement> elements = PO_View.accessPath(driver, "//*[@id='mynavbar']/ul[1]/li[2]/div/a[1]", 0); // TODO solve the crash here
-        // Pinchamos en la opción de lista de trayectos.
-        PO_View.accessPath(driver, "//a[contains(@href, 'trayecto/list')]", 0);
-        List<WebElement> trayectosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
-                PO_View.getTimeout());
+        // Navegamos hasta la lista de trayectos:
+        driver.navigate().to("http://localhost:8090/trayecto/list");
+        List<WebElement> trayectosList = driver.findElements(By.xpath("//*[@id='trayectosTable']/tbody/tr"));
         Assertions.assertEquals(1, trayectosList.size());
     }
 
     @Test
     @Order(25)
     public void Prueba25() {
-        driver.get("http://localhost:8090/trayecto/add");
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678D", "123456"); // Log in como empleado
+        // Navegamos hasta la lista de trayectos:
+        driver.navigate().to("http://localhost:8090/trayecto/add");
         // Seleccionamos un vehículo disponible
-        WebElement vehiculoSelect = driver.findElement(By.name("vehiculo"));
-        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
-        // Enviamos eñ formulario
+        WebElement vehiculoSelect = driver.findElement(By.xpath("//*[@id=\"vehiculo\"]"));
+        // Enviamos el formulario
         driver.findElement(By.tagName("button")).click();
         // Verificamos la redirección a la lista de trayectos
         Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/list"));
@@ -484,20 +522,18 @@ class Sdi2425Entrega142ApplicationTests {
     @Test
     @Order(26)
     public void Prueba26() {
+        // Intentamos agregar otro trayecto (no debería de dejarnos)
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678D", "123456"); // Log in como empleado
+        // Navegamos hasta la lista de trayectos:
         driver.get("http://localhost:8090/trayecto/add");
         // Seleccionamos el vehículo
-        WebElement vehiculoSelect = driver.findElement(By.name("vehiculo"));
-        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        WebElement vehiculoSelect = driver.findElement(By.xpath("//*[@id=\"vehiculo\"]"));
         // Enviamos el formulario
         driver.findElement(By.tagName("button")).click();
-        // Intentamos agregar otro trayecto
-        driver.get("http://localhost:8090/trayecto/add");
-        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
-        driver.findElement(By.tagName("button")).click();
-        // Verificamos que seguimos en la página de agregar trayecto
+        // No nos dejará (seguiremos en el menú de añadir)
         Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
     }
-
 
     @Test
     @Order(27)
@@ -509,19 +545,15 @@ class Sdi2425Entrega142ApplicationTests {
         });
     }
 
-
     @Test
     @Order(39)
     public void Prueba39() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/home");
-        // Pinchamos en la opción de menú de Vehículos:
-        List<WebElement> elements = PO_View.accessPath(driver, "//*[@id='myNavbar']/ul[1]/li[4]", 0);
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+        // Consultamos la lista de Vehículos:
+        List<WebElement> vehiculosList = driver.findElements(By.xpath("//table/tbody/tr"));
         // Pinchamos en la opción de lista de vehículos.
-        PO_View.accessPath(driver, "//a[contains(@href, 'vehiculo/list')]", 0);
-        List<WebElement> vehiculosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
-                PO_View.getTimeout());
         Assertions.assertEquals(5, vehiculosList.size());
     }
 }

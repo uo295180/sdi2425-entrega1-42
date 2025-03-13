@@ -3,6 +3,7 @@ package com.uniovi.sdi.sdi2425entrega142.controllers;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
+import com.uniovi.sdi.sdi2425entrega142.validators.VehiculosValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,6 +71,6 @@ public class VehiculosController {
         Page<Vehiculo> vehiculos = vehiculosService.getVehiculosDisponibles(pageable);
         model.addAttribute("vehiculosList", vehiculos.getContent());
         model.addAttribute("page", vehiculos);
-        return "fragments/vehiculosTable::vehiculosTable";
+        return "vehiculo/list/vehiculosTable::vehiculosTable";
     }
 }
