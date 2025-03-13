@@ -8,6 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface VehiculosRepository extends CrudRepository<Vehiculo, Long> {
 
+    Vehiculo findByMatricula(String matricula);
+    Vehiculo findByNumeroBastidor(String numeroBastidor);
     Page<Vehiculo> findAll(Pageable pageable);
 
     @Query("SELECT v FROM Vehiculo v WHERE v.estadoVehiculo = true ORDER BY v.id ASC")

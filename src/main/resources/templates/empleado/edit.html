@@ -13,16 +13,29 @@
         <div class="col-sm-10">
           <input th:value="*{dni}" id="dni" type="text" class="form-control" name="dni"
                  placeholder="modifica el dni" required="required"/>
+          <span class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span>
         </div>
         <label class="control-label col-sm-2" for="nombre">Nombre:</label>
         <div class="col-sm-10">
           <input th:value="*{nombre}" id="nombre" type="text" class="form-control" name="nombre"
                  placeholder="modifica el nombre" required="required"/>
+          <span class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
         </div>
         <label class="control-label col-sm-2" for="apellidos">Apellidos:</label>
         <div class="col-sm-10">
           <input th:value="*{apellidos}" id="apellidos" type="text" class="form-control" name="apellidos"
                  placeholder="modifica los apellidos" required="required"/>
+          <span class="text-danger" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></span>
+        </div>
+        <label class="control-label col-sm-2" for="role">Rol</label>
+        <div class="col-sm-10">
+          <select id="role" class="form-control" name="role">
+            <option th:each="role : ${rolesList}"
+                    th:value="${role}"
+                    th:text="${role}"
+                    th:selected="${role == empleado.role}">
+            </option>
+          </select>
         </div>
       </div>
 
