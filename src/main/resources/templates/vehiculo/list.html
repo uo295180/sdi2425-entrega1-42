@@ -1,10 +1,20 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+<head th:replace="fragments/head"></head>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"><title>Gestión de flotas</title></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
     <h2>Vehículos</h2>
+    <p>Los vehículos que actualmente figuran en el sistema son las siguientes:</p>
+
+    <div th:if="${#lists.isEmpty(vehiculosList)}">No hay vehículos</div>
+    <button type="button" id="deleteButton" class="btn btn-primary">Eliminar</button>
+    <form id="deleteForm" action="/vehiculo/delete" method="post" style="display: none;">
+        <input type="hidden" name="vehiculosSeleccionados" id="vehiculosSeleccionados" />
+    </form>
     <p>Los vehículos actualmente registrados en el sistema son los siguientes:</p>
     <button type="button" id="updateButton" class="btn btn-primary">Actualizar</button>
     <script th:inline="javascript">

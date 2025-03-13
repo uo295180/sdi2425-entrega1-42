@@ -45,6 +45,15 @@ public class InsertSampleDataService {
         administrador.setPassword("@Dm1n1str@D0r");
         administrador.setRole(rolesService.getRoles()[1]);
 
+        Vehiculo v1 = new Vehiculo(1000, 50, "Audi", "1234AAA",
+                "A5", "pppppppppppppppaa", Vehiculo.TipoCombustible.DIESEL);
+        Vehiculo v2 = new Vehiculo(1000, 50, "BMW", "1234ZZZ",
+                "M3", "bbbbbbbbbbbbbbbbb", Vehiculo.TipoCombustible.MICROHIBRIDO);
+        Vehiculo v3 = new Vehiculo(1000, 50, "Seat", "1234WWW",
+                "M3", "aaaaaaaaaaaaaaaaa", Vehiculo.TipoCombustible.HIBRIDO);
+        Vehiculo v4 = new Vehiculo(1000, 50, "Ford", "1234LLL",
+                "M3", "aaaaaaaaaaaaaaaff", Vehiculo.TipoCombustible.HIBRIDO);
+
         empleadosService.addEmpleado(empleado1);
         empleadosService.addEmpleado(empleado2);
         empleadosService.addEmpleado(empleado3);
