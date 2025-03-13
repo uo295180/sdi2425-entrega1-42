@@ -1,8 +1,8 @@
 package com.uniovi.sdi.sdi2425entrega142.controllers;
 
+import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
-import com.uniovi.sdi.sdi2425entrega142.validators.VehiculosValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +19,15 @@ import java.util.List;
 
 @Controller
 public class VehiculosController {
-    @Autowired
-    VehiculosService vehiculosService;
+
     @Autowired
     VehiculosValidator vehiculosValidator;
+
+    private final VehiculosService vehiculosService;
+
+    public VehiculosController(VehiculosService vehiculosService) {
+        this.vehiculosService = vehiculosService;
+    }
 
     @RequestMapping("/vehiculo/list")
     public String getVehiculosList(Pageable pageable, Model vehiculosModel) {
@@ -31,6 +36,7 @@ public class VehiculosController {
         vehiculosModel.addAttribute("page", vehiculos);
         return "vehiculo/list";
     }
+
     @RequestMapping(value = "/vehiculo/add")
     public String getVehiculo(Model vehiculosModel) {
         vehiculosModel.addAttribute("vehiculo", new Vehiculo());
@@ -59,4 +65,11 @@ public class VehiculosController {
         return "redirect:/vehiculo/list";
     }
 
+    @RequestMapping("/vehiculo/list/update")
+    public String updateList(Model model, Pageable pageable) {
+        Page<Vehiculo> vehiculos = vehiculosService.getVehiculosDisponibles(pageable);
+        model.addAttribute("vehiculosList", vehiculos.getContent());
+        model.addAttribute("page", vehiculos);
+        return "fragments/vehiculosTable::vehiculosTable";
+    }
 }

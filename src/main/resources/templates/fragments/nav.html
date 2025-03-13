@@ -12,7 +12,16 @@
             <li class="nav-item ">
                 <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown active">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="trayectosDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Gestión de trayectos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="trayectosDropdown">
+                    <a class="dropdown-item" href="/trayecto/list">Ver Trayectos</a>
+                    <a class="dropdown-item" href="/trayecto/add" sec:authorize="hasAnyRole('ROLE_ESTANDAR','ROLE_ADMIN')">Agregar Trayecto</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Gestión de empleados
                 </a>

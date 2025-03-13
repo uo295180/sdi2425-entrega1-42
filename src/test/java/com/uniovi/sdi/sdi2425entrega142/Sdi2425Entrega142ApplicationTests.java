@@ -5,6 +5,7 @@ import com.uniovi.sdi.sdi2425entrega142.pageobjects.*;
 import com.uniovi.sdi.sdi2425entrega142.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -15,17 +16,8 @@ import java.util.List;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
-    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
-
-
-    //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
-    //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
-
-
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-
+    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
 
@@ -125,7 +117,7 @@ class Sdi2425Entrega142ApplicationTests {
         isLogoutButtonRendered = driver.findElements(By.xpath("//a[@href='/logout']")).size() > 0;
         Assertions.assertFalse(isLogoutButtonRendered);
     }
-  
+
         @Test
     @Order(7)
     public void Prueba7() {
@@ -200,7 +192,7 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/empleado/add", currentUrl);
     }
-  
+
     @Test
     @Order(11)
     public void PR11() {
@@ -460,5 +452,76 @@ class Sdi2425Entrega142ApplicationTests {
         driver.navigate().refresh();
         List<WebElement> updatedCheckboxes = driver.findElements(By.name("vehiculosSeleccionados"));
         Assertions.assertTrue(updatedCheckboxes.size() < initialSize - 2); // Comprobar que se eliminaron 3
+    }
+    @Test
+    @Order(24)
+    public void Prueba24() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/home");
+        // Pinchamos en la opción de menú de Trayectos:
+        List<WebElement> elements = PO_View.accessPath(driver, "//*[@id='mynavbar']/ul[1]/li[2]/div/a[1]", 0); // TODO solve the crash here
+        // Pinchamos en la opción de lista de trayectos.
+        PO_View.accessPath(driver, "//a[contains(@href, 'trayecto/list')]", 0);
+        List<WebElement> trayectosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(1, trayectosList.size());
+    }
+
+    @Test
+    @Order(25)
+    public void Prueba25() {
+        driver.get("http://localhost:8090/trayecto/add");
+        // Seleccionamos un vehículo disponible
+        WebElement vehiculoSelect = driver.findElement(By.name("vehiculo"));
+        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        // Enviamos eñ formulario
+        driver.findElement(By.tagName("button")).click();
+        // Verificamos la redirección a la lista de trayectos
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/list"));
+    }
+
+    @Test
+    @Order(26)
+    public void Prueba26() {
+        driver.get("http://localhost:8090/trayecto/add");
+        // Seleccionamos el vehículo
+        WebElement vehiculoSelect = driver.findElement(By.name("vehiculo"));
+        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        // Enviamos el formulario
+        driver.findElement(By.tagName("button")).click();
+        // Intentamos agregar otro trayecto
+        driver.get("http://localhost:8090/trayecto/add");
+        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        driver.findElement(By.tagName("button")).click();
+        // Verificamos que seguimos en la página de agregar trayecto
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
+    }
+
+
+    @Test
+    @Order(27)
+    public void Prueba27() {
+        driver.get("http://localhost:8090/trayecto/add");
+        // Verificar que no hay vehículos disponibles
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            driver.findElement(By.name("vehiculo"));
+        });
+    }
+
+
+    @Test
+    @Order(39)
+    public void Prueba39() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/home");
+        // Pinchamos en la opción de menú de Vehículos:
+        List<WebElement> elements = PO_View.accessPath(driver, "//*[@id='myNavbar']/ul[1]/li[4]", 0);
+        // Pinchamos en la opción de lista de vehículos.
+        PO_View.accessPath(driver, "//a[contains(@href, 'vehiculo/list')]", 0);
+        List<WebElement> vehiculosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(5, vehiculosList.size());
     }
 }

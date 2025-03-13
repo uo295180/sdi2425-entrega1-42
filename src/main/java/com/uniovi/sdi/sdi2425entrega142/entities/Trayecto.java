@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Trayectos" )
+@Table(name = "Trayecto" )
 public class Trayecto {
 
     @Id
@@ -21,14 +21,14 @@ public class Trayecto {
     private double odometroFin;
     private String observaciones;
 
-    @OneToMany(mappedBy="trayecto", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="trayecto", cascade=CascadeType.MERGE)
     private Set<Incidencia> incidencias = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_id")
     private Empleado empleado;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="matricula")
     private Vehiculo vehiculo;
 
@@ -41,6 +41,14 @@ public class Trayecto {
         this.odometroInicio = vehiculo.getOdometro();
         this.estadoTrayecto = true;
         vehiculo.setEstadoVehiculo(false);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getDistanciaTrayecto() {
@@ -125,7 +133,7 @@ public class Trayecto {
     }
 
     public void endTrayecto(double odometroFin, String observaciones) {
-        if(estadoTrayecto) {
+        if (estadoTrayecto) {
             setEstadoTrayecto(false);
             setObservaciones(observaciones);
             setOdometroFin(odometroFin);
