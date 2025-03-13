@@ -12,6 +12,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -130,6 +131,47 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> trayectosList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(1, trayectosList.size());
+    }
+
+    @Test
+    @Order(25)
+    public void Prueba25() {
+        driver.get("http://localhost:8090/trayecto/add");
+        // Seleccionamos un vehículo disponible
+        WebElement vehiculoSelect = driver.findElement(By.name("vehiculo"));
+        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        // Enviamos eñ formulario
+        driver.findElement(By.tagName("button")).click();
+        // Verificamos la redirección a la lista de trayectos
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/list"));
+    }
+
+    @Test
+    @Order(26)
+    public void Prueba26() {
+        driver.get("http://localhost:8090/trayecto/add");
+        // Seleccionamos el vehículo
+        WebElement vehiculoSelect = driver.findElement(By.name("vehiculo"));
+        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        // Enviamos el formulario
+        driver.findElement(By.tagName("button")).click();
+        // Intentamos agregar otro trayecto
+        driver.get("http://localhost:8090/trayecto/add");
+        vehiculoSelect.findElements(By.tagName("option")).get(1).click();
+        driver.findElement(By.tagName("button")).click();
+        // Verificamos que seguimos en la página de agregar trayecto
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
+    }
+
+
+    @Test
+    @Order(27)
+    public void Prueba27() {
+        driver.get("http://localhost:8090/trayecto/add");
+        // Verificar que no hay vehículos disponibles
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+            driver.findElement(By.name("vehiculo"));
+        });
     }
 
 
