@@ -29,6 +29,7 @@ public class EmpleadosService {
         return empleados;
     }
     public Empleado getEmpleado(Long id) { return empleadosRepository.findById(id).get();}
+    public Empleado getEmpleadoByDni(String dni) { return empleadosRepository.findByDni(dni).get();}
     public void addEmpleado(Empleado empleado) {
         empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
         empleadosRepository.save(empleado);

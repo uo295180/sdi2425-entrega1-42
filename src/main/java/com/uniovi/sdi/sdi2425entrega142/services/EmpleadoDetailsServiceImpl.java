@@ -23,7 +23,7 @@ public class EmpleadoDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        Empleado empleado = empleadosRepository.findByDni(dni);
+        Empleado empleado = empleadosRepository.findByDni(dni).get();
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(empleado.getRole()));
