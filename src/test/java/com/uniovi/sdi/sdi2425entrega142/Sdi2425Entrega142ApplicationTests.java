@@ -358,7 +358,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals("http://localhost:8090/empleado/edit/3", currentUrlEdit);
     }
 
-
     @Test
     @Order(19)
     public void Prueba19() {
@@ -405,7 +404,6 @@ class Sdi2425Entrega142ApplicationTests {
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
     }
-
 
     @Test
     @Order(20)
@@ -568,7 +566,6 @@ class Sdi2425Entrega142ApplicationTests {
         // No nos dejará (seguiremos en el menú de añadir)
         Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
     }
-
 
     @Test
     @Order(27)

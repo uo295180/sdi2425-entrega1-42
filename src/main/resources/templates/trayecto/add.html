@@ -1,30 +1,34 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"><title>Gestión de flotas</title></head>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
     <nav th:replace="fragments/nav"></nav>
     <div class="container" id="main-container">
-        <h2>Agregar trayecto</h2>
+        <h2 th:text="#{nav.trayectos.add}">Agregar trayecto</h2>
         <form class="form-horizontal" method="post" action="/trayecto/add" th:object="${trayecto}">
             <div class="form-group">
-                <label class="control-label col-sm-2" for="vehiculo">Vehículo:</label>
+                <label class="control-label col-sm-2" for="vehiculo" th:text="#{trayecto.vehiculo}">Vehículo:</label>
                 <div class="col-sm-10" th:if="${vehiculosList != null and not #lists.isEmpty(vehiculosList)}">
-                    <p th:text="${vehiculosList}"></p>
                     <select id="vehiculo" class="form-control" name="vehiculo">
                         <option th:each="vehiculo : ${vehiculosList}" th:value="${vehiculo.id}"
                                 th:text="|${vehiculo.matricula} - ${vehiculo.marca} ${vehiculo.modelo}|"
                                 th:data-odometro="${vehiculo.odometro}">
-                            Vehículo
                         </option>
                     </select>
                 </div>
-                <div th:if="${#lists.isEmpty(vehiculosList)}">No hay vehículos disponibles</div>
+                <div th:if="${#lists.isEmpty(vehiculosList)}" th:text="#{vehiculos.nohaydisponibles}">
+                    No hay vehículos disponibles
+                </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="fechaInicioTrayecto">Fecha inicio trayecto:</label>
+                <label class="control-label col-sm-2" for="fechaInicioTrayecto" th:text="#{trayecto.fechainicio}">
+                    Fecha de inicio del trayecto:
+                </label>
                 <div class="col-sm-10">
-                    <input type="datetime-local" class="form-control" id="fechaInicioTrayecto" name="fechaInicioTrayecto" readonly />
-                    <span th:id="fecha" class="text-danger" th:if="${#fields.hasErrors('fechaInicioTrayecto')}" th:errors="*{fechaInicioTrayecto}"></span>
+                    <input type="datetime-local" class="form-control" id="fechaInicioTrayecto"
+                           name="fechaInicioTrayecto" readonly />
+                    <span th:id="fecha" class="text-danger" th:if="${#fields.hasErrors('fechaInicioTrayecto')}"
+                          th:errors="*{fechaInicioTrayecto}"></span>
                     <!-- Script para asignar la fecha actual -->
                     <script>
                         let fechaInput = document.getElementById("fechaInicioTrayecto");
@@ -35,10 +39,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="odometroInicio">Odómetro inicial:</label>
+                <label class="control-label col-sm-2" for="odometroInicio" th:text="#{trayecto.odometroinicial}">
+                    Odómetro inicial:
+                </label>
                 <div class="col-sm-10">
                     <input type="number" class="form-control" id="odometroInicio" name="odometroInicio" readonly />
-                    <span class="text-danger" th:if="${#fields.hasErrors('odometroInicio')}" th:errors="*{odometroInicio}"></span>
+                    <span class="text-danger" th:if="${#fields.hasErrors('odometroInicio')}"
+                          th:errors="*{odometroInicio}"></span>
                     <script>
                         let vehiculoSelect = document.getElementById("vehiculo");
                         let odometroInput = document.getElementById("odometroInicio");
@@ -58,7 +65,7 @@
             </div>
             <div class="form-group">
                 <div th:if="!${#lists.isEmpty(vehiculosList)}" class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{send}">Enviar</button>
                 </div>
             </div>
         </form>
