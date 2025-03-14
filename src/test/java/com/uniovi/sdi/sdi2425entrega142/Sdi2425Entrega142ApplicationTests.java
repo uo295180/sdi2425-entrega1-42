@@ -17,8 +17,22 @@ import java.util.List;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
+
+    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+
+
+    //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
+    //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
+
+
+    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+
+
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
 
@@ -30,16 +44,20 @@ class Sdi2425Entrega142ApplicationTests {
     }
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         driver.navigate().to(URL);
     }
+
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
         driver.manage().deleteAllCookies();
     }
+
     //Antes de la primera prueba
     @BeforeAll
-    static public void begin() {}
+    static public void begin() {
+    }
+
     //Al finalizar la última prueba
     @AfterAll
     static public void end() {
@@ -119,7 +137,7 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(isLogoutButtonRendered);
     }
 
-        @Test
+    @Test
     @Order(7)
     public void Prueba7() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -221,6 +239,7 @@ class Sdi2425Entrega142ApplicationTests {
         }
         Assertions.assertTrue(encontrado, "El vehículo no se encontró en la lista de vehículos.");
     }
+
     @Test
     @Order(12)
     public void PR12() {
@@ -233,6 +252,7 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
+
     @Test
     @Order(13)
     public void PR13() {
@@ -253,6 +273,7 @@ class Sdi2425Entrega142ApplicationTests {
         //Assertions.assertEquals(checkText2, result2.get(0).getText());
         //Esto no va nose por que
     }
+
     @Test
     @Order(14)
     public void PR14() {
@@ -265,6 +286,7 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
+
     @Test
     @Order(15)
     public void PR15() {
@@ -277,6 +299,7 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
+
     @Test
     @Order(16)
     public void PR16() {
@@ -374,6 +397,12 @@ class Sdi2425Entrega142ApplicationTests {
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
 
+        currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+
+        checkText = "Orviz";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertTrue(result.get(0).getText().contains(checkText));
     }
 
     @Test
@@ -552,7 +581,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(28)
     public void Prueba28() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación 1", "1.04", "12", "200");
         String currentUrl = driver.getCurrentUrl();
@@ -563,7 +592,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(29)
     public void Prueba29() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/home", currentUrl);
@@ -573,7 +602,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(30)
     public void Prueba30() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "", "", "", "");
         String currentUrl = driver.getCurrentUrl();
@@ -584,58 +613,58 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(31)
     public void Prueba31() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "-12", "-12", "10");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/repostajes/add", currentUrl);
         List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.negativePrice",
-                PO_Properties.getSPANISH() );
-//Comprobamos el error de Nombre corto de nombre corto .
+                PO_Properties.getSPANISH());
+        //Comprobamos el error de Nombre corto de nombre corto .
         String checkText = PO_HomeView.getP().getString("Error.repostaje.negativePrice",
                 PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText , result.get(0).getText());
+        Assertions.assertEquals(checkText, result.get(0).getText());
         result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.negativeQuantity",
-                PO_Properties.getSPANISH() );
-//Comprobamos el error de Nombre corto de nombre corto .
+                PO_Properties.getSPANISH());
+        //Comprobamos el error de Nombre corto de nombre corto .
         checkText = PO_HomeView.getP().getString("Error.repostaje.negativeQuantity",
                 PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText , result.get(0).getText());
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
     @Test
     @Order(32)
     public void Prueba32() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "100");
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "50");
         List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.invalidOdometer",
-                PO_Properties.getSPANISH() );
-//Comprobamos el error de Nombre corto de nombre corto .
+                PO_Properties.getSPANISH());
+        //Comprobamos el error de Nombre corto de nombre corto .
         String checkText = PO_HomeView.getP().getString("Error.repostaje.invalidOdometer",
                 PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText , result.get(0).getText());
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
     @Test
     @Order(33)
     public void Prueba33() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observacion");
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/6", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/24", currentUrl);
     }
 
     @Test
     @Order(36)
     public void Prueba34() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "", "Ejemplo observacion");
         String currentUrl = driver.getCurrentUrl();
@@ -646,15 +675,15 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(35)
     public void Prueba35() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "-20", "Ejemplo observacion");
         List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.trayecto.end.negativeOdometro",
-                PO_Properties.getSPANISH() );
-//Comprobamos el error de Nombre corto de nombre corto .
+                PO_Properties.getSPANISH());
+        //Comprobamos el error de Nombre corto de nombre corto .
         String checkText = PO_HomeView.getP().getString("Error.trayecto.end.negativeOdometro",
                 PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText , result.get(0).getText());
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
     @Test
@@ -678,4 +707,81 @@ class Sdi2425Entrega142ApplicationTests {
         // Pinchamos en la opción de lista de vehículos.
         Assertions.assertEquals(5, vehiculosList.size());
     }
+
+    @Test
+    @Order(40)
+    public void PR40() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+
+        driver.navigate().to("http://localhost:8090/empleado/password");
+
+        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "wefWDF#$%@vc333333", "wefWDF#$%@vc333333");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/home", currentUrlEdit);
+
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "wefWDF#$%@vc333333");
+
+        currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/empleado/list", currentUrlEdit);
+    }
+
+    @Test
+    @Order(41)
+    public void PR41() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+
+        driver.navigate().to("http://localhost:8090/empleado/password");
+
+        PO_PasswordChangeView.fillPasswordForm(driver, "123456wef", "wefWDF#$%@vc333333", "wefWDF#$%@vc333333");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
+
+        String checkText = "La contraseña no es correcta.";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    @Test
+    @Order(42)
+    public void PR42() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+
+        driver.navigate().to("http://localhost:8090/empleado/password");
+
+        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "debil", "debil");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
+
+        String checkText = "La nueva contraseña tiene que tener al menos 12 caracteres, una minuscula, mayuscula, y caracter especial.";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    @Test
+    @Order(43)
+    public void PR43() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+
+        driver.navigate().to("http://localhost:8090/empleado/password");
+
+        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "wefWDF#$%@vc333333", "iruhfgiernfk345436");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
+
+        String checkText = "Las contraseñas no coinciden.";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
 }
+
