@@ -550,7 +550,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(28)
     public void Prueba28() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación 1", "1.04", "12", "200");
         String currentUrl = driver.getCurrentUrl();
@@ -561,7 +561,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(29)
     public void Prueba29() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/home", currentUrl);
@@ -571,7 +571,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(30)
     public void Prueba30() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "", "", "", "");
         String currentUrl = driver.getCurrentUrl();
@@ -582,7 +582,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(31)
     public void Prueba31() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "-12", "-12", "10");
         String currentUrl = driver.getCurrentUrl();
@@ -605,7 +605,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(32)
     public void Prueba32() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "100");
         driver.navigate().to("http://localhost:8090/repostajes/add");
@@ -622,18 +622,18 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(33)
     public void Prueba33() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observacion");
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/6", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/24", currentUrl);
     }
 
     @Test
     @Order(36)
     public void Prueba34() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "", "Ejemplo observacion");
         String currentUrl = driver.getCurrentUrl();
@@ -644,7 +644,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(35)
     public void Prueba35() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "-20", "Ejemplo observacion");
         List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.trayecto.end.negativeOdometro",
