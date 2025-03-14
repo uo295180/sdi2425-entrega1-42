@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmpleadosRepository extends CrudRepository<Empleado, Long> {
-    Optional<Empleado> findByDni(String dni);
+    Empleado findByDni(String dni);
 
     Page<Empleado> findAll(Pageable pageable);
 

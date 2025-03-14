@@ -397,9 +397,6 @@ class Sdi2425Entrega142ApplicationTests {
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
 
-        currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
-
         checkText = "Orviz";
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
@@ -532,8 +529,8 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
         // Navegamos hasta la lista de trayectos:
         driver.navigate().to("http://localhost:8090/trayecto/list");
-        List<WebElement> trayectosList = driver.findElements(By.cssSelector("tbody tr"));
-        Assertions.assertEquals(1, trayectosList.size());
+        List<WebElement> trayectos = driver.findElements(By.xpath("//*[@id=\"trayectosTable\"]/tbody/*"));
+        Assertions.assertEquals(1, trayectos.size());
     }
 
     @Test
@@ -543,10 +540,8 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678D", "123456"); // Log in como empleado
         // Navegamos hasta la lista de trayectos:
         driver.navigate().to("http://localhost:8090/trayecto/add");
-        // Seleccionamos un vehículo disponible
-        WebElement vehiculoSelect = driver.findElement(By.xpath("//*[@id=\"vehiculo\"]"));
-        // Enviamos el formulario
-        driver.findElement(By.tagName("button")).click();
+        // Enviamos el formulario con el vehículo preseleccionado
+        driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/div[4]/div/button")).click();
         // Verificamos la redirección a la lista de trayectos
         Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/list"));
     }

@@ -33,7 +33,7 @@
                     <script>
                         let fechaInput = document.getElementById("fechaInicioTrayecto");
                         let now = new Date();
-                        let fechaActual = now.toISOString().slice(0, 16); // Formato compatible con datetime-local
+                        let fechaActual = now.toISOString().slice(0, 16);
                         fechaInput.value = fechaActual;
                     </script>
                 </div>
@@ -49,16 +49,12 @@
                     <script>
                         let vehiculoSelect = document.getElementById("vehiculo");
                         let odometroInput = document.getElementById("odometroInicio");
+                        let selectedOption = vehiculoSelect.options[vehiculoSelect.selectedIndex];
+                        odometroInput.value = selectedOption.getAttribute("data-odometro");
 
                         vehiculoSelect.addEventListener("change", function() {
-                            let selectedOption = vehiculoSelect.options[vehiculoSelect.selectedIndex];
-                            let odometroValue = selectedOption.getAttribute("data-odometro");
-
-                            if (odometroValue) {
-                                odometroInput.value = odometroValue;
-                            } else {
-                                odometroInput.value = ""; // Limpia si no hay vehículo seleccionado
-                            }
+                            selectedOption = vehiculoSelect.options[vehiculoSelect.selectedIndex];
+                            odometroInput.value = selectedOption.getAttribute("data-odometro");
                         });
                     </script>
                 </div>

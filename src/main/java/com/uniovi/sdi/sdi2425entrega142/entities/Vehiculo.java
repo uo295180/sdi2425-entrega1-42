@@ -188,4 +188,9 @@ public class Vehiculo {
     public void addTrayecto(Trayecto trayecto) {
         trayectos.add(trayecto);
     }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{id=" + id + ", matrícula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + "}";
+    }
 }

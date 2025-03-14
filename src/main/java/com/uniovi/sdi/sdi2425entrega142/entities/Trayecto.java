@@ -1,19 +1,27 @@
 package com.uniovi.sdi.sdi2425entrega142.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Trayecto" )
+@Table(name = "Trayecto")
 public class Trayecto {
 
     @Id
     @GeneratedValue
     private Long id;
-    private Timestamp fechaInicioTrayecto;
-    private Timestamp fechaFinTrayecto;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime fechaInicioTrayecto;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime fechaFinTrayecto;
+
     private long duracionTrayecto;
     private double distanciaTrayecto;
     private boolean estadoTrayecto;
@@ -21,23 +29,24 @@ public class Trayecto {
     private double odometroFin;
     private String observaciones;
 
-    @OneToMany(mappedBy="trayecto", cascade=CascadeType.MERGE)
+    @OneToMany(mappedBy = "trayecto", cascade = CascadeType.MERGE)
     private Set<Incidencia> incidencias = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private Empleado empleado;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="matricula")
+    @JoinColumn(name = "matricula")
     private Vehiculo vehiculo;
 
-    public Trayecto() {}
+    public Trayecto() {
+    }
 
     public Trayecto(Empleado empleado, Vehiculo vehiculo) {
         this.empleado = empleado;
         this.vehiculo = vehiculo;
-        this.fechaInicioTrayecto = new Timestamp(System.currentTimeMillis());
+        this.fechaInicioTrayecto = LocalDateTime.now();
         this.odometroInicio = vehiculo.getOdometro();
         this.estadoTrayecto = true;
     }
@@ -48,6 +57,22 @@ public class Trayecto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getFechaInicioTrayecto() {
+        return fechaInicioTrayecto;
+    }
+
+    public void setFechaInicioTrayecto(LocalDateTime fechaInicioTrayecto) {
+        this.fechaInicioTrayecto = fechaInicioTrayecto;
+    }
+
+    public LocalDateTime getFechaFinTrayecto() {
+        return fechaFinTrayecto;
+    }
+
+    public void setFechaFinTrayecto(LocalDateTime fechaFinTrayecto) {
+        this.fechaFinTrayecto = fechaFinTrayecto;
     }
 
     public double getDistanciaTrayecto() {
@@ -80,14 +105,6 @@ public class Trayecto {
 
     public void setEstadoTrayecto(boolean estadoTrayecto) {
         this.estadoTrayecto = estadoTrayecto;
-    }
-
-    public Timestamp getFechaInicioTrayecto() {
-        return fechaInicioTrayecto;
-    }
-
-    public void setFechaInicioTrayecto(Timestamp fechaInicioTrayecto) {
-        this.fechaInicioTrayecto = fechaInicioTrayecto;
     }
 
     public double getOdometroFin() {
@@ -123,21 +140,16 @@ public class Trayecto {
         this.vehiculo = vehiculo;
     }
 
-    public Timestamp getFechaFinTrayecto() {
-        return fechaFinTrayecto;
-    }
-
-    public void setFechaFinTrayecto(Timestamp fechaFinTrayecto) {
-        this.fechaFinTrayecto = fechaFinTrayecto;
-    }
-
     public void endTrayecto(double odometroFin, String observaciones) {
         if (estadoTrayecto) {
             setEstadoTrayecto(false);
             setObservaciones(observaciones);
             setOdometroFin(odometroFin);
-            setFechaFinTrayecto(new Timestamp(System.currentTimeMillis()));
-            setDuracionTrayecto(fechaFinTrayecto.getTime() - fechaInicioTrayecto.getTime());
+            setFechaFinTrayecto(LocalDateTime.now());
+
+            // Calcular la duración del trayecto en segundos
+            setDuracionTrayecto(Duration.between(fechaInicioTrayecto, fechaFinTrayecto).toSeconds());
+
             vehiculo.setEstadoVehiculo(false);
             vehiculo.setOdometro(odometroFin);
         } else {
@@ -145,8 +157,10 @@ public class Trayecto {
         }
     }
 
-    public void crearIncidencia(String titulo, String descricion, boolean estado) {
-        if(!estadoTrayecto) { throw new IllegalStateException("No se puede crear una incidencia en un trayecto terminado"); }
-        incidencias.add(new Incidencia(titulo, descricion, estado));
+    public void crearIncidencia(String titulo, String descripcion, boolean estado) {
+        if (!estadoTrayecto) {
+            throw new IllegalStateException("No se puede crear una incidencia en un trayecto terminado");
+        }
+        incidencias.add(new Incidencia(titulo, descripcion, estado));
     }
 }
