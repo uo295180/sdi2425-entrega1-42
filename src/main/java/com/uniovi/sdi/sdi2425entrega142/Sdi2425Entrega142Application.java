@@ -9,5 +9,4 @@ public class Sdi2425Entrega142Application {
     public static void main(String[] args) {
         SpringApplication.run(Sdi2425Entrega142Application.class, args);
     }
-
 }

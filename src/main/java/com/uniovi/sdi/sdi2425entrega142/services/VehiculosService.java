@@ -1,31 +1,49 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
+import com.uniovi.sdi.sdi2425entrega142.repository.TrayectosRepository;
 import com.uniovi.sdi.sdi2425entrega142.repository.VehiculosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class VehiculosService {
-    @Autowired
-    VehiculosRepository vehiculosRepository;
+
+    private final VehiculosRepository vehiculosRepository;
+    private final TrayectosRepository trayectosRepository;
+
+    public VehiculosService(VehiculosRepository vehiculosRepository, TrayectosRepository trayectosRepository) {
+        this.vehiculosRepository = vehiculosRepository;
+        this.trayectosRepository = trayectosRepository;
+    }
 
     public Page<Vehiculo> getVehiculos(Pageable pageable) {
-        Page<Vehiculo> vehiculos = vehiculosRepository.findAll(pageable);
-        return vehiculos;
+        return vehiculosRepository.findAll(pageable);
     }
+
     public Vehiculo getVehiculo(Long id) {
-        return vehiculosRepository.findById(id).get();
+        return vehiculosRepository.findById(id).isPresent() ? vehiculosRepository.findById(id).get() : new Vehiculo();
     }
+
     public void addVehiculo(Vehiculo vehiculo) {
-        // Si en Id es null le asignamos el último + 1 de la lista
         vehiculosRepository.save(vehiculo);
     }
+
+    public Page<Vehiculo> getVehiculosDisponibles(Pageable pageable) {
+        return vehiculosRepository.findByAvailability(pageable);
+    }
+
+    @Transactional
     public void deleteVehiculo(Long id) {
+        trayectosRepository.deleteByVehiculoId(id);
         vehiculosRepository.deleteById(id);
     }
+
     public Vehiculo getVehiculoByMatricula(String matricula) {
         return vehiculosRepository.findByMatricula(matricula);
     }

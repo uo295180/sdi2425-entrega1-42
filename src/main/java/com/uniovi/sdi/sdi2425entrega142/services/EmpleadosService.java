@@ -2,6 +2,8 @@ package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.dtos.PasswordDTO;
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
+import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
+import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadosService {
@@ -45,6 +50,7 @@ public class EmpleadosService {
     }
 
     public Empleado getEmpleado(Long id) { return empleadosRepository.findById(id).get();}
+    public Empleado getEmpleadoByDni(String dni) { return empleadosRepository.findByDni(dni).get();}
     public void addEmpleado(Empleado empleado) {
         if (empleado.getId() == null) {
             empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
@@ -65,9 +71,17 @@ public class EmpleadosService {
         return empleadosRepository.getByDni(dni).isPresent();
     }
 
+    public Page<Empleado> searchEmpleados(Pageable pageable, String searchText) {
+        if(searchText != null && !searchText.trim().isEmpty()) {
+            return empleadosRepository.searchByNameOrSurname(pageable, searchText);
+        }
+        return getEmpleados(pageable);
+    }
+
     public String generatePassword() {
         return passwordGeneratorService.generateStrongPassword(PASSWORD_LENGTH);
     }
+
 
     public Empleado getByDni(String dni) {
         return empleadosRepository.findByDni(dni);
@@ -80,4 +94,9 @@ public class EmpleadosService {
 
         empleadosRepository.save(empleado);
     }
+
+    public Optional<Empleado> findEmpleadoByDni(String dni) {
+        return empleadosRepository.findEmpleadoByDni(dni);
+    }
+
 }

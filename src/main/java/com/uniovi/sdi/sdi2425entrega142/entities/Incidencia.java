@@ -3,7 +3,7 @@ package com.uniovi.sdi.sdi2425entrega142.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Incidencias")
+@Table(name="Incidencia")
 public class Incidencia {
 
     enum EstadoIncidencia {
@@ -20,7 +20,7 @@ public class Incidencia {
     private EstadoIncidencia estado = EstadoIncidencia.REGISTRADA;
     private String respuesta;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="trayecto_id")
     private Trayecto trayecto;
 

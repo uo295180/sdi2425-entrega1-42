@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="Vehiculos")
+@Table(name="Vehiculo")
 public class Vehiculo {
 
     public enum TipoCombustible {
@@ -29,12 +29,12 @@ public class Vehiculo {
     private boolean estadoVehiculo;
 
 
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.MERGE)
     private Set<Trayecto> trayectos = new HashSet<>();
-    @OneToMany(mappedBy = "vehiculo", cascade  = CascadeType.ALL)
+    @OneToMany(mappedBy = "vehiculo", cascade  = CascadeType.MERGE)
     private Set<Repostaje> repostajes = new HashSet<>();
 
-    public Vehiculo() {estadoVehiculo = true;}
+    public Vehiculo() {estadoVehiculo = false;}
 
     public Vehiculo(double cantidadMaximaTanque, double consumoMedio, String marca, String matricula, String modelo, String numeroBastidor, TipoCombustible tipoCombustible) {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
@@ -44,9 +44,17 @@ public class Vehiculo {
         this.modelo = modelo;
         this.numeroBastidor = numeroBastidor;
         this.tipoCombustible = tipoCombustible;
-        this.estadoVehiculo = true;
+        this.estadoVehiculo = false;
         this.cantidadTanque = cantidadMaximaTanque;
         this.odometro = 0;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getCantidadMaximaTanque() {
@@ -57,9 +65,6 @@ public class Vehiculo {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
     }
 
-    public Long getId() {
-        return id;
-    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -167,16 +172,20 @@ public class Vehiculo {
     }
 
     public void respostar(Repostaje repostaje) {
-        if(!estadoVehiculo) { throw new IllegalStateException("No se puede repostar un vehículo que no está en uso"); }
+        if(estadoVehiculo) { throw new IllegalStateException("No se puede repostar un vehículo que no está en uso"); }
         repostajes.add(repostaje);
         setCantidadTanque(this.cantidadTanque + repostaje.getCantidadRepostada());
         setOdometro(repostaje.getOdometro());
     }
 
     public String getEstadoFormulario() {
-        if (estadoVehiculo) {
+        if (!estadoVehiculo) {
             return "LIBRE";
         }
         return "OCUPADO";
+    }
+
+    public void addTrayecto(Trayecto trayecto) {
+        trayectos.add(trayecto);
     }
 }

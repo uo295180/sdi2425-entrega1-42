@@ -11,10 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmpleadosRepository extends CrudRepository<Empleado, Long> {
-    Empleado findByDni(String dni);
+    Optional<Empleado> findByDni(String dni);
 
     Page<Empleado> findAll(Pageable pageable);
 
     @Query("SELECT u FROM Empleado u WHERE u.dni = ?1")
     Optional<Empleado> getByDni(String dni);
+
+    @Query("SELECT u FROM Empleado u WHERE (LOWER(u.nombre) LIKE LOWER(CONCAT('%', ?1, '%')) " +
+            "OR LOWER(u.apellidos) LIKE LOWER(CONCAT('%', ?1, '%')))")
+    Page<Empleado> searchByNameOrSurname(Pageable pageable, String searchText);
+
+    @Query("SELECT u FROM Empleado u WHERE (LOWER(u.dni) LIKE LOWER(?1) )")
+    Optional<Empleado> findEmpleadoByDni(String dni);
 }
