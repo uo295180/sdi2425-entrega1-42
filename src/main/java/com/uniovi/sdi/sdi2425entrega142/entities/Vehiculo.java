@@ -65,6 +65,9 @@ public class Vehiculo {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public double getCantidadTanque() {
         return cantidadTanque;
     }
@@ -170,9 +173,9 @@ public class Vehiculo {
 
     public void respostar(Repostaje repostaje) {
         if(!estadoVehiculo) { throw new IllegalStateException("No se puede repostar un vehículo que no está en uso"); }
-        setCantidadTanque(getCantidadTanqueTrasGasto(repostaje.getOdometro()) + repostaje.getCantidadRepostada());
-        setOdometro(repostaje.getOdometro());
         repostajes.add(repostaje);
+        setCantidadTanque(this.cantidadTanque + repostaje.getCantidadRepostada());
+        setOdometro(repostaje.getOdometro());
     }
 
     public String getEstadoFormulario() {

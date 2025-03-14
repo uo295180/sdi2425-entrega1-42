@@ -92,7 +92,7 @@ public class TrayectosController {
         Page<Trayecto> trayectos = trayectosService.getTrayectosDelEmpleado(pageable, empleado);
         model.addAttribute("trayectosList", trayectos.getContent());
         model.addAttribute("page", trayectos);
-        return "fragments/trayectosTable::trayectosTable";
+        return "trayecto/list/trayectosTable::trayectosTable";
     }
 
     @RequestMapping("/trayecto/end")

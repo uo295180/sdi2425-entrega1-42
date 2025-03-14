@@ -71,6 +71,6 @@ public class VehiculosController {
         Page<Vehiculo> vehiculos = vehiculosService.getVehiculosDisponibles(pageable);
         model.addAttribute("vehiculosList", vehiculos.getContent());
         model.addAttribute("page", vehiculos);
-        return "fragments/vehiculosTable::vehiculosTable";
+        return "vehiculo/list/vehiculosTable::vehiculosTable";
     }
 }

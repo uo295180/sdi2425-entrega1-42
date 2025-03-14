@@ -65,24 +65,21 @@ public class InsertSampleDataService {
         empleadosService.addEmpleado(empleado4);
         empleadosService.addEmpleado(administrador);
 
-        vehiculosService.addVehiculo(v1);
-        vehiculosService.addVehiculo(v2);
-        vehiculosService.addVehiculo(v3);
-        vehiculosService.addVehiculo(v4);
-
-        trayectosService.addTrayecto(t1);
-
-        Vehiculo vehiculo1 = new Vehiculo(100.0, 6.5, "Renault", "1234BBB", "Captur", "123456789abcdefgh", Vehiculo.TipoCombustible.DIESEL);
+        Vehiculo vehiculo1 = new Vehiculo(100.0, 6.5, "Renault", "1234ZZZ", "Captur", "123456789abcdefgh", Vehiculo.TipoCombustible.DIESEL);
         Vehiculo vehiculo2 = new Vehiculo(124.0, 7.4, "Mercedes", "0000BCD", "GLE", "000000000abcdefgh", Vehiculo.TipoCombustible.HIBRIDO);
-        Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234CCC", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
-        Vehiculo vehiculo4 = new Vehiculo(80.0, 8.5, "Ford", "4444KKK", "Mustang GT", "444400000kkkkkkkk", Vehiculo.TipoCombustible.DIESEL);
-        Vehiculo vehiculo5 = new Vehiculo(58.0, 4.5, "Citroen", "1111ZZZ", "C15", "111111111abcdefgh", Vehiculo.TipoCombustible.GASOLINA);
+        Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234LLL", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
+        Vehiculo vehiculo4 = new Vehiculo(58.0, 4.5, "Citroen", "1111ZZZ", "C15", "111111111abcdefgh", Vehiculo.TipoCombustible.GASOLINA);
+        Vehiculo vehiculo5 = new Vehiculo(80.0, 8.5, "Ford", "4444KKK", "Mustang GT", "444400000kkkkkkkk", Vehiculo.TipoCombustible.DIESEL);
+        Vehiculo vehiculo6 = new Vehiculo(63.0, 3.8, "Dacia", "1111CCZ", "Sandero", "111211111abcdefgh", Vehiculo.TipoCombustible.GLP);
+        Vehiculo vehiculo7 = new Vehiculo(108.0, 6.0, "Jeep", "1331ZDZ", "Wrangler", "111144111abcdefgh", Vehiculo.TipoCombustible.MICROHIBRIDO);
 
         vehiculosService.addVehiculo(vehiculo1);
         vehiculosService.addVehiculo(vehiculo2);
         vehiculosService.addVehiculo(vehiculo3);
         vehiculosService.addVehiculo(vehiculo4);
         vehiculosService.addVehiculo(vehiculo5);
+        vehiculosService.addVehiculo(vehiculo6);
+        vehiculosService.addVehiculo(vehiculo7);
 
         Trayecto trayecto1 = new Trayecto(empleado3, vehiculo4);
         vehiculo4.setEstadoVehiculo(true);
