@@ -4,7 +4,10 @@ import com.uniovi.sdi.sdi2425entrega142.pageobjects.*;
 
 import com.uniovi.sdi.sdi2425entrega142.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -218,7 +221,6 @@ class Sdi2425Entrega142ApplicationTests {
         }
         Assertions.assertTrue(encontrado, "El vehículo no se encontró en la lista de vehículos.");
     }
-
     @Test
     @Order(12)
     public void PR12() {
@@ -333,6 +335,8 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals("http://localhost:8090/empleado/edit/3", currentUrlEdit);
     }
 
+
+
     @Test
     @Order(19)
     public void Prueba19() {
@@ -371,8 +375,8 @@ class Sdi2425Entrega142ApplicationTests {
         checkText = "Orviz";
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
-    }
 
+    }
     @Test
     @Order(20)
     public void PR20() {
@@ -397,12 +401,12 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> pagination = driver.findElements(By.cssSelector("footer"));
         Assertions.assertFalse(pagination.isEmpty());
     }
-
     @Test
     @Order(21)
     public void PR21() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
         List<WebElement> rows = driver.findElements(By.xpath("//table/tbody/tr"));
@@ -422,9 +426,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
-
-
-
     @Test
     @Order(22)
     public void PR22() {
@@ -449,12 +450,12 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
-
     @Test
     @Order(23)
     public void PR23() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
         // Seleccionar los tres primeros vehículos de la lista
@@ -492,7 +493,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
-
     @Test
     @Order(24)
     public void Prueba24() {
@@ -535,6 +535,7 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
     }
 
+
     @Test
     @Order(27)
     public void Prueba27() {
@@ -543,6 +544,125 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertThrows(NoSuchElementException.class, () -> {
             driver.findElement(By.name("vehiculo"));
         });
+    }
+
+    @Test
+    @Order(28)
+    public void Prueba28() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/repostajes/add");
+        PO_AddRepostajeView.fillRegisterForm(driver, "Estación 1", "1.04", "12", "200");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/repostajes/list", currentUrl);
+    }
+
+    @Test
+    @Order(29)
+    public void Prueba29() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/repostajes/add");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/home", currentUrl);
+    }
+
+    @Test
+    @Order(30)
+    public void Prueba30() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/repostajes/add");
+        PO_AddRepostajeView.fillRegisterForm(driver, "", "", "", "");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/repostajes/add", currentUrl);
+    }
+
+    @Test
+    @Order(31)
+    public void Prueba31() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/repostajes/add");
+        PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "-12", "-12", "10");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/repostajes/add", currentUrl);
+        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.negativePrice",
+                PO_Properties.getSPANISH() );
+//Comprobamos el error de Nombre corto de nombre corto .
+        String checkText = PO_HomeView.getP().getString("Error.repostaje.negativePrice",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.negativeQuantity",
+                PO_Properties.getSPANISH() );
+//Comprobamos el error de Nombre corto de nombre corto .
+        checkText = PO_HomeView.getP().getString("Error.repostaje.negativeQuantity",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
+
+    @Test
+    @Order(32)
+    public void Prueba32() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/repostajes/add");
+        PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "100");
+        driver.navigate().to("http://localhost:8090/repostajes/add");
+        PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "50");
+        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.invalidOdometer",
+                PO_Properties.getSPANISH() );
+//Comprobamos el error de Nombre corto de nombre corto .
+        String checkText = PO_HomeView.getP().getString("Error.repostaje.invalidOdometer",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
+
+    @Test
+    @Order(33)
+    public void Prueba33() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/trayecto/end");
+        PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observacion");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/6", currentUrl);
+    }
+
+    @Test
+    @Order(36)
+    public void Prueba34() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/trayecto/end");
+        PO_EndTrayectoView.fillRegisterForm(driver, "", "Ejemplo observacion");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/trayecto/end", currentUrl);
+    }
+
+    @Test
+    @Order(35)
+    public void Prueba35() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/trayecto/end");
+        PO_EndTrayectoView.fillRegisterForm(driver, "-20", "Ejemplo observacion");
+        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.trayecto.end.negativeOdometro",
+                PO_Properties.getSPANISH() );
+//Comprobamos el error de Nombre corto de nombre corto .
+        String checkText = PO_HomeView.getP().getString("Error.trayecto.end.negativeOdometro",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
+
+    @Test
+    @Order(36)
+    public void Prueba36() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/trayecto/end");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/home", currentUrl);
     }
 
     @Test
