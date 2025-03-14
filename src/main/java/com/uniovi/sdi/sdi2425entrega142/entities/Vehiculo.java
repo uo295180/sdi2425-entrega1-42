@@ -44,7 +44,7 @@ public class Vehiculo {
         this.modelo = modelo;
         this.numeroBastidor = numeroBastidor;
         this.tipoCombustible = tipoCombustible;
-        this.estadoVehiculo = true;
+        this.estadoVehiculo = false;
         this.cantidadTanque = cantidadMaximaTanque;
         this.odometro = 0;
     }
@@ -180,5 +180,9 @@ public class Vehiculo {
             return "LIBRE";
         }
         return "OCUPADO";
+    }
+
+    public void addTrayecto(Trayecto trayecto) {
+        trayectos.add(trayecto);
     }
 }

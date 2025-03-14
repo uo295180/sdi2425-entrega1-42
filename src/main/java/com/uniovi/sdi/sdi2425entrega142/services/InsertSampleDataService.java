@@ -55,6 +55,9 @@ public class InsertSampleDataService {
                 "M3", "aaaaaaaaaaaaaaaff", Vehiculo.TipoCombustible.HIBRIDO);
 
         Trayecto t1 = new Trayecto(empleado1, v1);
+        v1.setEstadoVehiculo(true);
+        v1.addTrayecto(t1);
+        empleado1.addTrayecto(t1);
 
         empleadosService.addEmpleado(empleado1);
         empleadosService.addEmpleado(empleado2);
@@ -82,8 +85,32 @@ public class InsertSampleDataService {
         vehiculosService.addVehiculo(vehiculo5);
 
         Trayecto trayecto1 = new Trayecto(empleado3, vehiculo4);
+        vehiculo4.setEstadoVehiculo(true);
+        vehiculo4.addTrayecto(trayecto1);
+        empleado3.addTrayecto(trayecto1);
 
         trayectosService.addTrayecto(trayecto1);
 
+
+        Trayecto prueba1 = new Trayecto(empleado2, vehiculo3);
+        vehiculo3.setEstadoVehiculo(true);
+        vehiculo3.addTrayecto(prueba1);
+        empleado2.addTrayecto(prueba1);
+
+        prueba1.endTrayecto(100, "Observaciones");
+        trayectosService.addTrayecto(prueba1);
+        vehiculosService.addVehiculo(vehiculo3);
+        Trayecto prueba2 = new Trayecto(empleado2, vehiculo3);
+        vehiculo3.setEstadoVehiculo(true);
+        vehiculo3.addTrayecto(prueba2);
+        empleado2.addTrayecto(prueba2);
+        trayectosService.addTrayecto(prueba2);
+
+
+        Empleado empleadoSinTrayecto = new Empleado("12345678E", "Sin Trayectos", "No trayectos");
+        empleadoSinTrayecto.setPassword("123456");
+        empleadoSinTrayecto.setRole(rolesService.getRoles()[0]);
+
+        empleadosService.addEmpleado(empleadoSinTrayecto);
     }
 }
