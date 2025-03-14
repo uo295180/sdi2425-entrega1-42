@@ -1,0 +1,111 @@
+package com.uniovi.sdi.sdi2425entrega142.entities;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+@Entity
+@Table(name="Repostaje")
+public class Repostaje {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String nombreEstacion;
+    private double precio;
+    private double cantidadRepostada;
+    private boolean repostajeCompleto;
+    private String observaciones;
+    private Timestamp fechaHoraRepostaje;
+    private double odometro;
+    private double precioTotal;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "vehiculo_matricula")
+    private Vehiculo vehiculo;
+
+    public Repostaje() {}
+
+    public Repostaje(double cantidadRepostada, String nombreEstacion, String observaciones, double odometro, double precio) {
+        this.cantidadRepostada = cantidadRepostada;
+        this.nombreEstacion = nombreEstacion;
+        this.observaciones = observaciones;
+        this.odometro = odometro;
+        this.precio = precio;
+    }
+
+    public Timestamp getFechaHoraRepostaje() {
+        return fechaHoraRepostaje;
+    }
+
+    public void setFechaHoraRepostaje(Timestamp fechaHoraRepostaje) {
+        this.fechaHoraRepostaje = fechaHoraRepostaje;
+    }
+
+    public double getOdometro() {
+        return odometro;
+    }
+
+    public void setOdometro(double odometro) {
+        this.odometro = odometro;
+    }
+
+    public double getCantidadRepostada() {
+        return cantidadRepostada;
+    }
+
+    public void setCantidadRepostada(double cantidadRepostada) {
+        this.cantidadRepostada = cantidadRepostada;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public String getNombreEstacion() {
+        return nombreEstacion;
+    }
+
+    public void setNombreEstacion(String nombreEstacion) {
+        this.nombreEstacion = nombreEstacion;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public boolean isRepostajeCompleto() {
+        return repostajeCompleto;
+    }
+
+    public void setRepostajeCompleto(boolean repostajeCompleto) {
+        this.repostajeCompleto = repostajeCompleto;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public void calculatePrecioTotal() {
+        this.precioTotal = precio * cantidadRepostada;
+    }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title>Detalles usuario</title></head>
+<body>
+  <!-- Barra de Navegación superior -->
+  <nav th:replace="fragments/nav"></nav>
+
+  <div class="container" id="main-container">
+    <h2>Detalles del empleado</h2>
+    <div class="card">
+      <div class="card-header">Nombre</div>
+      <div class="card-body">
+        <p class="card-text" th:text="${empleado.nombre}">Nombre</p>
+      </div>
+    </div>
+    <br>
+    <div class="card">
+      <div class="card-header">Apellidos</div>
+      <div class="card-body">
+        <p class="card-text" th:text="${empleado.apellidos}">Apellidos</p>
+      </div>
+    </div>
+    <br>
+    <div class="card">
+      <div class="card-header">Dni</div>
+      <div class="card-body">
+        <p class="card-text" th:text="${empleado.dni}">Dni</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Rol</div>
+      <div class="card-body">
+        <p class="card-text" th:text="${empleado.role}">Rol</p>
+      </div>
+    </div>
+  </div>
+
+  <footer th:replace="fragments/footer"></footer>
+</body>
+</html>
