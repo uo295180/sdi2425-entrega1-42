@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface VehiculosRepository extends CrudRepository<Vehiculo, Long> {
 
 
-    @Query("SELECT v FROM Vehiculo v WHERE v.estadoVehiculo = true ORDER BY v.id ASC")
+    @Query("SELECT v FROM Vehiculo v WHERE v.estadoVehiculo = false ORDER BY v.id ASC")
     Page<Vehiculo> findByAvailability(Pageable pageable);
     Vehiculo findByMatricula(String matricula);
     Vehiculo findByNumeroBastidor(String numeroBastidor);

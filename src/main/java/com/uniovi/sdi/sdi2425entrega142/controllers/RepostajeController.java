@@ -86,6 +86,7 @@ public class RepostajeController {
         repostaje.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis())); // or other defaults you may want
         repostaje.calculatePrecioTotal();
 
+        vehiculosService.addVehiculo(vehiculo);
         repostajesService.addRepostaje(repostaje);
 
         model.addAttribute("repostaje", repostaje);
