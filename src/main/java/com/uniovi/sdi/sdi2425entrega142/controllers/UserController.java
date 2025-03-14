@@ -1,9 +1,11 @@
 package com.uniovi.sdi.sdi2425entrega142.controllers;
 
+import com.uniovi.sdi.sdi2425entrega142.dtos.PasswordDTO;
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.services.EmpleadosService;
 import com.uniovi.sdi.sdi2425entrega142.services.RolesService;
 import com.uniovi.sdi.sdi2425entrega142.validators.AddEmpleadoFormValidator;
+import com.uniovi.sdi.sdi2425entrega142.validators.ChangePasswordFormValidator;
 import com.uniovi.sdi.sdi2425entrega142.validators.EditEmpleadoFormValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.*;
@@ -29,14 +33,16 @@ public class UserController {
     private final RolesService rolesService;
     private final AddEmpleadoFormValidator addEmpleadoFormValidator;
     private final EditEmpleadoFormValidator editEmpleadoFormValidator;
+    private final ChangePasswordFormValidator changePasswordFormValidator;
 
     public UserController(EmpleadosService empleadosService, RolesService rolesService,
                           AddEmpleadoFormValidator addEmpleadoFormValidator,
-                          EditEmpleadoFormValidator editEmpleadoFormValidator) {
+                          EditEmpleadoFormValidator editEmpleadoFormValidator, ChangePasswordFormValidator changePasswordFormValidator) {
         this.empleadosService = empleadosService;
         this.rolesService = rolesService;
         this.addEmpleadoFormValidator = addEmpleadoFormValidator;
         this.editEmpleadoFormValidator = editEmpleadoFormValidator;
+        this.changePasswordFormValidator = changePasswordFormValidator;
     }
 
 
@@ -153,5 +159,40 @@ public class UserController {
         model.addAttribute("empleadosList", empleados );
         return "empleado/list :: empleadosTable";
     }
+
+    @RequestMapping("/empleado/password")
+    public String changePassword(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String dni;
+
+        if (principal instanceof UserDetails) {
+            dni = ((UserDetails) principal).getUsername();
+        } else {
+            dni = principal.toString();
+        }
+
+        Empleado empleado = empleadosService.getByDni(dni);
+
+        PasswordDTO dto = new PasswordDTO();
+        dto.setId(empleado.getId());
+
+        model.addAttribute("passwordDto", dto);
+
+        return "/empleado/password";
+    }
+
+    @RequestMapping(value = "/empleado/password", method = RequestMethod.POST)
+    public String changePassword(@ModelAttribute("passwordDto") @Validated PasswordDTO passwordDto, BindingResult result, Model model) {
+        changePasswordFormValidator.validate(passwordDto, result);
+
+        if (result.hasErrors()) {
+            return "/empleado/password";
+        }
+
+        empleadosService.changePassword(passwordDto);
+
+        return "redirect:/home";
+    }
+
 
 }

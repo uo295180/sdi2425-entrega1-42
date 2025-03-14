@@ -1,5 +1,6 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
+import com.uniovi.sdi.sdi2425entrega142.dtos.PasswordDTO;
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
@@ -48,9 +49,14 @@ public class EmpleadosService {
         if (empleado.getId() == null) {
             empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
         }
-
         empleadosRepository.save(empleado);
     }
+
+    public boolean matchesPassword(String rawPassword, Long id) {
+        Empleado empleado = getEmpleado(id);
+        return bCryptPasswordEncoder.matches(rawPassword, empleado.getPassword());
+    }
+
     public void deleteEmpleado(Long id) {
         empleadosRepository.deleteById(id);
     }
@@ -63,4 +69,15 @@ public class EmpleadosService {
         return passwordGeneratorService.generateStrongPassword(PASSWORD_LENGTH);
     }
 
+    public Empleado getByDni(String dni) {
+        return empleadosRepository.findByDni(dni);
+    }
+
+    public void changePassword(PasswordDTO dto) {
+        Empleado empleado = getEmpleado(dto.getId());
+
+        empleado.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
+
+        empleadosRepository.save(empleado);
+    }
 }
