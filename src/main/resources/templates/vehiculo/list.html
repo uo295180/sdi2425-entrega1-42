@@ -1,23 +1,23 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"></head>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Vehículos</h2>
-    <p>Los vehículos que actualmente figuran en el sistema son las siguientes:</p>
+    <h2 th:text="#{nav.vehiculos}">Vehículos</h2>
+    <p th:text="#{vehiculos.subtitle}">Los vehículos que actualmente figuran en el sistema son las siguientes:</p>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Matricula</th>
-                <th scope="col">Nº Bastidor</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">Combustible</th>
-                <th scope="col">Kilometraje</th>
-                <th scope="col">Estado Vehiculo</th>
-                <th scope="col">Eliminar</th>
+                <th scope="col" th:text="#{vehiculos.matricula}">Matricula</th>
+                <th scope="col" th:text="#{vehiculos.bastidor}">Nº Bastidor</th>
+                <th scope="col" th:text="#{vehiculos.marca}">Marca</th>
+                <th scope="col" th:text="#{vehiculos.modelo}">Modelo</th>
+                <th scope="col" th:text="#{vehiculos.combustible}">Combustible</th>
+                <th scope="col" th:text="#{vehiculos.kilometraje}">Kilometraje</th>
+                <th scope="col" th:text="#{vehiculos.estado}">Estado Vehiculo</th>
+                <th scope="col" th:text="#{eliminar}">Eliminar</th>
             </tr>
             </thead>
             <tbody>
@@ -34,8 +34,8 @@
             </tbody>
         </table>
     </div>
-    <div th:if="${#lists.isEmpty(vehiculosList)}">No hay vehículos</div>
-    <button type="button" id="deleteButton" class="btn btn-primary">Eliminar</button>
+    <div th:if="${#lists.isEmpty(vehiculosList)}" th:text="#{vehiculos.nohay}">No hay vehículos</div>
+    <button type="button" id="deleteButton" class="btn btn-primary" th:text="#{eliminar}">Eliminar</button>
     <form id="deleteForm" action="/vehiculo/delete" method="post" style="display: none;">
         <input type="hidden" name="vehiculosSeleccionados" id="vehiculosSeleccionados" />
     </form>
@@ -46,7 +46,6 @@
                 .map(function() { return this.value; }).get(); // Obtener IDs seleccionados
             // Establecer los valores en el campo oculto
             $("#vehiculosSeleccionados").val(selectedVehicles.join(','));
-
             // Enviar el formulario con los datos
             $("#deleteForm").submit();
         });
