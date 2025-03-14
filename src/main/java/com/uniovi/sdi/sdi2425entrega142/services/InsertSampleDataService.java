@@ -88,7 +88,6 @@ public class InsertSampleDataService {
 
         trayectosService.addTrayecto(trayecto1);
 
-
         Trayecto prueba1 = new Trayecto(empleado2, vehiculo3);
         vehiculo3.setEstadoVehiculo(true);
         vehiculo3.addTrayecto(prueba1);
