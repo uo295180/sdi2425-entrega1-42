@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments/head"> Lista de empleados </head>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
   <!-- Barra de Navegación superior -->
   <nav th:replace="fragments/nav"></nav>
-
   <div class="container">
-    <h2>Empleados del sistema</h2>
-
-    <p>Los empleados que actualmente figuran en el sistema son las siguientes:</p>
-    <button type="button" id="updateButton" class="btn btn-primary">Actualizar</button>
+    <h2 th:text="#{empleados.title}">Empleados del sistema</h2>
+    <p th:text="#{empleados.subtitle}">Los empleados que actualmente figuran en el sistema son las siguientes:</p>
+    <button type="button" id="updateButton" class="btn btn-primary" th:text="#{actualizar}">Actualizar</button>
     <script th:inline="javascript">
       /*<![CDATA[*/
       $( "#updateButton" ).click(function() {
@@ -19,14 +17,13 @@
       });
       /*]]>*/
     </script>
-
     <div class="table-responsive">
       <table class="table table-hover" th:fragment="empleadosTable" id="empleadosTable">
         <thead>
         <tr>
           <th scope="col">DNI</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellidos</th>
+          <th scope="col" th:text="#{nombre}">Nombre:</th>
+          <th scope="col" th:text="#{apellidos}">Apellidos:</th>
           <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -39,12 +36,24 @@
           <td th:text="${empleado.dni}">DNI</td>
           <td th:text="${empleado.nombre}">Nombre del empleado</td>
           <td th:text="${empleado.apellidos}">Apellidos del empleado</td>
-          <td><a th:href="${'/empleado/details/' + empleado.id}">detalles</a></td>
-          <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/empleado/edit/' + empleado.id}">modificar</a></td>
-          <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/empleado/delete/' + empleado.id}">eliminar</a></td>
+          <td>
+            <a th:href="${'/empleado/details/' + empleado.id}" th:text="#{detalles}">Detalles</a>
+          </td>
+          <td>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/empleado/edit/' + empleado.id}"
+               th:text="#{modificar}">
+              Modificar
+            </a>
+          </td>
+          <td>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/empleado/delete/' + empleado.id}"
+               th:text="#{eliminar}">
+              Eliminar
+            </a>
+          </td>
         </tr>
         <tr th:if="${#lists.isEmpty(empleadosList)}">
-          <td colspan="6" class="text-center">No hay empleados</td>
+          <td colspan="6" class="text-center" th:text="#{empleados.nohay}">No hay empleados</td>
         </tr>
         </tbody>
       </table>
@@ -52,7 +61,5 @@
     <footer th:replace="fragments/pagination"></footer>
   </div>
   <footer th:replace="fragments/footer"></footer>
-
-
 </body>
 </html>

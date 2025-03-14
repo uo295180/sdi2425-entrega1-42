@@ -335,8 +335,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals("http://localhost:8090/empleado/edit/3", currentUrlEdit);
     }
 
-
-
     @Test
     @Order(19)
     public void Prueba19() {
@@ -377,6 +375,7 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
 
     }
+
     @Test
     @Order(20)
     public void PR20() {
@@ -401,6 +400,7 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> pagination = driver.findElements(By.cssSelector("footer"));
         Assertions.assertFalse(pagination.isEmpty());
     }
+
     @Test
     @Order(21)
     public void PR21() {
@@ -426,6 +426,7 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
     @Test
     @Order(22)
     public void PR22() {
@@ -450,6 +451,7 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
     @Test
     @Order(23)
     public void PR23() {
@@ -493,6 +495,7 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
     @Test
     @Order(24)
     public void Prueba24() {
@@ -534,7 +537,6 @@ class Sdi2425Entrega142ApplicationTests {
         // No nos dejará (seguiremos en el menú de añadir)
         Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
     }
-
 
     @Test
     @Order(27)

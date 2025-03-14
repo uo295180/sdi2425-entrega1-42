@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="fragments/head"/>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
-<nav th:replace="fragments/nav"/>
+<nav th:replace="fragments/nav"></nav>
 <div class="container" style="text-align: center">
     <h2 th:text="#{welcome.message}"></h2>
-    <h3>Esta es una zona privada la web</h3>
-    <p>
-        Usuario Autenticado como :
-        <b th:inline="text" sec:authentication="principal.username"> </b>
-    </p>
+    <h3 th:text="#{private.message}">Esta es una zona privada la web</h3>
+    <p th:text="#{user.authenticated}">Usuario Autenticado como: <b th:inline="text" sec:authentication="principal.username"></b></p>
 </div>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>
