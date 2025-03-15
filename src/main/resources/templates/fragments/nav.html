@@ -12,7 +12,9 @@
             <li class="nav-item ">
                 <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
+
+
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Mi usuario
                 </a>
@@ -51,7 +53,16 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link dropdown-toggle" th:text="#{nav.log}" href="#" id="logsDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Seguridad del sistema
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.log.access}" class="dropdown-item" href="/admin/logs/list">Ver logs</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" th:text="#{nav.repostajes}" href="#" id="repostajeDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Repostajes
                 </a>

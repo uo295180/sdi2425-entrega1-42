@@ -1,5 +1,9 @@
 package com.uniovi.sdi.sdi2425entrega142;
 
+import com.uniovi.sdi.sdi2425entrega142.errors.CustomAccessDeniedHandler;
+import com.uniovi.sdi.sdi2425entrega142.services.LoggingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +16,12 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final LoggingService loggingService;  // ✅ Inyección de dependencia
+
+    public WebSecurityConfig(LoggingService loggingService) {
+        this.loggingService = loggingService;
+    }
 
     @Bean
     @Override
@@ -34,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/script/**", "/", "/login/**").permitAll()
                 .antMatchers("/empleado/delete/**", "/empleado/edit/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/vehiculo/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/vehiculo/list").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/vehiculo/add").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
@@ -52,6 +64,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .and()
                 .logout()
-                .permitAll();
+                .logoutUrl("/logout")  // Ruta explícita para logout
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    if (authentication != null) {
+                        String username = authentication.getName();
+                        Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+                        logger.info("✅ Logout exitoso para usuario: {}", username);
+                        loggingService.logLogout(username); // ✅ Se usa la instancia inyectada
+                    }
+                    response.sendRedirect("/login?logout");
+                })
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler());
     }
 }
