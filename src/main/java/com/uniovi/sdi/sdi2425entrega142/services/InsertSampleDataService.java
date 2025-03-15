@@ -151,5 +151,153 @@ public class InsertSampleDataService {
         empleado6.addTrayecto(trayecto3);
 
         trayectosService.addTrayecto(trayecto3);
+
+        // Creación de un coche con muchos trayectos para la prueba de el requisito 13
+
+        Vehiculo vehiculo10 = new Vehiculo(1000.0, 7.4, "Citroen", "4321CCC", "GLE", "000000000abcdefgd", Vehiculo.TipoCombustible.HIBRIDO);
+        vehiculosService.addVehiculo(vehiculo10);
+        Empleado empleado7 = new Empleado("12345678H", "Empleado", "Trayectos");
+        empleado7.setPassword("123456");
+        empleado7.setRole(rolesService.getRoles()[0]);
+
+        empleadosService.addEmpleado(empleado7);
+
+        Trayecto t13_1 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_1);
+        empleado7.addTrayecto(t13_1);
+
+        t13_1.endTrayecto(10, "Observaciones");
+
+        trayectosService.addTrayecto(t13_1);
+
+        Trayecto t13_2 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_2);
+        empleado7.addTrayecto(t13_2);
+
+        t13_2.endTrayecto(20, "Observaciones");
+
+        trayectosService.addTrayecto(t13_2);
+
+        Trayecto t13_3 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_3);
+        empleado7.addTrayecto(t13_3);
+
+        t13_3.endTrayecto(30, "Observaciones");
+
+        trayectosService.addTrayecto(t13_3);
+
+        Trayecto t13_4 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_4);
+        empleado7.addTrayecto(t13_4);
+
+        t13_4.endTrayecto(40, "Observaciones");
+
+        trayectosService.addTrayecto(t13_4);
+
+        Trayecto t13_5 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_5);
+        empleado7.addTrayecto(t13_5);
+
+        t13_5.endTrayecto(50, "Observaciones");
+
+        trayectosService.addTrayecto(t13_5);
+
+        Trayecto t13_6 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_6);
+        empleado7.addTrayecto(t13_6);
+
+        t13_6.endTrayecto(60, "Observaciones");
+
+        trayectosService.addTrayecto(t13_6);
+
+        Trayecto t13_7 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_7);
+        empleado7.addTrayecto(t13_7);
+
+        t13_7.endTrayecto(70, "Observaciones");
+
+        trayectosService.addTrayecto(t13_7);
+
+        Trayecto t13_8 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_8);
+        empleado7.addTrayecto(t13_8);
+
+        t13_8.endTrayecto(80, "Observaciones");
+
+        trayectosService.addTrayecto(t13_8);
+
+        Trayecto t13_9 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_9);
+        empleado7.addTrayecto(t13_9);
+
+        t13_9.endTrayecto(90, "Observaciones");
+
+        trayectosService.addTrayecto(t13_9);
+
+        Trayecto t13_10 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_10);
+        empleado7.addTrayecto(t13_10);
+
+        t13_10.endTrayecto(100, "Observaciones");
+
+        trayectosService.addTrayecto(t13_10);
+
+        Trayecto t13_11 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_11);
+        empleado7.addTrayecto(t13_11);
+
+        t13_11.endTrayecto(110, "Observaciones");
+
+        trayectosService.addTrayecto(t13_11);
+
+        Trayecto t13_12 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_12);
+        empleado7.addTrayecto(t13_12);
+
+        t13_12.endTrayecto(120, "Observaciones");
+
+        trayectosService.addTrayecto(t13_12);
+
+        Trayecto t13_13 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_13);
+        empleado7.addTrayecto(t13_13);
+
+        t13_13.endTrayecto(130, "Observaciones");
+
+        trayectosService.addTrayecto(t13_13);
+
+        Trayecto t13_14 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_14);
+        empleado7.addTrayecto(t13_14);
+
+        t13_14.endTrayecto(140, "Observaciones");
+
+        trayectosService.addTrayecto(t13_14);
+
+        Trayecto t13_15 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_15);
+        empleado7.addTrayecto(t13_15);
+
+        t13_15.endTrayecto(150, "Observaciones");
+
+        trayectosService.addTrayecto(t13_15);
+
+        empleadosService.addEmpleado(empleado7);
+        vehiculosService.addVehiculo(vehiculo10);
     }
 }

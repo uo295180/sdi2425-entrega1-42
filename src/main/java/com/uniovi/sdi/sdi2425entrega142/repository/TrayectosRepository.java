@@ -24,4 +24,7 @@ public interface TrayectosRepository extends CrudRepository<Trayecto, Long> {
     @Modifying
     @Query("DELETE FROM Trayecto t WHERE t.vehiculo.id = ?1")
     void deleteByVehiculoId(Long id);
+
+    @Query("SELECT t FROM Trayecto t WHERE t.vehiculo.id = ?1")
+    Page<Trayecto> findByVehiculoId(Long id, Pageable pageable);
 }
