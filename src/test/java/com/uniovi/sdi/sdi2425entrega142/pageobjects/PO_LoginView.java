@@ -22,11 +22,11 @@ public class PO_LoginView extends PO_NavView{
     static public boolean login(WebDriver driver, String dnip, String password, String textToVerify) {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         fillLoginForm(driver, dnip, password);
-        return PO_PrivateView.findText(driver, textToVerify);
+        return PO_AddVehiculo.findText(driver, textToVerify);
     }
 
     static public void logout(WebDriver driver) {
         String loginText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
-        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+        PO_AddVehiculo.clickOption(driver, "logout", "text", loginText);
     }
 }

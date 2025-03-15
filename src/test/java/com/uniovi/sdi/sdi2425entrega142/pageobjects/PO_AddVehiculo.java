@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class PO_PrivateView extends PO_NavView{
+public class PO_AddVehiculo extends PO_NavView{
 
     static public void fillFormAddVehiculo(WebDriver driver, String matriculap, String numeroBastidorp,
                                            String marcap, String modelop, String tipoCombustiblep) {
