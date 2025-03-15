@@ -2,20 +2,14 @@ package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.dtos.PasswordDTO;
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
-import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
-import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,21 +20,18 @@ public class EmpleadosService {
     private final EmpleadosRepository empleadosRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final PasswordGeneratorService passwordGeneratorService;
-    private final RolesService rolesService;
 
-    public EmpleadosService(EmpleadosRepository empleadosRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGeneratorService passwordGeneratorService, RolesService rolesService) {
+    public EmpleadosService(EmpleadosRepository empleadosRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGeneratorService passwordGeneratorService) {
         this.empleadosRepository = empleadosRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.passwordGeneratorService = passwordGeneratorService;
-        this.rolesService = rolesService;
     }
 
     @PostConstruct
     public void init() {
     }
     public Page<Empleado> getEmpleados(Pageable pageable) {
-        Page<Empleado> empleados = empleadosRepository.findAll(pageable);
-        return empleados;
+        return empleadosRepository.findAll(pageable);
     }
 
     public Page<Empleado> getEmpleadosPaginados(int page) {

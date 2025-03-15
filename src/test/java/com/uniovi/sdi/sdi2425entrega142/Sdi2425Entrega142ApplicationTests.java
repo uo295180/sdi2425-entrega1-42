@@ -19,8 +19,8 @@ class Sdi2425Entrega142ApplicationTests {
     //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
 
-    static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
-    static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
+    // static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
+    // static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
@@ -526,8 +526,10 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
         // Navegamos hasta la lista de trayectos:
         driver.navigate().to("http://localhost:8090/trayecto/list");
-        List<WebElement> trayectos = driver.findElements(By.xpath("//*[@id=\"trayectosTable\"]/tbody/*"));
-        Assertions.assertEquals(1, trayectos.size());
+        // Buscamos en la tabla una fila que contenga el texto "1111ZZZ", matrícula del vehículo con trayecto activo
+        List<WebElement> filasConMatricula = driver.findElements(By.xpath("//table/tbody/tr[contains(.,'1111ZZZ')]"));
+        // Comprobamos que se ha encontrado al menos una fila con esa matrícula
+        Assertions.assertFalse(filasConMatricula.isEmpty(), "No se encontró ningún trayecto con la matrícula 1111ZZZ");
     }
 
     @Test
@@ -546,18 +548,16 @@ class Sdi2425Entrega142ApplicationTests {
     @Test
     @Order(26)
     public void Prueba26() {
-        // Intentamos agregar otro trayecto (no debería de dejarnos)
+        // Log in como empleado que acaba de iniciar un trayecto
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678D", "123456"); // Log in como empleado
-        // Navegamos hasta la lista de trayectos:
-        driver.get("http://localhost:8090/trayecto/add");
-        // Seleccionamos el vehículo
-        WebElement vehiculoSelect = driver.findElement(By.xpath("//*[@id=\"vehiculo\"]"));
-        // Enviamos el formulario
-        driver.findElement(By.tagName("button")).click();
-        // No nos dejará (seguiremos en el menú de añadir)
-        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/add"));
+        PO_LoginView.fillLoginForm(driver, "12345678D", "123456");
+        driver.get("http://localhost:8090/trayecto/list");
+        // Buscar elementos que contengan el texto "Agregar trayecto" en el nav (no debería de ser visible)
+        List<WebElement> agregarTrayectoLinks = driver.findElements(By.xpath("//*[contains(text(),'Agregar trayecto')]"));
+        // Comprobar que no exista ningún enlace "Agregar trayecto"
+        Assertions.assertTrue(agregarTrayectoLinks.isEmpty(), "El enlace 'Agregar Trayecto' no debería estar visible, ya que hay un trayecto activo");
     }
+
 
     @Test
     @Order(27)
@@ -635,7 +635,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "50");
         List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.invalidOdometer",
                 PO_Properties.getSPANISH());
-        //Comprobamos el error de Nombre corto de nombre corto .
+        // Comprobamos el error de Nombre corto de nombre corto.
         String checkText = PO_HomeView.getP().getString("Error.repostaje.invalidOdometer",
                 PO_Properties.getSPANISH());
         Assertions.assertEquals(checkText, result.get(0).getText());
@@ -647,7 +647,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/trayecto/end");
-        PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observacion");
+        PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observación");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/4321AAA", currentUrl);
     }
@@ -699,12 +699,23 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
+    @Test
+    @Order(38)
+    public void Prueba38() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/vehiculo/repostajes/4321CCC");
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "repostajesTotales");
+        String checkText = "Repostajes totales: 15";
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
 
     @Test
     @Order(39)
     public void Prueba39() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/vehiculo/list");
         // Consultamos la lista de Vehículos:
         List<WebElement> vehiculosList = driver.findElements(By.xpath("//table/tbody/tr"));

@@ -3,7 +3,6 @@ package com.uniovi.sdi.sdi2425entrega142.services;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.TrayectosRepository;
 import com.uniovi.sdi.sdi2425entrega142.repository.VehiculosRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

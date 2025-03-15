@@ -1,7 +1,9 @@
 package com.uniovi.sdi.sdi2425entrega142.controllers;
 
+import com.uniovi.sdi.sdi2425entrega142.entities.Repostaje;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
+import com.uniovi.sdi.sdi2425entrega142.services.RepostajesService;
 import com.uniovi.sdi.sdi2425entrega142.services.TrayectosService;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
 import com.uniovi.sdi.sdi2425entrega142.validators.VehiculosValidator;
@@ -31,8 +33,11 @@ public class VehiculosController {
     @Autowired
     private TrayectosService trayectosService;
 
-    public VehiculosController(VehiculosService vehiculosService) {
+    private RepostajesService repostajesService;
+
+    public VehiculosController(VehiculosService vehiculosService, RepostajesService repostajesService) {
         this.vehiculosService = vehiculosService;
+        this.repostajesService = repostajesService;
     }
 
     @RequestMapping("/vehiculo/list")
@@ -95,7 +100,7 @@ public class VehiculosController {
     }
 
     @RequestMapping("/vehiculo/trayectos/{matricula}")
-    public String updateList(@PathVariable(required = false) String matricula,
+    public String trayectosListVehiculo(@PathVariable(required = false) String matricula,
                              @RequestParam(defaultValue = "0") int page,
                              Model model, Pageable pageable) {
 
@@ -107,5 +112,34 @@ public class VehiculosController {
         model.addAttribute("page", trayectosPage);
         model.addAttribute("totalTrayectos", trayectosPage.getTotalElements());
         return "vehiculo/trayectos";
+    }
+
+    @RequestMapping("/vehiculo/listAllRepostajes")
+    public String getRepostajes(@RequestParam(defaultValue = "0", required = false) int page,
+                               Model model, Pageable pageable) {
+
+        Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
+
+
+        // Pasar los datos al modelo
+        model.addAttribute("vehiculosList", vehiculos.getContent());
+        model.addAttribute("page", vehiculos);
+
+        return "vehiculo/listAllRepostajes"; // Aquí es donde se carga la vista completa
+    }
+
+    @RequestMapping("/vehiculo/repostajes/{matricula}")
+    public String repostajesListVehiculo(@PathVariable(required = false) String matricula,
+                             @RequestParam(defaultValue = "0") int page,
+                             Model model, Pageable pageable) {
+
+        Vehiculo vehiculo = vehiculosService.getVehiculoByMatricula(matricula); // Busca el vehículo por matrícula
+        Page<Repostaje> repostajesPage = repostajesService.getRepostajesByVehiculo(pageable, vehiculo); // Paginación de trayectos
+
+        model.addAttribute("vehiculo", vehiculo);
+        model.addAttribute("repostajesList", repostajesPage.getContent());
+        model.addAttribute("page", repostajesPage);
+        model.addAttribute("totalRepostajes", repostajesPage.getTotalElements());
+        return "vehiculo/repostajes";
     }
 }
