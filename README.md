@@ -24,13 +24,13 @@ Este archivo enumera los requisitos funcionales del proyecto, clasificados en ob
 13. **Consultar el historial de trayectos de un vehículo** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
 14. **Consultar el historial de repostajes de un vehículo** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
 15. **Consultar el listado de vehículos disponibles en la empresa** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
-16. **Modificar su contraseña** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+16. **Modificar su contraseña** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Internacionalización (Hasta 0.5 puntos)
 17. **Internacionalización de vistas** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
 
 ### Seguridad. (Hasta 1.0 puntos)
-18. **Vulnerabilidad de recursos y acciones** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+18. **Vulnerabilidad de recursos y acciones** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Informe obligatorio. (Hasta 1.0 puntos)
 19. **Escribir un informe obligatorio del proyecto** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
