@@ -1,0 +1,24 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2 th:text="#{vehiculo.trayectos}">Los trayectos realizados por este vehículo son los siguientes:</h2>
+
+    <!-- Información del Vehículo -->
+    <div>
+        <h3 th:text="'Matrícula: ' + ${vehiculo.matricula}"></h3>
+        <p><strong th:text="'Marca: ' + ${vehiculo.marca}"></strong></p>
+        <p><strong th:text="'Modelo: ' + ${vehiculo.modelo}"></strong></p>
+        <p><strong th:text="'Odómetro actual: ' + ${vehiculo.odometro}"></strong></p>
+        <p><strong th:text="'Trayectos totales: ' + ${totalTrayectos}" id="trayectosTotales"></strong></p>
+    </div>
+
+    <!-- Fragmento de la tabla de trayectos -->
+    <div class="table-responsive" th:replace="fragments/trayectosTable"></div>
+    <footer th:replace="fragments/pagination"></footer>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

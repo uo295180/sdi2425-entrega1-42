@@ -46,4 +46,8 @@ public class TrayectosService {
     public Optional<Trayecto> findTrayectoActivoByUser(Empleado empleado) {
         return trayectosRepository.findTrayectoActivoByUser(empleado);
     }
+
+    public Page<Trayecto> getTrayectosByVehiculo(Long vehiculoId, Pageable pageable) {
+        return trayectosRepository.findByVehiculoId(vehiculoId, pageable);
+    }
 }

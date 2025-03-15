@@ -2,11 +2,14 @@ package com.uniovi.sdi.sdi2425entrega142.controllers;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
+import com.uniovi.sdi.sdi2425entrega142.services.TrayectosService;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
 import com.uniovi.sdi.sdi2425entrega142.validators.VehiculosValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,8 @@ public class VehiculosController {
     VehiculosValidator vehiculosValidator;
 
     private final VehiculosService vehiculosService;
+    @Autowired
+    private TrayectosService trayectosService;
 
     public VehiculosController(VehiculosService vehiculosService) {
         this.vehiculosService = vehiculosService;
@@ -72,5 +77,35 @@ public class VehiculosController {
         model.addAttribute("vehiculosList", vehiculos.getContent());
         model.addAttribute("page", vehiculos);
         return "vehiculo/list/vehiculosTable::vehiculosTable";
+    }
+
+
+    @RequestMapping("/vehiculo/listAll")
+    public String getTrayectos(@RequestParam(defaultValue = "0", required = false) int page,
+                               Model model, Pageable pageable) {
+
+        Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
+
+
+        // Pasar los datos al modelo
+        model.addAttribute("vehiculosList", vehiculos.getContent());
+        model.addAttribute("page", vehiculos);
+
+        return "vehiculo/listAll"; // Aquí es donde se carga la vista completa
+    }
+
+    @RequestMapping("/vehiculo/trayectos/{matricula}")
+    public String updateList(@PathVariable(required = false) String matricula,
+                             @RequestParam(defaultValue = "0") int page,
+                             Model model, Pageable pageable) {
+
+        Vehiculo vehiculo = vehiculosService.getVehiculoByMatricula(matricula); // Busca el vehículo por matrícula
+        Page<Trayecto> trayectosPage = trayectosService.getTrayectosByVehiculo(vehiculo.getId(), pageable); // Paginación de trayectos
+
+        model.addAttribute("vehiculo", vehiculo);
+        model.addAttribute("trayectosList", trayectosPage.getContent());
+        model.addAttribute("page", trayectosPage);
+        model.addAttribute("totalTrayectos", trayectosPage.getTotalElements());
+        return "vehiculo/trayectos";
     }
 }

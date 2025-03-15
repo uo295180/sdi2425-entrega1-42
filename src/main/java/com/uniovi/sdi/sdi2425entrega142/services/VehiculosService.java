@@ -50,4 +50,8 @@ public class VehiculosService {
     public Vehiculo getVehiculoByNumeroBastidor(String numeroBastidor) {
         return vehiculosRepository.findByNumeroBastidor(numeroBastidor);
     }
+
+    public List<Vehiculo> findAll() {
+        return vehiculosRepository.findAllVehiculos();
+    }
 }
