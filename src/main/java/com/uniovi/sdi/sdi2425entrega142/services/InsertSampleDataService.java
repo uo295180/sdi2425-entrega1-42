@@ -412,5 +412,15 @@ public class InsertSampleDataService {
 
         empleadosService.addEmpleado(empleado7);
         vehiculosService.addVehiculo(vehiculo10);
+
+        Empleado empleado10 = new Empleado("99999998A", "NOMBRE", "CONADMIN");
+        empleado10.setPassword("123456");
+        empleado10.setRole(rolesService.getRoles()[1]);
+        empleadosService.addEmpleado(empleado10);
+
+        Empleado empleado11 = new Empleado("99999998B", "NOMBRE", "SINADMIN");
+        empleado11.setPassword("123456");
+        empleado11.setRole(rolesService.getRoles()[0]);
+        empleadosService.addEmpleado(empleado11);
     }
 }

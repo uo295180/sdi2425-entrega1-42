@@ -15,13 +15,12 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
 
-    // Configuración para VICENTE
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
 
-    // static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
-    // static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
+    static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
+    static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
@@ -750,7 +749,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(41)
     public void PR41() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "wefWDF#$%@vc333333"); // Contraseña cambiada en test anterior
+        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
 
         driver.navigate().to("http://localhost:8090/empleado/password");
 
@@ -768,11 +767,11 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(42)
     public void PR42() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "wefWDF#$%@vc333333");
+        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
 
         driver.navigate().to("http://localhost:8090/empleado/password");
 
-        PO_PasswordChangeView.fillPasswordForm(driver, "wefWDF#$%@vc333333", "debil", "debil");
+        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "debil", "debil");
 
         String currentUrlEdit = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
@@ -786,11 +785,11 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(43)
     public void PR43() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "wefWDF#$%@vc333333");
+        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
 
         driver.navigate().to("http://localhost:8090/empleado/password");
 
-        PO_PasswordChangeView.fillPasswordForm(driver, "wefWDF#$%@vc333333", "wefWDF#$%@vc333333", "iruhfgiernfk345436");
+        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "wefWDF#$%@vc333333", "iruhfgiernfk345436");
 
         String currentUrlEdit = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
@@ -822,7 +821,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(48)
     public void PR48() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678C", "123456");
+        PO_LoginView.fillLoginForm(driver, "99999998B", "123456");
 
         driver.navigate().to("http://localhost:8090/admin/logs");
 
@@ -834,20 +833,20 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(49)
     public void PR49() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
 
         driver.navigate().to("http://localhost:8090/admin/logs/list");
 
         PO_LogsView.filter(driver, "Logins exitosos");
 
-        String checkText = "Usuario autenticado: 12345678B";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", "12345678B");
+        String checkText = "Usuario autenticado: 99999998A";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", "99999998A");
         Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
 
         PO_LogsView.filter(driver, "Todo");
 
-        checkText = "Usuario autenticado: 12345678B";
-        result = PO_View.checkElementBy(driver, "text", "12345678B");
+        checkText = "Usuario autenticado: 99999998A";
+        result = PO_View.checkElementBy(driver, "text", "99999998A");
         Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
 
     }
@@ -856,23 +855,23 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(50)
     public void PR50() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
 
         driver.navigate().to("http://localhost:8090/admin/logs/list");
 
         PO_LogsView.filter(driver, "Todo");
 
-        String checkText = "Usuario autenticado: 12345678B";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", "12345678B");
+        String checkText = "Usuario autenticado: 99999998A";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", "99999998A");
         Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
 
         PO_LogsView.delete(driver, "Logins exitosos");
         PO_LogsView.filter(driver, "Logins exitosos");
 
         //No hay logs asociados
-        checkText = "12345678B";
+        checkText = "99999998A";
         Assertions.assertThrows(TimeoutException.class, () -> {
-            PO_View.checkElementBy(driver, "text", "12345678B");
+            PO_View.checkElementBy(driver, "text", "99999998A");
         });
 
     }
@@ -881,3 +880,4 @@ class Sdi2425Entrega142ApplicationTests {
 
 
 }
+
