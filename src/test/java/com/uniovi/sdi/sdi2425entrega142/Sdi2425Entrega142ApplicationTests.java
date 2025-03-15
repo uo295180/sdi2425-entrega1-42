@@ -702,6 +702,17 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
+    @Test
+    @Order(38)
+    public void Prueba38() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/vehiculo/repostajes/4321CCC");
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "repostajesTotales");
+        String checkText = "Repostajes totales: 15";
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
 
     @Test
     @Order(39)
