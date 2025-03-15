@@ -19,8 +19,8 @@ class Sdi2425Entrega142ApplicationTests {
     //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
 
-    // static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
-    // static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
+    static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
+    static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
