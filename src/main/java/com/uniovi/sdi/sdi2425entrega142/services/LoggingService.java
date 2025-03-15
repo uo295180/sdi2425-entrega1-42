@@ -26,7 +26,7 @@ public class LoggingService {
     }
 
     public void logUserCreation(String userDni) {
-        String message = "[ALTA] " + LocalDateTime.now() + " - Alta de usuario: " + userDni;
+        String message = "[ALTA] " + LocalDateTime.now() + " - Alta de nuevo empleado: " + userDni;
         logger.info(message);
         saveToDatabase("ALTA", message);
     }

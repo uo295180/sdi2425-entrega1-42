@@ -120,6 +120,8 @@ public class AuthenticationEventListener {
 
     @Component
     public static class LogoutEventListener implements LogoutHandler, LogoutSuccessHandler {
+
+        private static final Logger logger = LoggerFactory.getLogger(LogoutEventListener.class);
         private final LoggingService loggingService;
 
         public LogoutEventListener(LoggingService loggingService) {
@@ -138,18 +140,16 @@ public class AuthenticationEventListener {
         }
 
         @Override
-        public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-            String username = "desconocido";
+        public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+            String username = (authentication != null) ? authentication.getName() : "desconocido";
 
-            if (authentication != null) {
-                username = authentication.getName();
-            } else if (request.getUserPrincipal() != null) {
-                username = request.getUserPrincipal().getName();
-            }
-
-            logger.info("✅ Logout exitoso: {}", username);
+            logger.info("✅ Logout exitoso para: {}", username);
             loggingService.logLogout(username);
+
+            // Redirigir a la página de login con mensaje de logout exitoso
+            response.sendRedirect("/login?logout");
         }
     }
+
 
 }

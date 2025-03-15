@@ -825,6 +825,12 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "text", "12345678B");
         Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
 
+        PO_LogsView.filter(driver, "Todo");
+
+        checkText = "Usuario autenticado: 12345678B";
+        result = PO_View.checkElementBy(driver, "text", "12345678B");
+        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
+
     }
 
     @Test

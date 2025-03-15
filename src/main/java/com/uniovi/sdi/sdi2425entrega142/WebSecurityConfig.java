@@ -1,19 +1,14 @@
 package com.uniovi.sdi.sdi2425entrega142;
 
 import com.uniovi.sdi.sdi2425entrega142.errors.CustomAccessDeniedHandler;
+import com.uniovi.sdi.sdi2425entrega142.services.LoggingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
@@ -22,15 +17,23 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final LoggingService loggingService;  // ✅ Inyección de dependencia
+
+    public WebSecurityConfig(LoggingService loggingService) {
+        this.loggingService = loggingService;
+    }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SpringSecurityDialect securityDialect() {
         return new SpringSecurityDialect();
@@ -61,9 +64,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .and()
                 .logout()
+                .logoutUrl("/logout")  // Ruta explícita para logout
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    if (authentication != null) {
+                        String username = authentication.getName();
+                        Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+                        logger.info("✅ Logout exitoso para usuario: {}", username);
+                        loggingService.logLogout(username); // ✅ Se usa la instancia inyectada
+                    }
+                    response.sendRedirect("/login?logout");
+                })
                 .permitAll()
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(new CustomAccessDeniedHandler()); // 💡 Configurar handler personalizado
+                .accessDeniedHandler(new CustomAccessDeniedHandler());
     }
 }
