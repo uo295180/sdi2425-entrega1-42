@@ -4,10 +4,7 @@ import com.uniovi.sdi.sdi2425entrega142.pageobjects.*;
 
 import com.uniovi.sdi.sdi2425entrega142.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,16 +19,16 @@ class Sdi2425Entrega142ApplicationTests {
     //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
 
-    //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
-    //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
+    static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
+    static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
@@ -652,11 +649,11 @@ class Sdi2425Entrega142ApplicationTests {
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observacion");
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/24", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/4321AAA", currentUrl);
     }
 
     @Test
-    @Order(36)
+    @Order(34)
     public void Prueba34() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
@@ -690,6 +687,29 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/home", currentUrl);
     }
+
+    @Test
+    @Order(37)
+    public void Prueba37() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/vehiculo/trayectos/4321CCC");
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "trayectosTotales");
+        String checkText = "Trayectos totales: 15";
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    @Test
+    @Order(38)
+    public void Prueba38() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/vehiculo/repostajes/4321CCC");
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "repostajesTotales");
+        String checkText = "Repostajes totales: 15";
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
 
     @Test
     @Order(39)
@@ -778,4 +798,85 @@ class Sdi2425Entrega142ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
+
+    @Test
+    @Order(46)
+    public void PR46() {
+        driver.navigate().to("http://localhost:8090/empleado/list");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/login", currentUrlEdit);
+    }
+
+    @Test
+    @Order(47)
+    public void PR47() {
+        driver.navigate().to("http://localhost:8090/vehiculo/list");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/login", currentUrlEdit);
+    }
+
+    @Test
+    @Order(48)
+    public void PR48() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678C", "123456");
+
+        driver.navigate().to("http://localhost:8090/admin/logs");
+
+        String currentUrlEdit = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/forbidden", currentUrlEdit);
+    }
+
+    @Test
+    @Order(49)
+    public void PR49() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+
+        driver.navigate().to("http://localhost:8090/admin/logs/list");
+
+        PO_LogsView.filter(driver, "Logins exitosos");
+
+        String checkText = "Usuario autenticado: 12345678B";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", "12345678B");
+        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
+
+        PO_LogsView.filter(driver, "Todo");
+
+        checkText = "Usuario autenticado: 12345678B";
+        result = PO_View.checkElementBy(driver, "text", "12345678B");
+        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
+
+    }
+
+    @Test
+    @Order(50)
+    public void PR50() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
+
+        driver.navigate().to("http://localhost:8090/admin/logs/list");
+
+        PO_LogsView.filter(driver, "Todo");
+
+        String checkText = "Usuario autenticado: 12345678B";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", "12345678B");
+        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
+
+        PO_LogsView.delete(driver, "Logins exitosos");
+        PO_LogsView.filter(driver, "Logins exitosos");
+
+        //No hay logs asociados
+        checkText = "12345678B";
+        Assertions.assertThrows(TimeoutException.class, () -> {
+            PO_View.checkElementBy(driver, "text", "12345678B");
+        });
+
+    }
+
+
+
+
 }

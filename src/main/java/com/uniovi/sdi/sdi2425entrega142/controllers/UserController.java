@@ -3,6 +3,7 @@ package com.uniovi.sdi.sdi2425entrega142.controllers;
 import com.uniovi.sdi.sdi2425entrega142.dtos.PasswordDTO;
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.services.EmpleadosService;
+import com.uniovi.sdi.sdi2425entrega142.services.LoggingService;
 import com.uniovi.sdi.sdi2425entrega142.services.RolesService;
 import com.uniovi.sdi.sdi2425entrega142.validators.AddEmpleadoFormValidator;
 import com.uniovi.sdi.sdi2425entrega142.validators.ChangePasswordFormValidator;
@@ -24,6 +25,8 @@ import org.springframework.validation.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -34,15 +37,17 @@ public class UserController {
     private final AddEmpleadoFormValidator addEmpleadoFormValidator;
     private final EditEmpleadoFormValidator editEmpleadoFormValidator;
     private final ChangePasswordFormValidator changePasswordFormValidator;
+    private final LoggingService loggingService;
 
     public UserController(EmpleadosService empleadosService, RolesService rolesService,
                           AddEmpleadoFormValidator addEmpleadoFormValidator,
-                          EditEmpleadoFormValidator editEmpleadoFormValidator, ChangePasswordFormValidator changePasswordFormValidator) {
+                          EditEmpleadoFormValidator editEmpleadoFormValidator, ChangePasswordFormValidator changePasswordFormValidator, LoggingService loggingService) {
         this.empleadosService = empleadosService;
         this.rolesService = rolesService;
         this.addEmpleadoFormValidator = addEmpleadoFormValidator;
         this.editEmpleadoFormValidator = editEmpleadoFormValidator;
         this.changePasswordFormValidator = changePasswordFormValidator;
+        this.loggingService = loggingService;
     }
 
 
@@ -80,7 +85,7 @@ public class UserController {
         return "empleado/add";
     }
     @RequestMapping(value = "/empleado/add", method = RequestMethod.POST)
-    public String setUser(Model model, @Validated Empleado empleado, BindingResult result) {
+    public String setUser(Model model, @Validated Empleado empleado, BindingResult result, HttpSession session) {
 
         empleado.setRole(rolesService.getRoles()[0]);
         addEmpleadoFormValidator.validate(empleado, result);
@@ -91,6 +96,8 @@ public class UserController {
         }
         empleadosService.addEmpleado(empleado);
         model.addAttribute("registrado", true);
+
+        loggingService.logUserCreation(empleado.getDni());
 
         return "redirect:/empleado/add";
     }

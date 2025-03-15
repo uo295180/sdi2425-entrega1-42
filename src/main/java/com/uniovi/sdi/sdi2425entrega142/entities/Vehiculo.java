@@ -172,7 +172,7 @@ public class Vehiculo {
     }
 
     public void respostar(Repostaje repostaje) {
-        if(estadoVehiculo) { throw new IllegalStateException("No se puede repostar un vehículo que no está en uso"); }
+        if(!estadoVehiculo) { throw new IllegalStateException("No se puede repostar un vehículo que no está en uso"); }
         repostajes.add(repostaje);
         setCantidadTanque(this.cantidadTanque + repostaje.getCantidadRepostada());
         setOdometro(repostaje.getOdometro());

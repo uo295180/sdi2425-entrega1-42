@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
+    <body>
+    <nav th:replace="fragments/nav"></nav>
+        <div class="container" style="text-align: center">
+            <form class="form-horizontal" method="get" action="/admin/logs/list">
+                <label class="control-label col-sm-2">Tipo:
+                    <select class="form-control" name="tipo" id="filtrarDropdown">
+                        <option value="ALL">Todo</option>
+                        <option value="PET">Peticiones</option>
+                        <option value="ALTA">Altas de empleados</option>
+                        <option value="LOGIN-EX">Logins exitosos</option>
+                        <option value="LOGIN-ERR">Logins fallidos</option>
+                        <option value="LOGOUT">Cierres de sesión</option>
+                    </select>
+                </label>
+                <button type="submit" id="filtrarButton" class="btn btn-primary">Filtrar</button>
+            </form>
+
+            <form method="post" action="/admin/logs/delete">
+                <label class="control-label col-sm-2">Tipo:
+                    <select class="form-control" name="tipo" id="borrarDropdown">
+                        <option value="PET">Peticiones</option>
+                        <option value="ALTA">Altas de empleados</option>
+                        <option value="LOGIN-EX">Logins exitosos</option>
+                        <option value="LOGIN-ERR">Logins fallidos</option>
+                        <option value="LOGOUT">Cierres de sesión</option>
+                    </select>
+                </label>
+                <button type="submit" id="borrarButton" class="btn btn-primary">Borrar</button>
+            </form>
+
+            <table class="table table-hover">
+                <tr>
+                    <th scope="col" >Tipo</th>
+                    <th scope="col" >Fecha-Hora</th>
+                    <th scope="col" >Descripción</th>
+                </tr>
+                <tr th:each="log : ${logs}">
+                    <td th:text="${log.tipoLog}"></td>
+                    <td th:text="${log.fechaHora}"></td>
+                    <td th:text="${log.descripcion}"></td>
+                </tr>
+            </table>
+
+        </div>
+    <footer th:replace="fragments/footer"></footer>
+    </body>
+</html>

@@ -1,18 +1,21 @@
 package com.uniovi.sdi.sdi2425entrega142.controllers;
 
 import com.uniovi.sdi.sdi2425entrega142.services.EmpleadosService;
+import com.uniovi.sdi.sdi2425entrega142.services.LoggingService;
 import com.uniovi.sdi.sdi2425entrega142.services.RolesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
 
     private final EmpleadosService empleadosService;
     private RolesService rolesService;
+    private LoggingService loggingService;
 
     public HomeController(EmpleadosService empleadosService) {
         this.empleadosService = empleadosService;
@@ -35,5 +38,6 @@ public class HomeController {
     }
 
     @RequestMapping("/logout")
-    public String logout() { return "login";}
+    public String logout(HttpSession httpSession) {
+        return "login";}
 }

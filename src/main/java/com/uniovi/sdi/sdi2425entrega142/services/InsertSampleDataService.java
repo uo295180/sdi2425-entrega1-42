@@ -1,12 +1,14 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
 import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
+import com.uniovi.sdi.sdi2425entrega142.entities.Repostaje;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.sql.Timestamp;
 
 @Service
 public class InsertSampleDataService {
@@ -16,11 +18,15 @@ public class InsertSampleDataService {
     private final RolesService rolesService;
     private final TrayectosService trayectosService;
 
-    public InsertSampleDataService(EmpleadosService empleadosService, VehiculosService vehiculosService, RolesService rolesService, TrayectosService trayectosService) {
+    private final RepostajesService repostajesService;
+
+
+    public InsertSampleDataService(EmpleadosService empleadosService, VehiculosService vehiculosService, RolesService rolesService, TrayectosService trayectosService, RepostajesService repostajesService) {
         this.empleadosService = empleadosService;
         this.vehiculosService = vehiculosService;
         this.rolesService = rolesService;
         this.trayectosService = trayectosService;
+        this.repostajesService = repostajesService;
     }
 
     @PostConstruct
@@ -151,5 +157,260 @@ public class InsertSampleDataService {
         empleado6.addTrayecto(trayecto3);
 
         trayectosService.addTrayecto(trayecto3);
+
+        // Creación de un coche con muchos trayectos para la prueba de el requisito 13
+
+        Vehiculo vehiculo10 = new Vehiculo(1000.0, 7.4, "Citroen", "4321CCC", "GLE", "000000000abcdefgd", Vehiculo.TipoCombustible.HIBRIDO);
+        vehiculosService.addVehiculo(vehiculo10);
+        Empleado empleado7 = new Empleado("12345678H", "Empleado", "Trayectos");
+        empleado7.setPassword("123456");
+        empleado7.setRole(rolesService.getRoles()[0]);
+
+        empleadosService.addEmpleado(empleado7);
+
+        Trayecto t13_1 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_1);
+        empleado7.addTrayecto(t13_1);
+
+        t13_1.endTrayecto(10, "Observaciones");
+
+        trayectosService.addTrayecto(t13_1);
+
+        Trayecto t13_2 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_2);
+        empleado7.addTrayecto(t13_2);
+
+        t13_2.endTrayecto(20, "Observaciones");
+
+        trayectosService.addTrayecto(t13_2);
+
+        Trayecto t13_3 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_3);
+        empleado7.addTrayecto(t13_3);
+
+        t13_3.endTrayecto(30, "Observaciones");
+
+        trayectosService.addTrayecto(t13_3);
+
+        Trayecto t13_4 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_4);
+        empleado7.addTrayecto(t13_4);
+
+        t13_4.endTrayecto(40, "Observaciones");
+
+        trayectosService.addTrayecto(t13_4);
+
+        Trayecto t13_5 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_5);
+        empleado7.addTrayecto(t13_5);
+
+        t13_5.endTrayecto(50, "Observaciones");
+
+        trayectosService.addTrayecto(t13_5);
+
+        Trayecto t13_6 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_6);
+        empleado7.addTrayecto(t13_6);
+
+        t13_6.endTrayecto(60, "Observaciones");
+
+        trayectosService.addTrayecto(t13_6);
+
+        Trayecto t13_7 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_7);
+        empleado7.addTrayecto(t13_7);
+
+        t13_7.endTrayecto(70, "Observaciones");
+
+        trayectosService.addTrayecto(t13_7);
+
+        Trayecto t13_8 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_8);
+        empleado7.addTrayecto(t13_8);
+
+        t13_8.endTrayecto(80, "Observaciones");
+
+        trayectosService.addTrayecto(t13_8);
+
+        Trayecto t13_9 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_9);
+        empleado7.addTrayecto(t13_9);
+
+        t13_9.endTrayecto(90, "Observaciones");
+
+        trayectosService.addTrayecto(t13_9);
+
+        Trayecto t13_10 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_10);
+        empleado7.addTrayecto(t13_10);
+
+        t13_10.endTrayecto(100, "Observaciones");
+
+        trayectosService.addTrayecto(t13_10);
+
+        Trayecto t13_11 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_11);
+        empleado7.addTrayecto(t13_11);
+
+        t13_11.endTrayecto(110, "Observaciones");
+
+        trayectosService.addTrayecto(t13_11);
+
+        Trayecto t13_12 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_12);
+        empleado7.addTrayecto(t13_12);
+
+        t13_12.endTrayecto(120, "Observaciones");
+
+        trayectosService.addTrayecto(t13_12);
+
+        Trayecto t13_13 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_13);
+        empleado7.addTrayecto(t13_13);
+
+        t13_13.endTrayecto(130, "Observaciones");
+
+        trayectosService.addTrayecto(t13_13);
+
+        Trayecto t13_14 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_14);
+        empleado7.addTrayecto(t13_14);
+
+        Repostaje r9 = new Repostaje(48, "Estación prueba", "Observación 9", 133, 1.12);
+        repostajesService.addRepostaje(r9);
+        r9.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r9);
+        r9.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r9.calculatePrecioTotal();
+
+        Repostaje r10 = new Repostaje(49, "Estación prueba", "Observación 10", 134, 1.13);
+        repostajesService.addRepostaje(r10);
+        r10.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r10);
+        r10.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r10.calculatePrecioTotal();
+
+        Repostaje r11 = new Repostaje(50, "Estación prueba", "Observación 11", 135, 1.14);
+        repostajesService.addRepostaje(r11);
+        r11.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r11);
+        r11.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r11.calculatePrecioTotal();
+
+        Repostaje r12 = new Repostaje(51, "Estación prueba", "Observación 12", 136, 1.15);
+        repostajesService.addRepostaje(r12);
+        r12.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r12);
+        r12.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r12.calculatePrecioTotal();
+
+        Repostaje r13 = new Repostaje(52, "Estación prueba", "Observación 13", 137, 1.16);
+        repostajesService.addRepostaje(r13);
+        r13.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r13);
+        r13.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r13.calculatePrecioTotal();
+
+        Repostaje r14 = new Repostaje(53, "Estación prueba", "Observación 14", 138, 1.17);
+        repostajesService.addRepostaje(r14);
+        r14.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r14);
+        r14.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r14.calculatePrecioTotal();
+
+        Repostaje r15 = new Repostaje(53, "Estación prueba", "Observación 14", 139, 1.17);
+        repostajesService.addRepostaje(r15);
+        r15.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r15);
+        r15.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r15.calculatePrecioTotal();
+
+
+        t13_14.endTrayecto(140, "Observaciones");
+
+        trayectosService.addTrayecto(t13_14);
+
+        Trayecto t13_15 = new Trayecto(empleado7, vehiculo10);
+        vehiculo10.setEstadoVehiculo(true);
+        vehiculo10.addTrayecto(t13_15);
+        empleado7.addTrayecto(t13_15);
+
+        Repostaje r1 = new Repostaje(40, "Estación prueba", "Obsevación 1", 141, 1.04);
+        repostajesService.addRepostaje(r1);
+
+        r1.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r1);
+        r1.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis())); // or other defaults you may want
+        r1.calculatePrecioTotal();
+
+        Repostaje r2 = new Repostaje(41, "Estación prueba", "Observación 2", 142, 1.05);
+        repostajesService.addRepostaje(r2);
+        r2.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r2);
+        r2.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r2.calculatePrecioTotal();
+
+        Repostaje r3 = new Repostaje(42, "Estación prueba", "Observación 3", 143, 1.06);
+        repostajesService.addRepostaje(r3);
+        r3.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r3);
+        r3.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r3.calculatePrecioTotal();
+
+        Repostaje r4 = new Repostaje(43, "Estación prueba", "Observación 4", 144, 1.07);
+        repostajesService.addRepostaje(r4);
+        r4.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r4);
+        r4.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r4.calculatePrecioTotal();
+
+        Repostaje r5 = new Repostaje(44, "Estación prueba", "Observación 5", 145, 1.08);
+        repostajesService.addRepostaje(r5);
+        r5.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r5);
+        r5.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r5.calculatePrecioTotal();
+
+        Repostaje r6 = new Repostaje(45, "Estación prueba", "Observación 6", 146, 1.09);
+        repostajesService.addRepostaje(r6);
+        r6.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r6);
+        r6.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r6.calculatePrecioTotal();
+
+        Repostaje r7 = new Repostaje(46, "Estación prueba", "Observación 7", 147, 1.10);
+        repostajesService.addRepostaje(r7);
+        r7.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r7);
+        r7.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r7.calculatePrecioTotal();
+
+        Repostaje r8 = new Repostaje(47, "Estación prueba", "Observación 8", 148, 1.11);
+        repostajesService.addRepostaje(r8);
+        r8.setVehiculo(vehiculo10);
+        vehiculo10.respostar(r8);
+        r8.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
+        r8.calculatePrecioTotal();
+
+        t13_15.endTrayecto(150, "Observaciones");
+
+        trayectosService.addTrayecto(t13_15);
+
+        empleadosService.addEmpleado(empleado7);
+        vehiculosService.addVehiculo(vehiculo10);
     }
 }

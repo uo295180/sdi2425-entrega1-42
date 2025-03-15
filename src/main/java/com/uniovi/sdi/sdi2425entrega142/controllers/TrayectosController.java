@@ -125,6 +125,6 @@ public class TrayectosController {
         originalTrayecto.endTrayecto(trayecto.getOdometroFin(), trayecto.getObservaciones());
         trayectosService.addTrayecto(originalTrayecto);
         vehiculosService.addVehiculo(vehiculo);
-        return "redirect:/vehiculo/trayectos/"+vehiculo.getId();
+        return "redirect:/vehiculo/trayectos/"+vehiculo.getMatricula();
     }
 }
