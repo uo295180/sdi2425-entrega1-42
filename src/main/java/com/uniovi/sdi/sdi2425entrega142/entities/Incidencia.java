@@ -17,7 +17,7 @@ public class Incidencia {
     private String titulo;
     private String descripcion;
     private boolean tipo;
-    private EstadoIncidencia estado = EstadoIncidencia.REGISTRADA;
+    private EstadoIncidencia estado;
     private String respuesta;
 
     @ManyToOne(cascade=CascadeType.MERGE)
@@ -30,6 +30,8 @@ public class Incidencia {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.tipo = tipo;
+        this.estado = EstadoIncidencia.REGISTRADA;
+        this.respuesta = "";
     }
 
     public String getDescripcion() {
@@ -78,5 +80,15 @@ public class Incidencia {
 
     public void setTrayecto(Trayecto trayecto) {
         this.trayecto = trayecto;
+    }
+
+    public String getTipoFormulario() {
+        if (tipo) {
+            return "ESPERADA";
+        }
+        return "NO ESPERADA";
+    }
+    public boolean getEstadoFormulario() {
+        return estado == EstadoIncidencia.RESUELTA;
     }
 }

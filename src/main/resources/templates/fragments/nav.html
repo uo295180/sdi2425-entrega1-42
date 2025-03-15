@@ -1,3 +1,4 @@
+
 <!-- nav.html -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
@@ -28,17 +29,34 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/empleado/list">Ver Empleados</a>
                     <a class="dropdown-item" href="/empleado/add" sec:authorize="hasAnyRole('ROLE_ADMIN')">Agregar empleado</a>
-
                 </div>
             </li>
 
-            <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ADMIN')">
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link dropdown-toggle" href="#" id="vehiculoDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Gestión de vehiculos
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/list">Ver vehiculos</a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/vehiculo/add">Agregar vehiculo</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="repostajeDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Repostajes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" th:if="${tieneTrayectoEnCurso}">
+                    <a class="dropdown-item" href="/repostajes/add">Agregar repostajes</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="incidenciaDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Incidencias
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/incidencia/list">Ver incidencias</a>
+                    <a class="dropdown-item" href="/incidencia/add">Agregar incidencia</a>
                 </div>
             </li>
         </ul>

@@ -3,6 +3,7 @@ package com.uniovi.sdi.sdi2425entrega142.controllers;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
+import com.uniovi.sdi.sdi2425entrega142.validators.VehiculosValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

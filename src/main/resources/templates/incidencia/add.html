@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+  <h2>Agregar incidencia</h2>
+  <form class="form-horizontal" method="post" action="/incidencia/add" >
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="titulo">Título:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ejemplo Vehículo averiado"
+               required="true" th:value="${incidencia.titulo}" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="descripcion">Descripción:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ejemplo Se estropeó debido a..."
+               required="true" th:value="${incidencia.descripcion}" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="tipo">Tipo Incidencia:</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="tipo" name="tipo" required>
+          <option value="true" th:selected="${incidencia.tipo == true}">Respuesta Esperada</option>
+          <option value="false" th:selected="${incidencia.tipo == false}">Respuesta No Esperada</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" id="respuesta-group" style="display: none;">
+      <label class="control-label col-sm-2" for="respuesta">Respuesta:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="respuesta" name="respuesta" placeholder="Ejemplo Tienes que hacer esto..."
+                th:value="${incidencia.respuesta}" />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Agregar</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  document.addEventListener("DOMContentLoaded", function() {
+    let tipoIncidencia = document.getElementById("tipo");
+    let respuestaGroup = document.getElementById("respuesta-group");
+    let respuestaInput = document.getElementById("respuesta");
+    function toggleRespuestaField() {
+      if (tipoIncidencia.value === "true") {
+        respuestaGroup.style.display = "block";
+      } else {
+        respuestaGroup.style.display = "none";
+        respuestaInput.value = ""; // Limpiar campo si se oculta
+      }
+    }
+    // Inicializar el estado del campo según el valor de Thymeleaf
+    let tipoActual = /*[[${incidencia.tipo}]]*/ false;
+    if (tipoActual) {
+      respuestaGroup.style.display = "block";
+    }
+    // Evento para detectar cambios en el select
+    tipoIncidencia.addEventListener("change", toggleRespuestaField);
+  });
+  /*]]>*/
+</script>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>
+
