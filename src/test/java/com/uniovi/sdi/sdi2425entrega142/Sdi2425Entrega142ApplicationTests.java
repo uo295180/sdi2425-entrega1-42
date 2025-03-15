@@ -652,11 +652,11 @@ class Sdi2425Entrega142ApplicationTests {
         driver.navigate().to("http://localhost:8090/trayecto/end");
         PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observacion");
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/24", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/4321AAA", currentUrl);
     }
 
     @Test
-    @Order(36)
+    @Order(34)
     public void Prueba34() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
@@ -690,6 +690,18 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/home", currentUrl);
     }
+
+    @Test
+    @Order(37)
+    public void Prueba37() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/vehiculo/trayectos/4321CCC");
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "trayectosTotales");
+        String checkText = "Trayectos totales: 15";
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
 
     @Test
     @Order(39)

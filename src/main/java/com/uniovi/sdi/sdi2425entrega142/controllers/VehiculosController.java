@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -81,44 +80,32 @@ public class VehiculosController {
     }
 
 
-    @RequestMapping("/vehiculo/trayectos")
-    public String getTrayectos(@RequestParam(defaultValue = "0") int page,
+    @RequestMapping("/vehiculo/listAll")
+    public String getTrayectos(@RequestParam(defaultValue = "0", required = false) int page,
                                Model model, Pageable pageable) {
 
-        List<Vehiculo> vehiculos = vehiculosService.findAll();
+        Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
 
-        Long vehiculoId = vehiculos.get(0).getId();
-
-        // Obtener trayectos para el vehículo seleccionado
-        Pageable pageableRequest = PageRequest.of(page, 5, Sort.by("fechaInicioTrayecto").descending());
-        Page<Trayecto> trayectos = (vehiculoId != null) ?
-                trayectosService.getTrayectosByVehiculo(vehiculoId, pageableRequest) :
-                Page.empty();
 
         // Pasar los datos al modelo
-        model.addAttribute("vehiculosList", vehiculos);
-        model.addAttribute("trayectosList", trayectos.getContent());
-        model.addAttribute("page", trayectos);
-        model.addAttribute("selectedVehiculoId", vehiculoId);
+        model.addAttribute("vehiculosList", vehiculos.getContent());
+        model.addAttribute("page", vehiculos);
 
-        // Devolver la vista con el fragmento de trayectos
-        return "vehiculo/listTrayectos"; // Aquí es donde se carga la vista completa
+        return "vehiculo/listAll"; // Aquí es donde se carga la vista completa
     }
 
-    @RequestMapping("/vehiculo/trayectos/update")
-    public String updateList(@RequestParam(required = false) Long vehiculoId,
+    @RequestMapping("/vehiculo/trayectos/{matricula}")
+    public String updateList(@PathVariable(required = false) String matricula,
                              @RequestParam(defaultValue = "0") int page,
                              Model model, Pageable pageable) {
 
-        Pageable pageableRequest = PageRequest.of(page, 5, Sort.by("fechaInicioTrayecto").descending());
-        Page<Trayecto> trayectos = (vehiculoId != null) ?
-                trayectosService.getTrayectosByVehiculo(vehiculoId, pageableRequest) :
-                Page.empty();
+        Vehiculo vehiculo = vehiculosService.getVehiculoByMatricula(matricula); // Busca el vehículo por matrícula
+        Page<Trayecto> trayectosPage = trayectosService.getTrayectosByVehiculo(vehiculo.getId(), pageable); // Paginación de trayectos
 
-        // Pasar los datos al modelo
-        model.addAttribute("trayectosList", trayectos.getContent());
-        model.addAttribute("page", trayectos);
-
-        return "fragments/trayectosTable";
+        model.addAttribute("vehiculo", vehiculo);
+        model.addAttribute("trayectosList", trayectosPage.getContent());
+        model.addAttribute("page", trayectosPage);
+        model.addAttribute("totalTrayectos", trayectosPage.getTotalElements());
+        return "vehiculo/trayectos";
     }
 }

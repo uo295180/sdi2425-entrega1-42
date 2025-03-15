@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2 th:text="#{nav.vehiculos}">Vehículos</h2>
+    <p th:text="#{vehiculos.subtitle}">Los vehículos que actualmente figuran en el sistema son las siguientes:</p>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{vehiculos.matricula}">Matricula</th>
+                <th scope="col" th:text="#{vehiculos.marca}">Marca</th>
+                <th scope="col" th:text="#{vehiculos.estado}">Estado Vehiculo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vehiculo : ${vehiculosList}">
+                <td><a th:href="@{/vehiculo/trayectos/{matricula}(matricula=${vehiculo.matricula})}" th:text="${vehiculo.matricula}" ></a> </td>
+                <td th:text="${vehiculo.marca}">Mercedes</td>
+                <td th:text="${vehiculo.getEstadoFormulario()}">LIBRE</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(vehiculosList)}" th:text="#{vehiculos.nohay}">No hay vehículos</div>
+
+    <footer th:replace="fragments/pagination"></footer>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

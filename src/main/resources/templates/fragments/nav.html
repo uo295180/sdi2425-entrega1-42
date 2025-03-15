@@ -40,14 +40,14 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" th:text="#{nav.vehiculos}" href="#" id="vehiculoDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Gestión de vehículos
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.vehiculos.list}" class="dropdown-item" href="/vehiculo/list">Ver vehículos</a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.vehiculos.add}" class="dropdown-item" href="/vehiculo/add">Agregar vehiculo</a>
-                    <a th:text="#{nav.vehiculos.trayectos}" class="dropdown-item" href="/vehiculo/trayectos">Ver trayectos de vehículo</a>
+                    <a th:text="#{nav.vehiculos.trayectos}" class="dropdown-item" href="/vehiculo/listAll">Ver trayectos de vehículo</a>
                 </div>
             </li>
 

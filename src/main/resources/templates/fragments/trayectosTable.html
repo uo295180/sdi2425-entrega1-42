@@ -13,7 +13,7 @@
         <tbody>
         <tr th:each="trayecto : ${trayectosList}">
             <td scope="row" th:text="${trayecto.id}">1</td>
-            <td th:text="${trayecto.fechaInicioTrayecto}">Fecha y hora de inicio</td>
+            <td th:text="${#temporals.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}">Fecha y hora de inicio</td>
             <td th:text="${trayecto.vehiculo.matricula}">0000BBB</td>
             <td th:text="${trayecto.duracionTrayecto}">120</td>
             <td th:text="${trayecto.odometroInicio}">0</td>
