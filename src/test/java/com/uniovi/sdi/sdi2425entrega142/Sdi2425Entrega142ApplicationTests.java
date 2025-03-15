@@ -14,22 +14,8 @@ import java.util.List;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
-
-    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
-
-
-    static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
-    static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
-
-
-    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-
-
-    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
-
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
 
@@ -41,20 +27,16 @@ class Sdi2425Entrega142ApplicationTests {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(){
         driver.navigate().to(URL);
     }
-
     @AfterEach
-    public void tearDown() {
+    public void tearDown(){
         driver.manage().deleteAllCookies();
     }
-
     //Antes de la primera prueba
     @BeforeAll
-    static public void begin() {
-    }
-
+    static public void begin() {}
     //Al finalizar la última prueba
     @AfterAll
     static public void end() {
@@ -97,7 +79,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678A", "incorrecto");
         // Comprobar que se muestra el mensaje de error
-        String checkText = "Usuario o contraseña inválidos. Por favor, inténtelo de nuevo.";
+        String checkText = "Usuario o contraseña inválidos. Por favor, inténtelo de nuevo";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
@@ -157,15 +139,15 @@ class Sdi2425Entrega142ApplicationTests {
         PO_AddView.fillRegisterForm(driver, " ", " ", " ");
 
         //Errores en todos los campos
-        String checkText = "El campo nombre no puede estar vacío ni con espacios.";
+        String checkText = "El campo nombre no puede estar vacio ni con espacios.";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
 
-        checkText = "El campo apellidos no puede estar vacío ni con espacios.";
+        checkText = "El campo apellidos no puede estar vacio ni con espacios.";
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
 
-        checkText = "El campo dni no puede estar vacío ni con espacios.";
+        checkText = "El campo dni no puede estar vacio ni con espacios.";
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertTrue(result.get(0).getText().contains(checkText));
 
@@ -211,12 +193,12 @@ class Sdi2425Entrega142ApplicationTests {
 
     @Test
     @Order(11)
-    public void PR11() {
+    public void Prueba11() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "ppppppppppppppppp",
-                "Mercedes", "A4", "Diésel");
+                "Mercedes", "A4", "Diesel");
         // Navegamos a la lista de vehículos
         driver.navigate().to("http://localhost:8090/vehiculo/list");
         boolean encontrado = false; // Creamos una flag para buscar el vehículo por todas las páginas de la vista
@@ -239,25 +221,24 @@ class Sdi2425Entrega142ApplicationTests {
 
     @Test
     @Order(12)
-    public void PR12() {
+    public void Prueba12() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_PrivateView.fillFormAddVehiculo(driver, "", "",
-                "", "", "Diésel");
+                "", "", "Diesel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
-
     @Test
     @Order(13)
-    public void PR13() {
+    public void Prueba13() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_PrivateView.fillFormAddVehiculo(driver, "1234AABA", "ppppppppppppppppp",
-                "Mercedes", "A4", "Diésel");
+                "Mercedes", "A4", "Diesel");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
 
@@ -268,140 +249,47 @@ class Sdi2425Entrega142ApplicationTests {
         //String checkText2 = "Agregar vehículo";
         //List<WebElement> result2 = PO_View.checkElementBy(driver, "text", checkText2);
         //Assertions.assertEquals(checkText2, result2.get(0).getText());
-        //Esto no va nose por que
     }
-
     @Test
     @Order(14)
-    public void PR14() {
+    public void Prueba14() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "ppppppppp",
-                "Mercedes", "A4", "Diésel");
+                "Mercedes", "A4", "Diesel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
-
     @Test
     @Order(15)
-    public void PR15() {
+    public void Prueba15() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_PrivateView.fillFormAddVehiculo(driver, "1234AAA", "ppppppppppppppppp",
-                "Mercedes", "A4", "Diésel");
+                "Mercedes", "A4", "Diesel");
+
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+    }
+    @Test
+    @Order(16)
+    public void Prueba16() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "pppppppppppppppaa",
+                "Mercedes", "A4", "Diesel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
 
     @Test
-    @Order(16)
-    public void PR16() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
-        driver.navigate().to("http://localhost:8090/vehiculo/add");
-        PO_PrivateView.fillFormAddVehiculo(driver, "1234AAB", "pppppppppppppppaa",
-                "Mercedes", "A4", "Diésel");
-
-    }
-
-    @Test
-    @Order(17)
-    public void Prueba17() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/list");
-
-        List<WebElement> empleados = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
-                PO_View.getTimeout());
-        Assertions.assertEquals(5, empleados.size()); //Los 5 que se insertan en el servicio
-
-        String checkDniLogged = "12345678B";
-        String checkDniAdmin = "12345678Z";
-
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkDniLogged);
-        Assertions.assertEquals(checkDniLogged, result.get(0).getText());
-
-        List<WebElement> result2 = PO_View.checkElementBy(driver, "text", checkDniAdmin);
-        Assertions.assertEquals(checkDniAdmin, result2.get(0).getText());
-
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/list", currentUrl);
-    }
-
-    @Test
-    @Order(18)
-    public void Prueba18() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/edit/3");
-        PO_EditView.fillEditForm(driver, "44445678B", "newNombre", "newApellido", true);
-
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/details/3", currentUrl);
-
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "44445678B", "123456");
-
-        //El empleado esta habilitado para entrar en la edicion
-        driver.navigate().to("http://localhost:8090/empleado/edit/3");
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/edit/3", currentUrlEdit);
-    }
-
-    @Test
-    @Order(19)
-    public void Prueba19() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/edit/1");
-        PO_EditView.fillEditForm(driver, "12345678B", " ", " ", false);
-
-        //Errores en todos los campos
-        String checkText = "El campo nombre no puede estar vacío ni con espacios.";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
-
-        checkText = "El campo apellidos no puede estar vacío ni con espacios.";
-        result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
-
-        checkText = "El nuevo dni ya esta registrado en el sistema.";
-        result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertTrue(result.get(0).getText().contains(checkText));
-
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/edit/1", currentUrl);
-
-        //Comprobar que el empleado no se actualiza
-        driver.navigate().to("http://localhost:8090/empleado/details/1");
-        checkText = "12345678A";
-        result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertTrue(result.get(0).getText().contains(checkText));
-
-        checkText = "Mario";
-        result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertTrue(result.get(0).getText().contains(checkText));
-
-        checkText = "Orviz";
-        result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertTrue(result.get(0).getText().contains(checkText));
-
-        checkText = "Orviz";
-        result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertTrue(result.get(0).getText().contains(checkText));
-    }
-
-    @Test
     @Order(20)
-    public void PR20() {
+    public void Prueba20() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
 
@@ -426,10 +314,9 @@ class Sdi2425Entrega142ApplicationTests {
 
     @Test
     @Order(21)
-    public void PR21() {
+    public void Prueba21() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
-
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
         List<WebElement> rows = driver.findElements(By.xpath("//table/tbody/tr"));
@@ -450,20 +337,28 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
 
+
+
     @Test
     @Order(22)
-    public void PR22() {
+    public void Prueba22() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
+        // Navegar a la última página
+        List<WebElement> paginationLinks = driver.findElements(By.xpath("//ul[@class='pagination']//a"));
+        if (!paginationLinks.isEmpty()) {
+            paginationLinks.get(paginationLinks.size() - 1).click(); // Hacer clic en la última página
+        }
+
         List<WebElement> rows = driver.findElements(By.xpath("//table/tbody/tr"));
-        // Eliminar el primer vehículo
+        // Eliminar el último vehículo
         WebElement checkbox = rows.get(rows.size() - 1).findElement(By.xpath(".//input[@type='checkbox']"));
         String vehicleId = checkbox.getAttribute("value");
         checkbox.click();
         driver.findElement(By.id("deleteButton")).click();
-        driver.navigate().refresh();
+        driver.get("http://localhost:8090/vehiculo/list");
 
         // Comprobar que se ha actualizado la lista (se ha eliminado el vehículo)
         List<WebElement> updatedRows = driver.findElements(By.xpath("//table/tbody/tr"));
@@ -477,10 +372,9 @@ class Sdi2425Entrega142ApplicationTests {
 
     @Test
     @Order(23)
-    public void PR23() {
+    public void Prueba23() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
-
         driver.navigate().to("http://localhost:8090/vehiculo/list");
 
         // Seleccionar los tres primeros vehículos de la lista
@@ -501,7 +395,7 @@ class Sdi2425Entrega142ApplicationTests {
         checkbox3.click();
 
         driver.findElement(By.id("deleteButton")).click();
-        driver.navigate().refresh();
+        driver.get("http://localhost:8090/vehiculo/list");
 
         // Comprobar que se ha actualizado la lista (se ha eliminado el vehículo)
         List<WebElement> updatedRows = driver.findElements(By.xpath("//table/tbody/tr"));
@@ -518,366 +412,34 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
-
     @Test
-    @Order(24)
-    public void Prueba24() {
+    @Order(51)
+    public void Prueba51() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
-        // Navegamos hasta la lista de trayectos:
-        driver.navigate().to("http://localhost:8090/trayecto/list");
-        // Buscamos en la tabla una fila que contenga el texto "1111ZZZ", matrícula del vehículo con trayecto activo
-        List<WebElement> filasConMatricula = driver.findElements(By.xpath("//table/tbody/tr[contains(.,'1111ZZZ')]"));
-        // Comprobamos que se ha encontrado al menos una fila con esa matrícula
-        Assertions.assertFalse(filasConMatricula.isEmpty(), "No se encontró ningún trayecto con la matrícula 1111ZZZ");
-    }
-
-    @Test
-    @Order(25)
-    public void Prueba25() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678D", "123456"); // Log in como empleado
-        // Navegamos hasta la lista de trayectos:
-        driver.navigate().to("http://localhost:8090/trayecto/add");
-        // Enviamos el formulario con el vehículo preseleccionado
-        driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/div[4]/div/button")).click();
-        // Verificamos la redirección a la lista de trayectos
-        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/list"));
-    }
-
-    @Test
-    @Order(26)
-    public void Prueba26() {
-        // Log in como empleado que acaba de iniciar un trayecto
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678D", "123456");
-        driver.get("http://localhost:8090/trayecto/list");
-        // Buscar elementos que contengan el texto "Agregar trayecto" en el nav (no debería de ser visible)
-        List<WebElement> agregarTrayectoLinks = driver.findElements(By.xpath("//*[contains(text(),'Agregar trayecto')]"));
-        // Comprobar que no exista ningún enlace "Agregar trayecto"
-        Assertions.assertTrue(agregarTrayectoLinks.isEmpty(), "El enlace 'Agregar Trayecto' no debería estar visible, ya que hay un trayecto activo");
-    }
-
-
-    @Test
-    @Order(27)
-    public void Prueba27() {
-        driver.get("http://localhost:8090/trayecto/add");
-        // Verificar que no hay vehículos disponibles
-        Assertions.assertThrows(NoSuchElementException.class, () -> {
-            driver.findElement(By.name("vehiculo"));
-        });
-    }
-
-    @Test
-    @Order(28)
-    public void Prueba28() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/repostajes/add");
-        PO_AddRepostajeView.fillRegisterForm(driver, "Estación 1", "1.04", "12", "200");
+        driver.navigate().to("http://localhost:8090/incidencia/add");
+        //Rellenamos el formulario
+        PO_IncidenciaView.fillIncidenciaNoEsperadaForm(driver, "Vehículo averiado", "Reventó la rueda");
+        //Se registra correctamente
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/repostajes/list", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/incidencia/list", currentUrl);
+        //Se encuentra en el listado de incidencias
+        Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaNoEsperada(driver, "Vehículo averiado", "Reventó la rueda"));
     }
-
     @Test
-    @Order(29)
-    public void Prueba29() {
+    @Order(52)
+    public void Prueba52() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/repostajes/add");
+        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        driver.navigate().to("http://localhost:8090/incidencia/add");
+        //Rellenamos el formulario
+        PO_IncidenciaView.fillIncidenciaEsperadaForm(driver, "Vehículo estropeado", "Reventó el cristal",
+                "Comprar un nuevo cristal");
+        //Se registra correctamente
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/home", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/incidencia/list", currentUrl);
+        //Se encuentra en el listado de incidencias
+        Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaEsperada(driver, "Vehículo estropeado",
+                "Reventó el cristal", "Comprar un nuevo cristal"));
     }
-
-    @Test
-    @Order(30)
-    public void Prueba30() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/repostajes/add");
-        PO_AddRepostajeView.fillRegisterForm(driver, "", "", "", "");
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/repostajes/add", currentUrl);
-    }
-
-    @Test
-    @Order(31)
-    public void Prueba31() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/repostajes/add");
-        PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "-12", "-12", "10");
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/repostajes/add", currentUrl);
-        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.negativePrice",
-                PO_Properties.getSPANISH());
-        //Comprobamos el error de Nombre corto de nombre corto .
-        String checkText = PO_HomeView.getP().getString("Error.repostaje.negativePrice",
-                PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText, result.get(0).getText());
-        result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.negativeQuantity",
-                PO_Properties.getSPANISH());
-        //Comprobamos el error de Nombre corto de nombre corto .
-        checkText = PO_HomeView.getP().getString("Error.repostaje.negativeQuantity",
-                PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(32)
-    public void Prueba32() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/repostajes/add");
-        PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "100");
-        driver.navigate().to("http://localhost:8090/repostajes/add");
-        PO_AddRepostajeView.fillRegisterForm(driver, "Estación ejemplo", "1", "10", "50");
-        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.repostaje.invalidOdometer",
-                PO_Properties.getSPANISH());
-        // Comprobamos el error de Nombre corto de nombre corto.
-        String checkText = PO_HomeView.getP().getString("Error.repostaje.invalidOdometer",
-                PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(33)
-    public void Prueba33() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678F", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/trayecto/end");
-        PO_EndTrayectoView.fillRegisterForm(driver, "300", "Ejemplo observación");
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/vehiculo/trayectos/4321AAA", currentUrl);
-    }
-
-    @Test
-    @Order(34)
-    public void Prueba34() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/trayecto/end");
-        PO_EndTrayectoView.fillRegisterForm(driver, "", "Ejemplo observacion");
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/trayecto/end", currentUrl);
-    }
-
-    @Test
-    @Order(35)
-    public void Prueba35() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678G", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/trayecto/end");
-        PO_EndTrayectoView.fillRegisterForm(driver, "-20", "Ejemplo observacion");
-        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.trayecto.end.negativeOdometro",
-                PO_Properties.getSPANISH());
-        //Comprobamos el error de Nombre corto de nombre corto .
-        String checkText = PO_HomeView.getP().getString("Error.trayecto.end.negativeOdometro",
-                PO_Properties.getSPANISH());
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(36)
-    public void Prueba36() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/trayecto/end");
-        String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/home", currentUrl);
-    }
-
-    @Test
-    @Order(37)
-    public void Prueba37() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/vehiculo/trayectos/4321CCC");
-        List<WebElement> result = PO_View.checkElementBy(driver, "id", "trayectosTotales");
-        String checkText = "Trayectos totales: 15";
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(38)
-    public void Prueba38() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678E", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/vehiculo/repostajes/4321CCC");
-        List<WebElement> result = PO_View.checkElementBy(driver, "id", "repostajesTotales");
-        String checkText = "Repostajes totales: 15";
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-
-    @Test
-    @Order(39)
-    public void Prueba39() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
-        driver.navigate().to("http://localhost:8090/vehiculo/list");
-        // Consultamos la lista de Vehículos:
-        List<WebElement> vehiculosList = driver.findElements(By.xpath("//table/tbody/tr"));
-        // Pinchamos en la opción de lista de vehículos.
-        Assertions.assertEquals(5, vehiculosList.size());
-    }
-
-    @Test
-    @Order(40)
-    public void PR40() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/password");
-
-        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "wefWDF#$%@vc333333", "wefWDF#$%@vc333333");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/home", currentUrlEdit);
-
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678B", "wefWDF#$%@vc333333");
-
-        currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/list", currentUrlEdit);
-    }
-
-    @Test
-    @Order(41)
-    public void PR41() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/password");
-
-        PO_PasswordChangeView.fillPasswordForm(driver, "123456wef", "wefWDF#$%@vc333333", "wefWDF#$%@vc333333");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
-
-        String checkText = "La contraseña no es correcta.";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(42)
-    public void PR42() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/password");
-
-        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "debil", "debil");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
-
-        String checkText = "La nueva contraseña tiene que tener al menos 12 caracteres, una minuscula, mayuscula, y caracter especial.";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(43)
-    public void PR43() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
-
-        driver.navigate().to("http://localhost:8090/empleado/password");
-
-        PO_PasswordChangeView.fillPasswordForm(driver, "123456", "wefWDF#$%@vc333333", "iruhfgiernfk345436");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
-
-        String checkText = "Las contraseñas no coinciden.";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-    @Test
-    @Order(46)
-    public void PR46() {
-        driver.navigate().to("http://localhost:8090/empleado/list");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/login", currentUrlEdit);
-    }
-
-    @Test
-    @Order(47)
-    public void PR47() {
-        driver.navigate().to("http://localhost:8090/vehiculo/list");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/login", currentUrlEdit);
-    }
-
-    @Test
-    @Order(48)
-    public void PR48() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "99999998B", "123456");
-
-        driver.navigate().to("http://localhost:8090/admin/logs");
-
-        String currentUrlEdit = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/forbidden", currentUrlEdit);
-    }
-
-    @Test
-    @Order(49)
-    public void PR49() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
-
-        driver.navigate().to("http://localhost:8090/admin/logs/list");
-
-        PO_LogsView.filter(driver, "Logins exitosos");
-
-        String checkText = "Usuario autenticado: 99999998A";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", "99999998A");
-        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
-
-        PO_LogsView.filter(driver, "Todo");
-
-        checkText = "Usuario autenticado: 99999998A";
-        result = PO_View.checkElementBy(driver, "text", "99999998A");
-        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
-
-    }
-
-    @Test
-    @Order(50)
-    public void PR50() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "99999998A", "123456");
-
-        driver.navigate().to("http://localhost:8090/admin/logs/list");
-
-        PO_LogsView.filter(driver, "Todo");
-
-        String checkText = "Usuario autenticado: 99999998A";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", "99999998A");
-        Assertions.assertTrue(result.get(0).getText().toLowerCase().contains(checkText.toLowerCase()));
-
-        PO_LogsView.delete(driver, "Logins exitosos");
-        PO_LogsView.filter(driver, "Logins exitosos");
-
-        //No hay logs asociados
-        checkText = "99999998A";
-        Assertions.assertThrows(TimeoutException.class, () -> {
-            PO_View.checkElementBy(driver, "text", "99999998A");
-        });
-
-    }
-
-
-
-
 }
-

@@ -34,7 +34,7 @@ public class Vehiculo {
     @OneToMany(mappedBy = "vehiculo", cascade  = CascadeType.MERGE)
     private Set<Repostaje> repostajes = new HashSet<>();
 
-    public Vehiculo() {estadoVehiculo = false;}
+    public Vehiculo() {estadoVehiculo = true;}
 
     public Vehiculo(double cantidadMaximaTanque, double consumoMedio, String marca, String matricula, String modelo, String numeroBastidor, TipoCombustible tipoCombustible) {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
@@ -44,7 +44,7 @@ public class Vehiculo {
         this.modelo = modelo;
         this.numeroBastidor = numeroBastidor;
         this.tipoCombustible = tipoCombustible;
-        this.estadoVehiculo = false;
+        this.estadoVehiculo = true;
         this.cantidadTanque = cantidadMaximaTanque;
         this.odometro = 0;
     }
@@ -63,10 +63,6 @@ public class Vehiculo {
 
     public void setCantidadMaximaTanque(double cantidadMaximaTanque) {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
     public double getCantidadTanque() {
         return cantidadTanque;
@@ -179,18 +175,9 @@ public class Vehiculo {
     }
 
     public String getEstadoFormulario() {
-        if (!estadoVehiculo) {
+        if (estadoVehiculo) {
             return "LIBRE";
         }
         return "OCUPADO";
-    }
-
-    public void addTrayecto(Trayecto trayecto) {
-        trayectos.add(trayecto);
-    }
-
-    @Override
-    public String toString() {
-        return "Vehiculo{id=" + id + ", matrícula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + "}";
     }
 }
