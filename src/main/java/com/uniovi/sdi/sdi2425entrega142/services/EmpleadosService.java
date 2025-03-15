@@ -50,7 +50,7 @@ public class EmpleadosService {
     }
 
     public Empleado getEmpleado(Long id) { return empleadosRepository.findById(id).get();}
-    public Empleado getEmpleadoByDni(String dni) { return empleadosRepository.findByDni(dni).get();}
+
     public void addEmpleado(Empleado empleado) {
         if (empleado.getId() == null) {
             empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
@@ -81,7 +81,6 @@ public class EmpleadosService {
     public String generatePassword() {
         return passwordGeneratorService.generateStrongPassword(PASSWORD_LENGTH);
     }
-
 
     public Empleado getByDni(String dni) {
         return empleadosRepository.findByDni(dni).get();

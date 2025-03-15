@@ -15,10 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class TrayectosController {
@@ -42,7 +42,7 @@ public class TrayectosController {
     @RequestMapping("/trayecto/list")
     public String getList(Model model, Pageable pageable, Principal principal) {
         String dni = principal.getName(); // DNI es el "name" de la autenticación
-        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        Empleado empleado = empleadosService.getByDni(dni);
         Page<Trayecto> trayectos = trayectosService.getTrayectosDelEmpleado(pageable, empleado);
         model.addAttribute("trayectosList", trayectos.getContent());
         model.addAttribute("page", trayectos);
@@ -50,33 +50,35 @@ public class TrayectosController {
     }
 
     @RequestMapping(value="/trayecto/add", method=RequestMethod.POST)
-    public String setTrayecto(@ModelAttribute Trayecto trayecto, BindingResult result, Principal principal) {
-        String dni = principal.getName(); // El empleado que registra el trayecto es el empleado en sesión
-        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
-        if (empleado == null) { // Solo lanzará error si la sesión es inválida (si algún problema ocurre)
+    public String setTrayecto(@ModelAttribute Trayecto trayecto, @RequestParam("vehiculo") Long vehiculoId,
+                              BindingResult result, Principal principal) {
+        String dni = principal.getName();
+        Empleado empleado = empleadosService.getByDni(dni);
+        if (empleado == null) {
             return "redirect:/login";
         }
         trayecto.setEmpleado(empleado);
 
-        // Verifica que el vehículo se esté recibiendo y asigna el vehículo correspondiente
-        if (trayecto.getVehiculo() != null) {
-            Vehiculo vehiculo = vehiculosService.getVehiculo(trayecto.getVehiculo().getId());
-            trayecto.setVehiculo(vehiculo); // Asigna el vehículo correspondiente
+        // Obtener el objeto Vehículo y asignarlo al Trayecto
+        if (vehiculoId != null) {
+            Vehiculo v = vehiculosService.getVehiculo(vehiculoId);
+            trayecto.setVehiculo(v);
         }
 
         addTrayectoValidator.validate(trayecto, result);
+        System.out.println(result.getAllErrors()); // Agregar esta línea para ver los errores en la consola
         if (result.hasErrors()) {
             return "trayecto/add";
         }
+
         trayectosService.addTrayecto(trayecto);
         return "redirect:/trayecto/list";
     }
 
-
     @RequestMapping(value="/trayecto/add", method=RequestMethod.GET)
     public String getTrayecto(Model model, Pageable pageable, Principal principal) {
         String dni = principal.getName(); // DNI es el "name" de la autenticación
-        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        Empleado empleado = empleadosService.getByDni(dni);
         Trayecto trayecto = new Trayecto();
         trayecto.setEmpleado(empleado);
 
@@ -88,7 +90,7 @@ public class TrayectosController {
     @RequestMapping("/trayecto/list/update")
     public String updateList(Model model, Pageable pageable, Principal principal) {
         String dni = principal.getName();
-        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        Empleado empleado = empleadosService.getByDni(dni);
         Page<Trayecto> trayectos = trayectosService.getTrayectosDelEmpleado(pageable, empleado);
         model.addAttribute("trayectosList", trayectos.getContent());
         model.addAttribute("page", trayectos);
@@ -98,7 +100,7 @@ public class TrayectosController {
     @RequestMapping("/trayecto/end")
     public String endTrayecto(Model model, Pageable pageable, Principal principal) {
         String dni = principal.getName();
-        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        Empleado empleado = empleadosService.getByDni(dni);
         Optional<Trayecto> opTrayecto = trayectosService.findTrayectoActivoByUser(empleado);
         if (!opTrayecto.isPresent()) {
             return "redirect:/home";
@@ -113,7 +115,7 @@ public class TrayectosController {
     @RequestMapping(value="/trayecto/end", method = RequestMethod.POST)
     public String endTrayectoPost(@Validated Trayecto trayecto, BindingResult result, Principal principal, Model model) {
         String dni = principal.getName();
-        Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+        Empleado empleado = empleadosService.getByDni(dni);
         Optional<Trayecto> opTrayecto = trayectosService.findTrayectoActivoByUser(empleado);
         Trayecto originalTrayecto = opTrayecto.get();
         Vehiculo vehiculo = vehiculosService.getVehiculo(originalTrayecto.getVehiculo().getId());
@@ -127,6 +129,6 @@ public class TrayectosController {
         originalTrayecto.endTrayecto(trayecto.getOdometroFin(), trayecto.getObservaciones());
         trayectosService.addTrayecto(originalTrayecto);
         vehiculosService.addVehiculo(vehiculo);
-        return "redirect:/vehiculo/trayectos/"+vehiculo.getId();
+        return "redirect:/vehiculo/trayectos/"+vehiculo.getMatricula();
     }
 }

@@ -25,7 +25,7 @@ public class GlobalAttributes {
     public boolean tieneTrayectoEnCurso(Principal principal) {
         if(principal != null) {
             String dni = principal.getName();
-            Empleado empleado = empleadosService.getEmpleadoByDni(dni);
+            Empleado empleado = empleadosService.getByDni(dni);
             Optional<Trayecto> opTrayecto = trayectosService.findTrayectoActivoByUser(empleado);
             return opTrayecto.isPresent();
         }

@@ -28,12 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public SpringSecurityDialect securityDialect() {
         return new SpringSecurityDialect();
@@ -48,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/empleado/delete/**", "/empleado/edit/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/vehiculo/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/vehiculo/list").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/vehiculo/add").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
