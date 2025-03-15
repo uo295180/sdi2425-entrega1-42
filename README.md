@@ -9,10 +9,10 @@ Este archivo enumera los requisitos funcionales del proyecto, clasificados en ob
 2. **Salir de sesión** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Administrador: Un usuario Administrador podrá:
-3. **Registrar nuevos empleados en el sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+3. **Registrar nuevos empleados en el sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 4. **Añadir nuevos vehículos al sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
-5. **Consultar el listado de los empleados del sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
-6. **Editar usuarios del sistema** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+5. **Consultar el listado de los empleados del sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
+6. **Editar usuarios del sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 7. **Consultar el listado de todos los vehículos en la empresa** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 8. **Borrar múltiples vehículos del sistema** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
