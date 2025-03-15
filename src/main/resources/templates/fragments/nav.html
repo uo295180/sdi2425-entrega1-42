@@ -50,6 +50,7 @@
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.vehiculos.list}" class="dropdown-item" href="/vehiculo/list">Ver vehículos</a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.vehiculos.add}" class="dropdown-item" href="/vehiculo/add">Agregar vehiculo</a>
                     <a th:text="#{nav.vehiculos.trayectos}" class="dropdown-item" href="/vehiculo/listAll">Ver trayectos de vehículo</a>
+                    <a th:text="#{nav.vehiculos.repostajes}" class="dropdown-item" href="/vehiculo/listAllRepostajes">Ver repostajes de vehículo</a>
                 </div>
             </li>
 

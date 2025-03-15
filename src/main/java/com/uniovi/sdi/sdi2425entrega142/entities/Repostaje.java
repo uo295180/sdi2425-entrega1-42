@@ -9,7 +9,7 @@ public class Repostaje {
 
     @Id
     @GeneratedValue
-    private Long id;
+    public Long id;
     private String nombreEstacion;
     private double precio;
     private double cantidadRepostada;

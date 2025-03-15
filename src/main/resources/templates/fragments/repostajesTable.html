@@ -1,0 +1,25 @@
+<div class="table-responsive" th:fragment="repostajesTable" th:if="!${#lists.isEmpty(repostajesList)}">
+    <table class="table table-hover" id="trayectosTable">
+        <thead>
+        <tr>
+            <th scope="col" th:text="#{repostaje.fechaYHora}">Fecha y hora de repostaje</th>
+            <th scope="col" th:text="#{repostaje.odometro}">Odometro</th>
+            <th scope="col" th:text="#{repostaje.nombreEstacion}">Nombre de la estación</th>
+            <th scope="col" th:text="#{repostaje.precioPorUnidad}">Precio por unidad</th>
+            <th scope="col" th:text="#{repostaje.cantidad}">Cantidad repostada</th>
+            <th scope="col" th:text="#{repostaje.precioTotal}">Precio total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="repostaje : ${repostajesList}">
+            <td th:text="${#dates.format(repostaje.fechaHoraRepostaje, 'dd/MM/yyyy HH:mm')}">Fecha y hora de repostaje</td>
+            <td th:text="${repostaje.odometro}"></td>
+            <td th:text="${repostaje.nombreEstacion}"></td>
+            <td th:text="${repostaje.precio}"></td>
+            <td th:text="${repostaje.cantidadRepostada}"></td>
+            <td th:text="${#numbers.formatDecimal(repostaje.precioTotal, 1, 2)}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${#lists.isEmpty(repostajesList)}" th:text="#{repostaje.nohay}">No hay repostajes</div>
+</div>
