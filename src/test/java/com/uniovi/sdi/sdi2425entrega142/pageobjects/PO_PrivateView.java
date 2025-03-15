@@ -12,7 +12,7 @@ public class PO_PrivateView extends PO_NavView{
 
     static public void fillFormAddVehiculo(WebDriver driver, String matriculap, String numeroBastidorp,
                                            String marcap, String modelop, String tipoCombustiblep) {
-        SeleniumUtils.waitSeconds(driver, 2);
+        //SeleniumUtils.waitSeconds(driver, 2);
         //Rellenemos los campos
         WebElement matricula = driver.findElement(By.name("matricula"));
         matricula.click();

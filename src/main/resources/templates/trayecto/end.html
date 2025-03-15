@@ -39,7 +39,7 @@
             </label></b>
             <div class="col-sm-10">
                 <p id="fechaInicioTrayecto" name="fechaInicioTrayecto"
-                   th:text="${#dates.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}"></p>
+                   th:text="${#temporals.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}"></p>
             </div>
         </div>
         <!-- Final odometer value input -->
