@@ -83,7 +83,7 @@ public class EmpleadosService {
     }
 
     public Empleado getByDni(String dni) {
-        return empleadosRepository.findByDni(dni).get();
+        return empleadosRepository.findByDni(dni);
     }
 
     public void changePassword(PasswordDTO dto) {
