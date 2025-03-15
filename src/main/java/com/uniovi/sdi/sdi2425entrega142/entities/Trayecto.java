@@ -37,7 +37,7 @@ public class Trayecto {
     private Empleado empleado;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "matricula")
+    @JoinColumn(name = "vehiculo_matricula")
     private Vehiculo vehiculo;
 
     public Trayecto() {

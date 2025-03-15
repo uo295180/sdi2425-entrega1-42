@@ -50,7 +50,7 @@ public class TrayectosController {
     }
 
     @RequestMapping(value="/trayecto/add", method=RequestMethod.POST)
-    public String setTrayecto(@ModelAttribute Trayecto trayecto, @RequestParam("vehiculo") Long vehiculoId,
+    public String setTrayecto(@ModelAttribute Trayecto trayecto, @RequestParam("vehiculoMatricula") String matricula,
                               BindingResult result, Principal principal) {
         String dni = principal.getName();
         Empleado empleado = empleadosService.getByDni(dni);
@@ -59,30 +59,26 @@ public class TrayectosController {
         }
         trayecto.setEmpleado(empleado);
 
-        // Obtener el objeto Vehículo y asignarlo al Trayecto
-        if (vehiculoId != null) {
-            Vehiculo v = vehiculosService.getVehiculo(vehiculoId);
-            trayecto.setVehiculo(v);
-        }
+        // Obtener el objeto Vehículo a partir de la matrícula
+        Vehiculo v = vehiculosService.getVehiculoByMatricula(matricula);
+        trayecto.setVehiculo(v);
 
         addTrayectoValidator.validate(trayecto, result);
-        System.out.println(result.getAllErrors()); // Agregar esta línea para ver los errores en la consola
         if (result.hasErrors()) {
             return "trayecto/add";
         }
 
+        v.setEstadoVehiculo(true);
+        v.addTrayecto(trayecto);
+        empleado.addTrayecto(trayecto);
+        trayecto.setEstadoTrayecto(true);
         trayectosService.addTrayecto(trayecto);
         return "redirect:/trayecto/list";
     }
 
-    @RequestMapping(value="/trayecto/add", method=RequestMethod.GET)
-    public String getTrayecto(Model model, Pageable pageable, Principal principal) {
-        String dni = principal.getName(); // DNI es el "name" de la autenticación
-        Empleado empleado = empleadosService.getByDni(dni);
-        Trayecto trayecto = new Trayecto();
-        trayecto.setEmpleado(empleado);
-
-        model.addAttribute("trayecto", trayecto);
+    @RequestMapping(value="/trayecto/add")
+    public String getTrayecto(Model model, Pageable pageable) {
+        model.addAttribute("trayecto", new Trayecto());
         model.addAttribute("vehiculosList", vehiculosService.getVehiculosDisponibles(pageable));
         return "trayecto/add";
     }

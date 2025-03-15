@@ -9,8 +9,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="vehiculo" th:text="#{trayecto.vehiculo}">Vehículo:</label>
                 <div class="col-sm-10" th:if="${vehiculosList != null and not #lists.isEmpty(vehiculosList)}">
-                    <select id="vehiculo" class="form-control" name="vehiculo">
-                        <option th:each="vehiculo : ${vehiculosList}" th:value="${vehiculo.id}"
+                    <select id="vehiculo" class="form-control" name="vehiculoMatricula">
+                        <option th:each="vehiculo : ${vehiculosList}" th:value="${vehiculo.matricula}"
                                 th:text="|${vehiculo.matricula} - ${vehiculo.marca} ${vehiculo.modelo}|"
                                 th:data-odometro="${vehiculo.odometro}">
                         </option>
