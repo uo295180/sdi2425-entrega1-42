@@ -1,8 +1,10 @@
 package com.uniovi.sdi.sdi2425entrega142.controllers;
 
+import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.entities.Repostaje;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
+import com.uniovi.sdi.sdi2425entrega142.services.EmpleadosService;
 import com.uniovi.sdi.sdi2425entrega142.services.RepostajesService;
 import com.uniovi.sdi.sdi2425entrega142.services.TrayectosService;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
@@ -27,12 +29,14 @@ public class VehiculosController {
     private final RepostajesService repostajesService;
     private final TrayectosService trayectosService;
     private final VehiculosValidator vehiculosValidator;
+    private final EmpleadosService empleadosService;
 
-    public VehiculosController(VehiculosService vehiculosService, RepostajesService repostajesService, TrayectosService trayectosService, VehiculosValidator vehiculosValidator) {
+    public VehiculosController(VehiculosService vehiculosService, RepostajesService repostajesService, TrayectosService trayectosService, VehiculosValidator vehiculosValidator, EmpleadosService empleadosService) {
         this.vehiculosService = vehiculosService;
         this.repostajesService = repostajesService;
         this.trayectosService = trayectosService;
         this.vehiculosValidator = vehiculosValidator;
+        this.empleadosService = empleadosService;
     }
 
     @RequestMapping("/vehiculo/list")
