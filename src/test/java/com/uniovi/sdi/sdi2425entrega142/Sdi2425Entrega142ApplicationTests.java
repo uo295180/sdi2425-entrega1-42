@@ -242,13 +242,9 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
 
-        //String checkText = PO_HomeView.getP().getString("Error.vehiculo.matricula.format",
-        //        PO_Properties.getSPANISH());
-        //PO_PrivateView.findText(driver, checkText);
-
-        //String checkText2 = "Agregar vehículo";
-        //List<WebElement> result2 = PO_View.checkElementBy(driver, "text", checkText2);
-        //Assertions.assertEquals(checkText2, result2.get(0).getText());
+        String checkText = PO_HomeView.getP().getString("Error.vehiculo.matricula.format",
+                PO_Properties.getSPANISH());
+        PO_AddVehiculo.findText(driver, checkText);
     }
     @Test
     @Order(14)
