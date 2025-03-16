@@ -27,20 +27,20 @@ Este archivo enumera los requisitos funcionales del proyecto, clasificados en ob
 16. **Modificar su contraseña** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Internacionalización (Hasta 0.5 puntos)
-17. **Internacionalización de vistas** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
+17. **Internacionalización de vistas** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Seguridad. (Hasta 1.0 puntos)
 18. **Vulnerabilidad de recursos y acciones** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ### Informe obligatorio. (Hasta 1.0 puntos)
-19. **Escribir un informe obligatorio del proyecto** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
+19. **Escribir un informe obligatorio del proyecto** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ---
 
 ## OPCIONALES (Hasta 3.0 puntos)
 
 20. **Crear incidencias asociadas a un trayecto** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
-21. **Usuario administrador: Gestión de incidencias** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
+21. **Usuario administrador: Gestión de incidencias** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 22. **Usuario administrador: Edición de trayectos** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
 ---
