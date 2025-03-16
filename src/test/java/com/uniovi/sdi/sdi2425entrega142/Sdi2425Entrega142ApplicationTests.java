@@ -22,11 +22,11 @@ class Sdi2425Entrega142ApplicationTests {
     //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    //static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
@@ -891,7 +891,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_IncidenciaView.fillIncidenciaNoEsperadaForm(driver, "Vehículo averiado", "Reventó la rueda");
         //Se registra correctamente
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/incidencia/list", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/incidencia/add", currentUrl);
         //Se encuentra en el listado de incidencias
         Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaNoEsperada(driver, "Vehículo averiado"));
     }
@@ -906,7 +906,7 @@ class Sdi2425Entrega142ApplicationTests {
                 "Comprar un nuevo cristal");
         //Se registra correctamente
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/incidencia/list", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/incidencia/add", currentUrl);
         //Se encuentra en el listado de incidencias
         Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaEsperada(driver, "Vehículo estropeado"));
     }

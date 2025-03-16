@@ -1,5 +1,8 @@
 package com.uniovi.sdi.sdi2425entrega142.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,7 +28,10 @@ public class Incidencia {
 
     @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="trayecto_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Trayecto trayecto;
+
+
 
     public Incidencia() {this.estado = EstadoIncidencia.REGISTRADA;}
 
@@ -128,4 +134,5 @@ public class Incidencia {
     public String getEstadoString() {
         return String.valueOf(estado);
     }
+
 }
