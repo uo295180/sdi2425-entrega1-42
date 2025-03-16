@@ -16,14 +16,14 @@ import java.util.List;
 class Sdi2425Entrega142ApplicationTests {
 
     // CONFIGURACIÓN DE VICENTE
-    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
@@ -583,7 +583,7 @@ class Sdi2425Entrega142ApplicationTests {
         driver.navigate().to("http://localhost:8090/repostajes/add");
         PO_AddRepostajeView.fillRegisterForm(driver, "Estación 1", "1.04", "12", "200");
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertEquals("http://localhost:8090/repostajes/list", currentUrl);
+        Assertions.assertEquals("http://localhost:8090/vehiculo/listAllRepostajes", currentUrl);
     }
 
     @Test
