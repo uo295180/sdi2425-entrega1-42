@@ -451,8 +451,6 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
 
-
-
     @Test
     @Order(22)
     public void Prueba22() {
@@ -806,6 +804,127 @@ class Sdi2425Entrega142ApplicationTests {
     }
 
     @Test
+    @Order(44)
+    public void Prueba44() {
+        // Inicio de sesión como ADMIN
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456");
+
+        // Página Home (por defecto en español)
+        driver.navigate().to("http://localhost:8090/home");
+        List<WebElement> titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        WebElement titulo = titulos.get(0);
+        Assertions.assertEquals("Bienvenidos a la página principal", titulo.getText());
+
+        // Cambiar a inglés en Home
+        List<WebElement> btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        List<WebElement> botonIngles = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[1]", 5);
+        botonIngles.get(0).click();
+        SeleniumUtils.textIsPresentOnPage(driver, "Welcome to the main page");
+        titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo = titulos.get(0);
+        Assertions.assertEquals("Welcome to the main page", titulo.getText());
+
+        // Página de lista de empleados (en inglés)
+        driver.navigate().to("http://localhost:8090/empleado/list");
+        titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo = titulos.get(0);
+        Assertions.assertEquals("System Employees", titulo.getText());
+
+        // Cambiar a español en lista de empleados
+        btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        List<WebElement> botonEspanol = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[2]", 5);
+        botonEspanol.get(0).click();
+        SeleniumUtils.textIsPresentOnPage(driver, "Empleados del sistema");
+        titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo = titulos.get(0);
+        Assertions.assertEquals("Empleados del sistema", titulo.getText());
+
+        // Página de adición de vehículos (por defecto en español)
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo = titulos.get(0);
+        Assertions.assertEquals("Agregar vehículo", titulo.getText());
+
+        // Cambiar a inglés en adición de vehículos
+        btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        botonIngles = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[1]", 5);
+        botonIngles.get(0).click();
+        SeleniumUtils.textIsPresentOnPage(driver, "Add vehicle");
+        titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo = titulos.get(0);
+        Assertions.assertEquals("Add vehicle", titulo.getText());
+    }
+
+    @Test
+    @Order(45)
+    public void Prueba45() {
+        // Inicio de sesión como ADMIN
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456");
+
+        // Navegamos a la vista de home
+        driver.navigate().to("http://localhost:8090/home");
+
+        // Página home: Comenzamos en inglés
+        List<WebElement> btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        // Seleccionar inglés
+        List<WebElement> botonIngles = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[1]", 5);
+        botonIngles.get(0).click();
+        // Comprobamos que aparece el título en inglés
+        SeleniumUtils.textIsPresentOnPage(driver, "Welcome to the main page");
+        List<WebElement> titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        WebElement titulo1 = titulos.get(0);
+        Assertions.assertEquals("Welcome to the main page", titulo1.getText());
+
+        // Cambiar a francés en Home
+        btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        List<WebElement> botonFrances = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[3]", 5);
+        botonFrances.get(0).click();
+        SeleniumUtils.textIsPresentOnPage(driver, "Bienvenue sur la page principale");
+        titulos = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo1 = titulos.get(0);
+        Assertions.assertEquals("Bienvenue sur la page principale", titulo1.getText());
+
+        // --- Vista de lista de empleados (en francés) ---
+        driver.navigate().to("http://localhost:8090/empleado/list");
+        List<WebElement> titulos2 = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        WebElement titulo2 = titulos2.get(0);
+        Assertions.assertEquals("Employés du système", titulo2.getText());
+
+        // Cambiar a inglés en la vista de empleados
+        btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        botonIngles = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[1]", 5);
+        botonIngles.get(0).click();
+        SeleniumUtils.textIsPresentOnPage(driver, "System Employees");
+        titulos2 = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo2 = titulos2.get(0);
+        Assertions.assertEquals("System Employees", titulo2.getText());
+
+        // --- Vista de adición de vehículos (en inglés) ---
+        driver.navigate().to("http://localhost:8090/vehiculo/add");
+        List<WebElement> titulos3 = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        WebElement titulo3 = titulos3.get(0);
+        Assertions.assertEquals("Add vehicle", titulo3.getText());
+
+        // Cambiar a francés en la vista de vehículos
+        btnLanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage", 5);
+        btnLanguage.get(0).click();
+        botonFrances = SeleniumUtils.waitLoadElementsByXpath(driver, "//*[@id='languageDropdownMenuButton']/a[3]", 5);
+        botonFrances.get(0).click();
+        SeleniumUtils.textIsPresentOnPage(driver, "Ajouter un véhicule");
+        List<WebElement> titulos3After = SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/h2", 5);
+        titulo3 = titulos3After.get(0);
+        Assertions.assertEquals("Ajouter un véhicule", titulo3.getText());
+    }
+
+    @Test
     @Order(46)
     public void PR46() {
         driver.navigate().to("http://localhost:8090/empleado/list");
@@ -908,8 +1027,7 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/incidencia/list", currentUrl);
         //Se encuentra en el listado de incidencias
-        Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaEsperada(driver, "Vehículo estropeado",
-                "Reventó el cristal", "Comprar un nuevo cristal"));
+        Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaEsperada(driver, "Vehículo estropeado", "Reventó el cristal", "Comprar un nuevo cristal"));
     }
 
     @Test
