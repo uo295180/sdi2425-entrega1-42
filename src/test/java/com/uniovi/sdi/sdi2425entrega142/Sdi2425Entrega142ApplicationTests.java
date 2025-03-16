@@ -15,14 +15,14 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
 
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
+    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
-    // static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    // static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
@@ -256,6 +256,10 @@ class Sdi2425Entrega142ApplicationTests {
                 "Mercedes", "A4", "Diésel");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+
+        String checkText = PO_HomeView.getP().getString("Error.vehiculo.matricula.format",
+                PO_Properties.getSPANISH());
+        PO_AddVehiculo.findText(driver, checkText);
     }
     @Test
     @Order(14)
@@ -268,6 +272,10 @@ class Sdi2425Entrega142ApplicationTests {
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+
+        String checkText = PO_HomeView.getP().getString("Error.vehiculo.numeroBastidor.length",
+                PO_Properties.getSPANISH());
+        PO_AddVehiculo.findText(driver, checkText);
     }
     @Test
     @Order(15)
@@ -280,6 +288,10 @@ class Sdi2425Entrega142ApplicationTests {
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+
+        String checkText = PO_HomeView.getP().getString("Error.vehiculo.matricula.duplicate",
+                PO_Properties.getSPANISH());
+        PO_AddVehiculo.findText(driver, checkText);
     }
     @Test
     @Order(16)
@@ -292,6 +304,10 @@ class Sdi2425Entrega142ApplicationTests {
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
+
+        String checkText = PO_HomeView.getP().getString("Error.vehiculo.numeroBastidor.duplicate",
+                PO_Properties.getSPANISH());
+        PO_AddVehiculo.findText(driver, checkText);
     }
     @Test
     @Order(17)
