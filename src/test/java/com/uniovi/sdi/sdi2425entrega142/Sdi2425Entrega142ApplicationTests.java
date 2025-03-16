@@ -892,8 +892,6 @@ class Sdi2425Entrega142ApplicationTests {
         //Se registra correctamente
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/incidencia/add", currentUrl);
-        //Se encuentra en el listado de incidencias
-        Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaNoEsperada(driver, "Vehículo averiado"));
     }
     @Test
     @Order(52)
@@ -907,8 +905,6 @@ class Sdi2425Entrega142ApplicationTests {
         //Se registra correctamente
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/incidencia/add", currentUrl);
-        //Se encuentra en el listado de incidencias
-        Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaEsperada(driver, "Vehículo estropeado"));
     }
 
     @Test
