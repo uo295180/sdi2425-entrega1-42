@@ -871,7 +871,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(51)
     public void Prueba51() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/incidencia/add");
         //Rellenamos el formulario
         PO_IncidenciaView.fillIncidenciaNoEsperadaForm(driver, "Vehículo averiado", "Reventó la rueda");
@@ -885,7 +885,7 @@ class Sdi2425Entrega142ApplicationTests {
     @Order(52)
     public void Prueba52() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como empleado
         driver.navigate().to("http://localhost:8090/incidencia/add");
         //Rellenamos el formulario
         PO_IncidenciaView.fillIncidenciaEsperadaForm(driver, "Vehículo estropeado", "Reventó el cristal",
