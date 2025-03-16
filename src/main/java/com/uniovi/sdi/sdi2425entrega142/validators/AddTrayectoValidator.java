@@ -19,23 +19,27 @@ public class AddTrayectoValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Trayecto trayecto = (Trayecto) target;
 
+        // Validación de empleado
         if (trayecto.getEmpleado() == null) {
             errors.rejectValue("empleado", "Error.trayecto.add.empleado.required");
-        }
-        if (trayecto.getVehiculo() == null) {
-            errors.rejectValue("vehiculo", "Error.trayecto.add.vehiculo.required");
         } else {
-            if (!trayecto.getVehiculo().isEstadoVehiculo()) {
-                errors.rejectValue("vehiculo", "Error.trayecto.add.vehiculo");
+            Set<Trayecto> trayectos = trayecto.getEmpleado().getTrayectos();
+            if (trayectos != null && !trayectos.isEmpty()) {
+                for (Trayecto t : trayectos) {
+                    if (t.isEstadoTrayecto()) {
+                        errors.rejectValue("estadoTrayecto", "Error.trayecto.add.estado");
+                    }
+                }
             }
         }
 
-        Set<Trayecto> trayectos = trayecto.getEmpleado().getTrayectos();
-        if (trayectos != null && !trayectos.isEmpty()) {
-            for (Trayecto t : trayectos) {
-                if (t.isEstadoTrayecto()) {
-                    errors.rejectValue("estadoTrayecto", "Error.trayecto.add.estado");
-                }
+        // Validación de vehículo
+        if (trayecto.getVehiculo() == null) {
+            errors.rejectValue("vehiculo", "Error.trayecto.add.vehiculo.required");
+        } else {
+            // Verificación de vehículo activo según el estado
+            if (trayecto.getVehiculo().isEstadoVehiculo()) {
+                errors.rejectValue("vehiculo", "Error.trayecto.add.vehiculo");
             }
         }
     }

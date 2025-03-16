@@ -44,7 +44,7 @@ public class Vehiculo {
         this.modelo = modelo;
         this.numeroBastidor = numeroBastidor;
         this.tipoCombustible = tipoCombustible;
-        this.estadoVehiculo = false;
+        this.estadoVehiculo = true;
         this.cantidadTanque = cantidadMaximaTanque;
         this.odometro = 0;
     }
@@ -63,10 +63,6 @@ public class Vehiculo {
 
     public void setCantidadMaximaTanque(double cantidadMaximaTanque) {
         this.cantidadMaximaTanque = cantidadMaximaTanque;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
     public double getCantidadTanque() {
         return cantidadTanque;
@@ -187,5 +183,10 @@ public class Vehiculo {
 
     public void addTrayecto(Trayecto trayecto) {
         trayectos.add(trayecto);
+    }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{id=" + id + ", matrícula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + "}";
     }
 }

@@ -1,27 +1,27 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"><title>Gestión de flotas</title></head>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Trayectos</h2>
-    <p>Los trayectos realizados (y en curso) son los siguientes:</p>
-    <button type="button" id="updateButton" class="btn btn-primary">Actualizar</button>
+    <h2 th:text="#{nav.trayectos}">Trayectos</h2>
+    <p th:text="#{trayectos.subtitle}">Los trayectos realizados (y en curso) son los siguientes:</p>
+    <button type="button" id="updateButton" class="btn btn-primary" th:text="#{actualizar}">Actualizar</button>
     <div class="table-responsive" th:if="!${#lists.isEmpty(trayectosList)}">
         <table class="table table-hover" id="trayectosTable">
             <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Fecha y hora de inicio</th>
-                <th scope="col">Matrícula del vehículo</th>
-                <th scope="col">Duración del trayecto</th>
-                <th scope="col">Odómetro inicio</th>
-                <th scope="col">Odómetro final</th>
+                <th scope="col" th:text="#{trayecto.fechayhora}">Fecha y hora de inicio</th>
+                <th scope="col" th:text="#{trayecto.matricula}">Matrícula del vehículo</th>
+                <th scope="col" th:text="#{trayecto.duracion}">Duración del trayecto</th>
+                <th scope="col" th:text="#{trayecto.odometroinicio}">Odómetro inicio</th>
+                <th scope="col" th:text="#{trayecto.odometrofin}">Odómetro final</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="trayecto : ${trayectosList}">
-                <td scope="row" th:text="${trayecto.id}"> 1</td>
+                <td scope="row" th:text="${trayecto.id}">1</td>
                 <td th:text="${trayecto.fechaInicioTrayecto}">Fecha y hora de inicio</td>
                 <td th:text="${trayecto.vehiculo.matricula}">0000BBB</td>
                 <td th:text="${trayecto.duracionTrayecto}">120</td>
@@ -31,7 +31,7 @@
             </tbody>
         </table>
     </div>
-    <div th:if="${#lists.isEmpty(trayectosList)}">No hay trayectos</div>
+    <div th:if="${#lists.isEmpty(trayectosList)}" th:text="#{trayectos.nohay}">No hay trayectos</div>
     <footer th:replace="fragments/pagination"></footer>
 </div>
 <footer th:replace="fragments/footer"></footer>

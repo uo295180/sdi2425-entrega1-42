@@ -11,14 +11,18 @@ import java.util.regex.Pattern;
 
 @Component
 public class VehiculosValidator implements Validator {
+
     private final VehiculosService vehiculosService;
+
     public VehiculosValidator(VehiculosService vehiculosService) {
         this.vehiculosService = vehiculosService;
     }
+
     @Override
     public boolean supports(Class<?> aClass) {
         return Vehiculo.class.equals(aClass);
     }
+
     @Override
     public void validate(Object target, Errors errors) {
         Vehiculo vehiculo = (Vehiculo) target;

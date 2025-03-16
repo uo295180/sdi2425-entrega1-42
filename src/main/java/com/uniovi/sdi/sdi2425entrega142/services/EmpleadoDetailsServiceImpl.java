@@ -23,13 +23,10 @@ public class EmpleadoDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        Empleado empleado = empleadosRepository.findByDni(dni).get();
+        Empleado empleado = empleadosRepository.findByDni(dni);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(empleado.getRole()));
-        if(empleado == null){
-            throw new UsernameNotFoundException(dni);
-        }
         return new org.springframework.security.core.userdetails.User(
                 empleado.getDni(), empleado.getPassword(), grantedAuthorities);
     }

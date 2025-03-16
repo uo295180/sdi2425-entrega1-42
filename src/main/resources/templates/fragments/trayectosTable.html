@@ -1,0 +1,25 @@
+<div class="table-responsive" th:fragment="trayectosTable" th:if="!${#lists.isEmpty(trayectosList)}">
+    <table class="table table-hover" id="trayectosTable">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col" th:text="#{trayecto.fechayhora}">Fecha y hora de inicio</th>
+            <th scope="col" th:text="#{trayecto.conductor}">Conductor</th>
+            <th scope="col" th:text="#{trayecto.matricula}">Matrícula del vehículo</th>
+            <th scope="col" th:text="#{trayecto.duracion}">Duración del trayecto</th>
+            <th scope="col" th:text="#{trayecto.distancia}">Distancia recorrida</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="trayecto : ${trayectosList}">
+            <td scope="row" th:text="${trayecto.id}">1</td>
+            <td th:text="${#temporals.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}">Fecha y hora de inicio</td>
+            <td th:text="${trayecto.empleado.nombre}">0000BBB</td>
+            <td th:text="${trayecto.vehiculo.matricula}">0000BBB</td>
+            <td th:text="${trayecto.duracionTrayecto}">120</td>
+            <td th:text="${trayecto.odometroFin - trayecto.odometroInicio}">0</td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${#lists.isEmpty(trayectosList)}" th:text="#{trayectos.nohay}">No hay trayectos</div>
+</div>

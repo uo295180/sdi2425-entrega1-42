@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<head th:replace="fragments/head"> Añadir empleado</head>
-
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
 <!-- Barra de Navegación superior -->
 <nav th:replace="fragments/nav"></nav>
-
 <div class="container">
-    <h2>Agregar empleado</h2>
+    <h2 th:text="#{nav.empleados.add}">Agregar empleado</h2>
     <form class="form-horizontal" method="post" action="/empleado/add" th:object="${empleado}">
         <div class="form-group">
             <label class="control-label col-sm-2" for="dni">DNI:</label>
@@ -18,7 +16,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="nombre">Nombre:</label>
+            <label class="control-label col-sm-2" for="nombre" th:text="#{nombre}">Nombre:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="nombre" name="nombre"
                        placeholder="Ejemplo: Juan" required="required"/>
@@ -26,7 +24,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="apellidos">Apellidos:</label>
+            <label class="control-label col-sm-2" for="apellidos" th:text="#{apellidos}">Apellidos:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="apellidos" name="apellidos"
                        placeholder="Ejemplo: Peréz Almonte" required="required"/>
@@ -35,28 +33,24 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" id="submitButton" class="btn btn-primary">Enviar</button>
+                <button type="submit" id="submitButton" class="btn btn-primary" th:text="#{send}">Enviar</button>
             </div>
         </div>
         <!-- Hidden input for password -->
         <input type="hidden" th:field="*{password}" />
-
         <!-- Password Card (Initially Hidden) -->
         <div id="passwordCard" class="card">
-            <div class="card-header">Contraseña propuesta para el empleado</div>
+            <div class="card-header" th:text="#{password.propuesta}">Contraseña propuesta para el empleado:</div>
             <div class="card-body">
                 <p class="card-text" id="passwordText" th:text="${empleado.password}">Contraseña</p>
             </div>
         </div>
-
         <!-- Refresh Link (Initially Hidden) -->
         <div class="form-group" id="refreshLink" style="display: none; margin-top: 10px;">
-            <a href="/empleado/add" class="btn btn-secondary">Añadir otro empleado</a>
+            <a href="/empleado/add" class="btn btn-secondary" th:text="#{empleado.addotro}">Añadir otro empleado</a>
         </div>
-
     </form>
 </div>
-
 <footer th:replace="fragments/footer"></footer>
 </body>
 </html>

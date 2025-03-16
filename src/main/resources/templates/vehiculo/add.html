@@ -1,52 +1,59 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"></head>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Agregar vehículo</h2>
+    <h2 th:text="#{nav.vehiculos.add}">Agregar vehículo</h2>
     <form class="form-horizontal" method="post" action="/vehiculo/add" th:object="${vehiculo}">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="matricula">Matricula:</label>
+            <label class="control-label col-sm-2" for="matricula" th:text="#{vehiculos.matricula}">Matricula:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Ejemplo 1234AAA"
-                       required="true" th:value="${vehiculo.matricula}" />
+                <input type="text" class="form-control" id="matricula" name="matricula" placeholder="1234BBB"
+                       required="required" th:value="${vehiculo.matricula}" />
                 <span class="text-danger" th:if="${#fields.hasErrors('matricula')}" th:errors="*{matricula}"></span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="numeroBastidor">Nº Bastidor:</label>
+            <label class="control-label col-sm-2" for="numeroBastidor" th:text="#{vehiculos.bastidor}">Nº Bastidor:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="numeroBastidor" name="numeroBastidor" placeholder="Ejemplo ppppppppppppppppp"
-                       required="true" th:value="${vehiculo.numeroBastidor}" />
+                <input type="text" class="form-control" id="numeroBastidor" name="numeroBastidor" placeholder="ppppppppppppppppp"
+                       required="required" th:value="${vehiculo.numeroBastidor}" />
                 <span class="text-danger" th:if="${#fields.hasErrors('numeroBastidor')}" th:errors="*{numeroBastidor}"></span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="marca">Marca:</label>
+            <label class="control-label col-sm-2" for="marca" th:text="#{vehiculos.marca}">Marca:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="marca" name="marca" placeholder="Ejemplo Mercedes"
-                       required="true" th:value="${vehiculo.marca}" />
+                <input type="text" class="form-control" id="marca" name="marca" placeholder="Mercedes"
+                       required="required" th:value="${vehiculo.marca}" />
                 <span class="text-danger" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="modelo">Modelo:</label>
+            <label class="control-label col-sm-2" for="modelo" th:text="#{vehiculos.modelo}">Modelo:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Ejemplo M4"
-                       required="true" th:value="${vehiculo.modelo}" />
+                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="M4"
+                       required="required" th:value="${vehiculo.modelo}" />
                 <span class="text-danger" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="tipoCombustible">Tipo Combustible:</label>
+            <label class="control-label col-sm-2" for="tipoCombustible" th:text="#{vehiculos.combustible}">
+                Tipo combustible:
+            </label>
             <div class="col-sm-10">
                 <select class="form-control" id="tipoCombustible" name="tipoCombustible" required>
-                    <option value="GASOLINA" th:selected="${vehiculo.tipoCombustible == 'GASOLINA'}">Gasolina</option>
-                    <option value="DIESEL" th:selected="${vehiculo.tipoCombustible == 'DIESEL'}">Diesel</option>
-                    <option value="MICROHIBRIDO" th:selected="${vehiculo.tipoCombustible == 'MICROHIBRIDO'}">MicroHíbrido</option>
-                    <option value="HIBRIDO" th:selected="${vehiculo.tipoCombustible == 'HIBRIDO'}">Híbrido</option>
-                    <option value="ELECTRICO" th:selected="${vehiculo.tipoCombustible == 'ELECTRICO'}">Eléctrico</option>
+                    <option value="GASOLINA" th:selected="${vehiculo.tipoCombustible == 'GASOLINA'}"
+                            th:text="#{gasolina}">Gasolina</option>
+                    <option value="DIESEL" th:selected="${vehiculo.tipoCombustible == 'DIESEL'}"
+                            th:text="#{diesel}">Diesel</option>
+                    <option value="MICROHIBRIDO" th:selected="${vehiculo.tipoCombustible == 'MICROHIBRIDO'}"
+                            th:text="#{microhibrido}">MicroHíbrido</option>
+                    <option value="HIBRIDO" th:selected="${vehiculo.tipoCombustible == 'HIBRIDO'}"
+                            th:text="#{hibrido}">Híbrido</option>
+                    <option value="ELECTRICO" th:selected="${vehiculo.tipoCombustible == 'ELECTRICO'}"
+                            th:text="#{electrico}">Eléctrico</option>
                     <option value="GLP" th:selected="${vehiculo.tipoCombustible == 'GLP'}">GLP</option>
                     <option value="GNR" th:selected="${vehiculo.tipoCombustible == 'GNR'}">GNR</option>
                 </select>
@@ -54,7 +61,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Agregar</button>
+                <button type="submit" class="btn btn-primary" th:text="#{agregar}">Agregar</button>
             </div>
         </div>
     </form>

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
@@ -24,4 +23,7 @@ public interface TrayectosRepository extends CrudRepository<Trayecto, Long> {
     @Modifying
     @Query("DELETE FROM Trayecto t WHERE t.vehiculo.id = ?1")
     void deleteByVehiculoId(Long id);
+
+    @Query("SELECT t FROM Trayecto t WHERE t.vehiculo.id = ?1 ORDER BY t.fechaInicioTrayecto DESC")
+    Page<Trayecto> findByVehiculoId(Long id, Pageable pageable);
 }

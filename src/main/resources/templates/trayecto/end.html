@@ -1,63 +1,74 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"><title>Gestión de flotas - Finalizar Trayecto</title></head>
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Finalizar trayecto</h2>
+    <h2 th:text="#{nav.trayectos.end}">Finalizar trayecto</h2>
     <form class="form-horizontal" method="post" action="/trayecto/end" th:object="${trayecto}">
         <div class="form-group">
-            <b><label class="control-label col-sm-2">Matrícula del Vehículo:</label></b>
+            <b>
+                <label class="control-label col-sm-2" th:text="#{trayecto.vehiculo.matricula}">
+                    Matrícula del vehículo:
+                </label>
+            </b>
             <div class="col-sm-10">
                 <p th:text="${vehiculo.matricula}"></p>
             </div>
         </div>
-
         <div class="form-group">
-            <b><label class="control-label col-sm-2">Marca del Vehículo:</label></b>
+            <b>
+                <label class="control-label col-sm-2" th:text="#{trayecto.vehiculo.marca}">Marca del vehículo:</label>
+            </b>
             <div class="col-sm-10">
                 <p th:text="${vehiculo.marca}"></p>
             </div>
         </div>
-
         <div class="form-group">
-            <b><label class="control-label col-sm-2">Modelo del Vehículo:</label></b>
+            <b>
+                <label class="control-label col-sm-2" th:text="#{trayecto.vehiculo.modelo}">Modelo del vehículo:</label>
+            </b>
             <div class="col-sm-10">
                 <p th:text="${vehiculo.modelo}"></p>
             </div>
         </div>
-
         <!-- Display trayecto (trip) information -->
         <div class="form-group">
-            <b><label class="control-label col-sm-2" for="fechaInicioTrayecto">Fecha de Inicio del Trayecto:</label></b>
+            <b><label class="control-label col-sm-2" for="fechaInicioTrayecto" th:text="#{trayecto.fechainicio}">
+                Fecha de inicio del trayecto:
+            </label></b>
             <div class="col-sm-10">
-                <p id="fechaInicioTrayecto" name="fechaInicioTrayecto" th:text="${#dates.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}"></p>
+                <p id="fechaInicioTrayecto" name="fechaInicioTrayecto"
+                   th:text="${#temporals.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}"></p>
             </div>
         </div>
-
         <!-- Final odometer value input -->
         <div class="form-group">
-            <label for="odometroFin" class="control-label col-sm-2">Odómetro Final:</label>
+            <label for="odometroFin" class="control-label col-sm-2" th:text="#{trayecto.odometrofinal}">
+                Odómetro final:
+            </label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="odometroFin" name="odometroFin"
                        th:placeholder="${vehiculo.odometro}" th:field="*{odometroFin}" step="0.01" required/>
                 <span class="text-danger" th:if="${#fields.hasErrors('odometroFin')}" th:errors="*{odometroFin}"></span>
-
             </div>
         </div>
-
         <!-- Observations input -->
         <div class="form-group">
-            <label for="observaciones" class="control-label col-sm-2">Observaciones:</label>
+            <label for="observaciones" class="control-label col-sm-2" th:text="#{observaciones}">
+                Observaciones:
+            </label>
             <div class="col-sm-10">
-                <input type="text" id="observaciones" name="observaciones" class="form-control" th:field="*{observaciones}" placeholder="Ingrese observaciones sobre el trayecto"></input>
+                <input type="text" id="observaciones" name="observaciones" class="form-control"
+                       th:field="*{observaciones}" placeholder="Ingrese observaciones sobre el trayecto"></input>
             </div>
         </div>
-
         <!-- Submit button -->
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Finalizar Trayecto</button>
+                <button type="submit" class="btn btn-primary"  th:text="#{nav.trayectos.end}">
+                    Finalizar trayecto
+                </button>
             </div>
         </div>
     </form>

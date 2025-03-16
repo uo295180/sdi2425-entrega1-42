@@ -1,0 +1,35 @@
+<!DOCTYPE>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
+<body>
+  <!-- Barra de Navegación superior -->
+  <nav th:replace="fragments/nav"></nav>
+  <div class="container" id="main-container">
+    <h2 th:text="#{nav.trayectos.editSelectTrayecto}">Editar trayecto: Selección de trayecto a editar</h2>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col" th:text="#{trayecto.edit.conductor}">Conductor</th>
+        <th scope="col" th:text="#{trayecto.edit.fechainicio}">Fecha inicio</th>
+        <th scope="col" th:text="#{trayecto.edit.fechafinal}">Fecha fin</th>
+        <th scope="col" th:text="#{trayecto.edit.acciones}">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="trayecto : ${trayectosFinalizados}">
+        <td th:text="${trayecto.id}"></td>
+        <td th:text="${trayecto.empleado.dni}"></td>
+        <td th:text="${trayecto.fechaInicioTrayecto}"></td>
+        <td th:text="${trayecto.fechaFinTrayecto}"></td>
+        <td>
+          <!-- Enlace para editar el trayecto -->
+          <a th:href="@{/trayecto/edit/{id}(id=${trayecto.id})}" th:text="#{modificar}">Modificar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer th:replace="fragments/footer"></footer>
+</body>
+</html>

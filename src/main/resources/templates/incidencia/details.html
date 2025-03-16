@@ -1,0 +1,95 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+  <h2>Detalles de la incidencia</h2>
+  <div class="card">
+    <div class="card-header">Fecha y Hora: </div>
+    <div class="card-body">
+      <p class="card-text" th:text="${incidencia.fechaHoraIncidencia}"></p>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">Título: </div>
+    <div class="card-body">
+      <p class="card-text" th:text="${incidencia.titulo}">Vehículo averiado</p>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">Descripción:</div>
+    <div class="card-body">
+      <p class="card-text" th:text="${incidencia.descripcion}">Se estropeó debido a...</p>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">Nombre del empleado:</div>
+    <div class="card-body">
+      <p class="card-text" th:text="${incidencia.trayecto.empleado.nombre}">Evaristo</p>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">Apellido del empleado:</div>
+    <div class="card-body">
+      <p class="card-text" th:text="${incidencia.trayecto.empleado.apellidos}">García Blanco</p>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">Respuesta:</div>
+    <div class="card-body">
+      <p class="card-text" th:text="${incidencia.respuesta}">Se arregla así...</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Estado de la incidencia:</div>
+    <div class="card-body">
+      <p id="estadoIncidencia[[${incidencia.id}]]" class="card-text" th:text="${incidencia.estado}">LEIDA</p>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">Cambiar estado:</div>
+    <div class="card-body">
+      <div th:if="${incidencia.getEstadoString() != 'RESUELTA'}">
+        <!-- Botón "Marcar En Proceso" solo si el estado no es "EN PROCESO" -->
+        <button type="button" th:id="${'btnEnProceso' + incidencia.id}"
+                class="btn btn-warning"
+                th:disabled="${incidencia.getEstadoString() == 'EN_PROCESO'}">Marcar En Proceso</button>
+
+        <!-- Botón "Marcar Resuelta" solo si el estado no es "RESUELTA" -->
+        <button type="button" th:id="${'btnResuelta' + incidencia.id}"
+                class="btn btn-success"
+                th:disabled="${incidencia.getEstadoString() == 'RESUELTA'}">Marcar Resuelta</button>
+        <script th:inline="javascript">
+          /*<![CDATA[*/
+          $("#btnEnProceso" + [[${incidencia.id}]]).click(function () {
+            $.get("/incidencias/details/[[${incidencia.id}]]/en-proceso", function (data) {
+              // Actualiza solo el estado en la vista de detalles
+              $("p.card-text#estadoIncidencia" + [[${incidencia.id}]]).text("EN PROCESO");
+              $("#btnEnProceso" + [[${incidencia.id}]]).prop('disabled', true);
+            });
+          });
+
+          $("#btnResuelta" + [[${incidencia.id}]]).click(function () {
+            $.get("/incidencias/details/[[${incidencia.id}]]/resuelta", function (data) {
+              // Actualiza solo el estado en la vista de detalles
+              $("p.card-text#estadoIncidencia" + [[${incidencia.id}]]).text("RESUELTA");
+              $("#btnEnProceso" + [[${incidencia.id}]]).prop('disabled', true);
+              $("#btnResuelta" + [[${incidencia.id}]]).prop('disabled', true);
+            });
+          });
+          /*]]>*/
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>
