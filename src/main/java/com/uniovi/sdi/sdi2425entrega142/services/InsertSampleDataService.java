@@ -4,7 +4,6 @@ import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
 import com.uniovi.sdi.sdi2425entrega142.entities.Repostaje;
 import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
-import com.uniovi.sdi.sdi2425entrega142.repository.EmpleadosRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -75,7 +74,6 @@ public class InsertSampleDataService {
         v1.setEstadoVehiculo(true);
         v1.addTrayecto(t1);
         empleado1.addTrayecto(t1);
-
         trayectosService.addTrayecto(t1);
 
 
@@ -422,5 +420,15 @@ public class InsertSampleDataService {
         empleado11.setPassword("123456");
         empleado11.setRole(rolesService.getRoles()[0]);
         empleadosService.addEmpleado(empleado11);
+
+        // Test 24
+        Vehiculo t24_v = new Vehiculo(104.0, 12.2, "Ferrari", "2404KMG", "F80", "V2I4C0E4N2T0E0M4G", Vehiculo.TipoCombustible.DIESEL);
+        vehiculosService.addVehiculo(t24_v);
+        Empleado t24_e = new Empleado("99999998C", "NOMBRE", "SINADMIN");
+        t24_e.setPassword("123456");
+        t24_e.setRole(rolesService.getRoles()[0]);
+        empleadosService.addEmpleado(t24_e);
+        Trayecto t24_t = new Trayecto(t24_e, t24_v);
+        trayectosService.addTrayecto(t24_t);
     }
 }

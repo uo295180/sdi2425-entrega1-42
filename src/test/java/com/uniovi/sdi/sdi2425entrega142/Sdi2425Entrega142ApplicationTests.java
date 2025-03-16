@@ -15,17 +15,14 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2425Entrega142ApplicationTests {
 
-    //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
-
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "/Users/fer/selenium/geckodriver-v0.30.0-macos";
     //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox";
 
-
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-
+    // static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    // static String Geckodriver = "C:\\Users\\PC\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     //static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Dev\\tools\\selenium\\geckodriver-v0.30.0-win64.exe";
@@ -216,7 +213,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_AddVehiculo.fillFormAddVehiculo(driver, "1234AAB", "ppppppppppppppppp",
-                "Mercedes", "A4", "Diesel");
+                "Mercedes", "A4", "Diésel");
         // Navegamos a la lista de vehículos
         driver.navigate().to("http://localhost:8090/vehiculo/list");
         boolean encontrado = false; // Creamos una flag para buscar el vehículo por todas las páginas de la vista
@@ -244,7 +241,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_AddVehiculo.fillFormAddVehiculo(driver, "", "",
-                "", "", "Diesel");
+                "", "", "Diésel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
@@ -256,7 +253,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_AddVehiculo.fillFormAddVehiculo(driver, "1234AABA", "ppppppppppppppppp",
-                "Mercedes", "A4", "Diesel");
+                "Mercedes", "A4", "Diésel");
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
     }
@@ -267,7 +264,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_AddVehiculo.fillFormAddVehiculo(driver, "1234AAB", "ppppppppp",
-                "Mercedes", "A4", "Diesel");
+                "Mercedes", "A4", "Diésel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
@@ -279,7 +276,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_AddVehiculo.fillFormAddVehiculo(driver, "1234AAA", "ppppppppppppppppp",
-                "Mercedes", "A4", "Diesel");
+                "Mercedes", "A4", "Diésel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
@@ -291,7 +288,7 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "12345678Z", "@Dm1n1str@D0r");
         driver.navigate().to("http://localhost:8090/vehiculo/add");
         PO_AddVehiculo.fillFormAddVehiculo(driver, "1234AAB", "pppppppppppppppaa",
-                "Mercedes", "A4", "Diesel");
+                "Mercedes", "A4", "Diésel");
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/vehiculo/add", currentUrl);
@@ -512,17 +509,19 @@ class Sdi2425Entrega142ApplicationTests {
         Assertions.assertFalse(vehicleStillExists, "El vehículo aún está presente después de la eliminación");
         Assertions.assertEquals("http://localhost:8090/vehiculo/list", driver.getCurrentUrl());
     }
+
     @Test
     @Order(24)
     public void Prueba24() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "12345678C", "123456"); // Log in como empleado
+        PO_LoginView.fillLoginForm(driver, "99999998C", "123456"); // Log in como empleado
         // Navegamos hasta la lista de trayectos:
         driver.navigate().to("http://localhost:8090/trayecto/list");
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'2404KMG')]")));
         // Buscamos en la tabla una fila que contenga el texto "1111ZZZ", matrícula del vehículo con trayecto activo
-        List<WebElement> filasConMatricula = driver.findElements(By.xpath("//table/tbody/tr[contains(.,'1111ZZZ')]"));
+        // List<WebElement> filasConMatricula = driver.findElements(By.xpath("//table/tbody/tr[contains(.,'1111ZZZ')]"));
         // Comprobamos que se ha encontrado al menos una fila con esa matrícula
-        Assertions.assertFalse(filasConMatricula.isEmpty(), "No se encontró ningún trayecto con la matrícula 1111ZZZ");
+        // Assertions.assertFalse(filasConMatricula.isEmpty(), "No se encontró ningún trayecto con la matrícula 1111ZZZ");
     }
 
     @Test
