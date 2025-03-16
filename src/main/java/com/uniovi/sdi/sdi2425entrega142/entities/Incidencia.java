@@ -1,12 +1,14 @@
 package com.uniovi.sdi.sdi2425entrega142.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name="Incidencia")
 public class Incidencia {
 
-    enum EstadoIncidencia {
+    public enum EstadoIncidencia {
         REGISTRADA,LEIDA,EN_PROCESO,RESUELTA
     }
 
@@ -19,12 +21,13 @@ public class Incidencia {
     private boolean tipo;
     private EstadoIncidencia estado;
     private String respuesta;
+    private Timestamp fechaHoraIncidencia;
 
     @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="trayecto_id")
     private Trayecto trayecto;
 
-    public Incidencia() {}
+    public Incidencia() {this.estado = EstadoIncidencia.REGISTRADA;}
 
     public Incidencia(String titulo, String descripcion, boolean tipo) {
         this.titulo = titulo;
@@ -32,6 +35,24 @@ public class Incidencia {
         this.tipo = tipo;
         this.estado = EstadoIncidencia.REGISTRADA;
         this.respuesta = "";
+    }
+
+    public Incidencia(Timestamp fechaHoraIncidencia, String titulo, String descripcion, boolean tipo, EstadoIncidencia estado, String respuesta, Trayecto trayecto) {
+        this.fechaHoraIncidencia = fechaHoraIncidencia;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+        this.estado = estado;
+        this.respuesta = respuesta;
+        this.trayecto = trayecto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescripcion() {
@@ -82,6 +103,14 @@ public class Incidencia {
         this.trayecto = trayecto;
     }
 
+    public Timestamp getFechaHoraIncidencia() {
+        return fechaHoraIncidencia;
+    }
+
+    public void setFechaHoraIncidencia(Timestamp fechaHoraIncidencia) {
+        this.fechaHoraIncidencia = fechaHoraIncidencia;
+    }
+
     public String getTipoFormulario() {
         if (tipo) {
             return "ESPERADA";
@@ -90,5 +119,13 @@ public class Incidencia {
     }
     public boolean getEstadoFormulario() {
         return estado == EstadoIncidencia.RESUELTA;
+    }
+    public void marcarLeida() {
+        if (estado == EstadoIncidencia.REGISTRADA) {
+            setEstado(EstadoIncidencia.LEIDA);
+        }
+    }
+    public String getEstadoString() {
+        return String.valueOf(estado);
     }
 }

@@ -64,7 +64,7 @@
                 <a class="nav-link dropdown-toggle" th:text="#{nav.incidencias}" href="#" id="incidenciaDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Incidencias
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" th:if="${tieneTrayectoEnCurso}">
                     <a th:text="#{nav.incidencias.ver}" class="dropdown-item" href="/incidencia/list">Ver incidencias</a>
                     <a th:text="#{nav.incidencias.add}" class="dropdown-item" href="/incidencia/add">Agregar incidencia</a>
                 </div>

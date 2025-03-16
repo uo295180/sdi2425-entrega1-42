@@ -55,19 +55,19 @@ public class PO_IncidenciaView extends PO_NavView{
         WebElement boton = driver.findElement(By.className("btn"));
         boton.click();
     }
-    public static boolean existeIncidenciaNoEsperada(WebDriver driver, String titulop, String descripcionp) {
+    public static boolean existeIncidenciaNoEsperada(WebDriver driver, String titulop) {
         List<WebElement> filas = driver.findElements(By.cssSelector("tbody tr"));
 
         return filas.stream().anyMatch(fila ->
-                fila.getText().contains(titulop) && fila.getText().contains(descripcionp)
+                fila.getText().contains(titulop)
         );
     }
-    public static boolean existeIncidenciaEsperada(WebDriver driver, String titulop, String descripcionp, String respuestap) {
+    public static boolean existeIncidenciaEsperada(WebDriver driver, String titulop) {
         WebElement segundoTbody = driver.findElement(By.xpath("(//tbody)[2]"));
         List<WebElement> filas = segundoTbody.findElements(By.tagName("tr"));
 
         return filas.stream().anyMatch(fila ->
-                fila.getText().contains(titulop) && fila.getText().contains(descripcionp) && fila.getText().contains(respuestap)
+                fila.getText().contains(titulop)
         );
     }
 }

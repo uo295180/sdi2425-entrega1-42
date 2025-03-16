@@ -1,5 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head"></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
@@ -11,16 +12,24 @@
     <table class="table table-hover">
       <thead>
       <tr>
+        <th scope="col">Fecha y Hora</th>
         <th scope="col">Título</th>
-        <th scope="col">Descripción</th>
         <th scope="col">Tipo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Detalles</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="incidencia : ${incidenciasList}" th:if="${incidencia.getTipoFormulario() == 'NO ESPERADA'}">
+        <td th:text="${incidencia.fechaHoraIncidencia}"></td>
         <td th:text="${incidencia.titulo}"></td>
-        <td th:text="${incidencia.descripcion}"></td>
         <td th:text="${incidencia.getTipoFormulario()}"></td>
+        <td th:text="${incidencia.trayecto.empleado.nombre}"></td>
+        <td th:text="${incidencia.trayecto.empleado.apellidos}"></td>
+        <td th:text="${incidencia.estado}"></td>
+        <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/incidencia/details/' + incidencia.id}">detalles</a></td>
       </tr>
       </tbody>
     </table>
@@ -30,19 +39,25 @@
     <table class="table table-hover">
       <thead>
       <tr>
+        <th scope="col">Fecha y Hora</th>
         <th scope="col">Título</th>
-        <th scope="col">Descripción</th>
         <th scope="col">Tipo</th>
-        <th scope="col">Respuesta</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Detalles</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="incidencia : ${incidenciasList}" th:if="${incidencia.getEstadoFormulario() == false
                                                 and incidencia.getTipoFormulario() == 'ESPERADA'}">
+        <td th:text="${incidencia.fechaHoraIncidencia}"></td>
         <td th:text="${incidencia.titulo}"></td>
-        <td th:text="${incidencia.descripcion}"></td>
         <td th:text="${incidencia.getTipoFormulario()}"></td>
-        <td th:text="${incidencia.respuesta}"></td>
+        <td th:text="${incidencia.trayecto.empleado.nombre}"></td>
+        <td th:text="${incidencia.trayecto.empleado.apellidos}"></td>
+        <td th:text="${incidencia.estado}"></td>
+        <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/incidencia/details/' + incidencia.id}">detalles</a></td>
       </tr>
       </tbody>
     </table>
@@ -52,19 +67,25 @@
     <table class="table table-hover">
       <thead>
       <tr>
+        <th scope="col">Fecha y Hora</th>
         <th scope="col">Título</th>
-        <th scope="col">Descripción</th>
         <th scope="col">Tipo</th>
-        <th scope="col">Respuesta</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Detalles</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="incidencia : ${incidenciasList}" th:if="${incidencia.getEstadoFormulario() == true
                                                 and incidencia.getTipoFormulario() == 'ESPERADA'}">
+        <td th:text="${incidencia.fechaHoraIncidencia}"></td>
         <td th:text="${incidencia.titulo}"></td>
-        <td th:text="${incidencia.descripcion}"></td>
         <td th:text="${incidencia.getTipoFormulario()}"></td>
-        <td th:text="${incidencia.respuesta}"></td>
+        <td th:text="${incidencia.trayecto.empleado.nombre}"></td>
+        <td th:text="${incidencia.trayecto.empleado.apellidos}"></td>
+        <td th:text="${incidencia.estado}"></td>
+        <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${'/incidencia/details/' + incidencia.id}">detalles</a></td>
       </tr>
       </tbody>
     </table>

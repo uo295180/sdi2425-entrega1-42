@@ -1,9 +1,6 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
-import com.uniovi.sdi.sdi2425entrega142.entities.Empleado;
-import com.uniovi.sdi.sdi2425entrega142.entities.Repostaje;
-import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
-import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
+import com.uniovi.sdi.sdi2425entrega142.entities.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -17,13 +14,17 @@ public class InsertSampleDataService {
     private final RolesService rolesService;
     private final TrayectosService trayectosService;
     private final RepostajesService repostajesService;
+    private final IncidenciasService incidenciasService;
 
-    public InsertSampleDataService(EmpleadosService empleadosService, VehiculosService vehiculosService, RolesService rolesService, TrayectosService trayectosService, RepostajesService repostajesService) {
+    public InsertSampleDataService(EmpleadosService empleadosService, VehiculosService vehiculosService,
+                                   RolesService rolesService, TrayectosService trayectosService,
+                                   RepostajesService repostajesService, IncidenciasService incidenciasService) {
         this.empleadosService = empleadosService;
         this.vehiculosService = vehiculosService;
         this.rolesService = rolesService;
         this.trayectosService = trayectosService;
         this.repostajesService = repostajesService;
+        this.incidenciasService = incidenciasService;
     }
 
     @PostConstruct
@@ -422,5 +423,9 @@ public class InsertSampleDataService {
         empleadosService.addEmpleado(t24_e);
         Trayecto t24_t = new Trayecto(t24_e, t24_v);
         trayectosService.addTrayecto(t24_t);
+
+        Incidencia i1 = new Incidencia(new Timestamp(System.currentTimeMillis()),"Rompio", "Reventó el capo", true, Incidencia.EstadoIncidencia.EN_PROCESO, "Compra un nuevo capo",t1);
+        incidenciasService.addIncidencia(i1);
+
     }
 }
