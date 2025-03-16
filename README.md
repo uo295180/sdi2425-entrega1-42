@@ -21,8 +21,8 @@ Este archivo enumera los requisitos funcionales del proyecto, clasificados en ob
 10. **Registrar el inicio de un nuevo trayecto con un vehículo disponible** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
 11. **Registrar un repostaje realizado en el vehículo que tenga asignado** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 12. **Finalizar un trayecto con el vehículo que tenga en uso** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
-13. **Consultar el historial de trayectos de un vehículo** ![In Progress](https://img.shields.io/badge/Estado-En%20proceso-yellow)
-14. **Consultar el historial de repostajes de un vehículo** ![Not Started](https://img.shields.io/badge/Estado-No%20empezado-red)
+13. **Consultar el historial de trayectos de un vehículo** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
+14. **Consultar el historial de repostajes de un vehículo** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 15. **Consultar el listado de vehículos disponibles en la empresa** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 16. **Modificar su contraseña** ![Done](https://img.shields.io/badge/Estado-Hecho-green)
 
