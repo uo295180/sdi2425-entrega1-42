@@ -1,0 +1,40 @@
+<!DOCTYPE>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
+<body>
+  <!-- Barra de Navegación superior -->
+  <nav th:replace="fragments/nav"></nav>
+  <div class="container" id="main-container">
+    <h2 th:text="#{nav.trayectos.edit}">Editar trayecto</h2>
+    <form method="post" th:action="@{/trayecto/edit/{id}(id=${trayecto.id})}" th:object="${trayecto}">
+      <div class="form-group">
+        <label for="fechaInicioTrayecto" th:text="#{trayecto.fechainicio}">Fecha de inicio del trayecto:</label>
+        <input type="datetime-local" th:field="*{fechaInicioTrayecto}" class="form-control" id="fechaInicioTrayecto" required />
+        <span class="text-danger" th:if="${#fields.hasErrors('fechaInicioTrayecto')}" th:errors="*{fechaInicioTrayecto}"></span>
+      </div>
+      <div class="form-group">
+        <label for="fechaFinTrayecto" th:text="#{trayecto.fechafin}">Fecha de fin del trayecto:</label>
+        <input type="datetime-local" th:field="*{fechaFinTrayecto}" class="form-control" id="fechaFinTrayecto" required />
+        <span class="text-danger" th:if="${#fields.hasErrors('fechaFinTrayecto')}" th:errors="*{fechaFinTrayecto}"></span>
+      </div>
+      <div class="form-group">
+        <label for="odometroInicio" th:text="#{trayecto.odometroinicial}">Odómetro inicial:</label>
+        <input type="number" th:field="*{odometroInicio}" class="form-control" id="odometroInicio" step="0.1" required />
+        <span class="text-danger" th:if="${#fields.hasErrors('odometroInicio')}" th:errors="*{odometroInicio}"></span>
+      </div>
+      <div class="form-group">
+        <label for="odometroFin" th:text="#{trayecto.odometrofinal}">Odómetro final:</label>
+        <input type="number" th:field="*{odometroFin}" class="form-control" id="odometroFin" step="0.1" required />
+        <span class="text-danger" th:if="${#fields.hasErrors('odometroFin')}" th:errors="*{odometroFin}"></span>
+      </div>
+      <div class="form-group">
+        <label for="observaciones" th:text="#{observaciones}">Observaciones:</label>
+        <textarea th:field="*{observaciones}" class="form-control" id="observaciones"></textarea>
+        <span th:if="${#fields.hasErrors('observaciones')}" th:errors="*{observaciones}"></span>
+      </div>
+      <button type="submit" class="btn btn-primary" th:text="#{modificar}">Modificar</button>
+    </form>
+  </div>
+  <footer th:replace="fragments/footer"></footer>
+</body>
+</html>
