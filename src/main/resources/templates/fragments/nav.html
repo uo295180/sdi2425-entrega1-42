@@ -29,10 +29,10 @@
             <!-- Empleados -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" th:text="#{nav.empleados}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Gestión de empleados
+                   aria-haspopup="true" aria-expanded="false" sec:authorize="hasAnyRole('ROLE_ADMIN')"> Gestión de empleados
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" th:text="#{nav.empleados.list}" href="/empleado/list">Ver Empleados</a>
+                    <a class="dropdown-item" th:text="#{nav.empleados.list}" href="/empleado/list" sec:authorize="hasAnyRole('ROLE_ADMIN')">Ver Empleados</a>
                     <a class="dropdown-item" th:text="#{nav.empleados.add}" href="/empleado/add" sec:authorize="hasAnyRole('ROLE_ADMIN')">Agregar empleado</a>
                 </div>
             </li>
@@ -43,6 +43,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.vehiculos.list}" class="dropdown-item" href="/vehiculo/list">Ver vehículos</a>
+                    <a sec:authorize="hasRole('ROLE_ESTANDAR')" th:text="#{nav.vehiculos.list}" class="dropdown-item" href="/vehiculo/listForEmpleadoEstandar">Ver vehículos</a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{nav.vehiculos.add}" class="dropdown-item" href="/vehiculo/add">Agregar vehículo</a>
                     <a th:text="#{nav.vehiculos.trayectos}" class="dropdown-item" href="/vehiculo/listAll">Ver trayectos de vehículo</a>
                     <a th:text="#{nav.vehiculos.repostajes}" class="dropdown-item" href="/vehiculo/listAllRepostajes">Ver repostajes de vehículo</a>

@@ -5,7 +5,6 @@
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
     <h2 th:text="#{vehiculo.trayectos}">Los trayectos realizados por este vehículo son los siguientes:</h2>
-
     <!-- Información del Vehículo -->
     <div>
         <h3 th:text="'Matrícula: ' + ${vehiculo.matricula}"></h3>
@@ -14,9 +13,30 @@
         <p><strong th:text="'Odómetro actual: ' + ${vehiculo.odometro}"></strong></p>
         <p><strong th:text="'Trayectos totales: ' + ${totalTrayectos}" id="trayectosTotales"></strong></p>
     </div>
-
-    <!-- Fragmento de la tabla de trayectos -->
-    <div class="table-responsive" th:replace="fragments/trayectosTable"></div>
+    <!--Tabla de trayectos modificada (Incluye conductor) -->
+    <div class="table-responsive" th:fragment="trayectosTable" th:if="!${#lists.isEmpty(trayectosList)}">
+        <table class="table table-hover" id="trayectosTable">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col" th:text="#{trayecto.fechayhora}">Fecha y hora de inicio</th>
+                <th scope="col" th:text="#{trayecto.edit.conductor}">Conductor</th>
+                <th scope="col" th:text="#{trayecto.duracion}">Duración del trayecto</th>
+                <th scope="col" th:text="#{vehiculos.kilometraje}">Kilometraje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="trayecto : ${trayectosList}">
+                <td scope="row" th:text="${trayecto.id}">1</td>
+                <td th:text="${#temporals.format(trayecto.fechaInicioTrayecto, 'dd/MM/yyyy HH:mm')}">Fecha y hora de inicio</td>
+                <td th:text="${trayecto.empleado.nombre}">Nombre</td>
+                <td th:text="${trayecto.duracionTrayecto}">120</td>
+                <td th:text="${trayecto.distanciaTrayecto}">200</td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(trayectosList)}" th:text="#{trayectos.nohay}">No hay trayectos</div>
+    </div>
     <footer th:replace="fragments/pagination"></footer>
 </div>
 <footer th:replace="fragments/footer"></footer>

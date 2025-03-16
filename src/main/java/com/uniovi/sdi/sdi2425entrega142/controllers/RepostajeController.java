@@ -37,7 +37,7 @@ public class RepostajeController {
         this.repostajesValidator = repostajesValidator;
     }
 
-     @RequestMapping("repostajes/add")
+    @RequestMapping("repostajes/add")
     public String getAddRepostaje(Model model, Principal principal) {
         String dni = principal.getName();
         Optional<Empleado> opEmpl = empleadosService.findEmpleadoByDni(dni);
@@ -76,18 +76,16 @@ public class RepostajeController {
             model.addAttribute("vehiculo", ve);
             return "repostajes/add";
         }
-        if(repostaje.isRepostajeCompleto()) {
+        if (repostaje.isRepostajeCompleto()) {
             repostaje.setCantidadRepostada(vehiculo.getCantidadMaximaTanque()
                     - vehiculo.getCantidadTanqueTrasGasto(repostaje.getOdometro()));
         }
         vehiculo.respostar(repostaje);
         repostaje.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis())); // or other defaults you may want
         repostaje.calculatePrecioTotal();
-
         vehiculosService.addVehiculo(vehiculo);
-        repostajesService.addRepostaje(repostaje);
 
         model.addAttribute("repostaje", repostaje);
-        return "redirect:/repostajes/list";
+        return "redirect:/vehiculo/listAllRepostajes";
     }
 }

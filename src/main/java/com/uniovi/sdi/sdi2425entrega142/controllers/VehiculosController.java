@@ -35,12 +35,22 @@ public class VehiculosController {
         this.vehiculosValidator = vehiculosValidator;
     }
 
+    // List para los usuarios ADMIN
     @RequestMapping("/vehiculo/list")
     public String getVehiculosList(Pageable pageable, Model vehiculosModel) {
         Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
         vehiculosModel.addAttribute("vehiculosList", vehiculos.getContent());
         vehiculosModel.addAttribute("page", vehiculos);
         return "vehiculo/list";
+    }
+
+    // List para los usuarios ESTANDAR
+    @RequestMapping("/vehiculo/listForEmpleadoEstandar")
+    public String getVehiculosListEmpleadoEstandar(Pageable pageable, Model vehiculosModel) {
+        Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
+        vehiculosModel.addAttribute("vehiculosList", vehiculos.getContent());
+        vehiculosModel.addAttribute("page", vehiculos);
+        return "vehiculo/listForEmpleadoEstandar";
     }
 
     @RequestMapping(value = "/vehiculo/add")
