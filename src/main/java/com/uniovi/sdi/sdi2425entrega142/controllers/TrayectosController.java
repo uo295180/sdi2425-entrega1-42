@@ -7,6 +7,7 @@ import com.uniovi.sdi.sdi2425entrega142.services.EmpleadosService;
 import com.uniovi.sdi.sdi2425entrega142.services.TrayectosService;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
 import com.uniovi.sdi.sdi2425entrega142.validators.AddTrayectoValidator;
+import com.uniovi.sdi.sdi2425entrega142.validators.EditTrayectoValidator;
 import com.uniovi.sdi.sdi2425entrega142.validators.EndTrayectoValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,15 +27,17 @@ public class TrayectosController {
     private final EmpleadosService empleadosService;
     private final VehiculosService vehiculosService;
     private final AddTrayectoValidator addTrayectoValidator;
+    private final EditTrayectoValidator editTrayectoValidator;
     private final EndTrayectoValidator endTrayectoValidator;
 
     public TrayectosController(TrayectosService trayectosService, EmpleadosService empleadosService,
                                VehiculosService vehiculosService, AddTrayectoValidator addTrayectoValidator,
-                               EndTrayectoValidator endTrayectoValidator) {
+                               EditTrayectoValidator editTrayectoValidator, EndTrayectoValidator endTrayectoValidator) {
         this.trayectosService = trayectosService;
         this.empleadosService = empleadosService;
         this.vehiculosService = vehiculosService;
         this.addTrayectoValidator = addTrayectoValidator;
+        this.editTrayectoValidator = editTrayectoValidator;
         this.endTrayectoValidator = endTrayectoValidator;
     }
 
@@ -124,5 +128,58 @@ public class TrayectosController {
         trayectosService.addTrayecto(originalTrayecto);
         vehiculosService.addVehiculo(vehiculo);
         return "redirect:/vehiculo/trayectos/"+vehiculo.getMatricula();
+    }
+
+    @RequestMapping("/trayecto/edit")
+    public String selectVehiculo(Model model) {
+        // Obtener solo los vehículos con trayectos finalizados,
+        List<Vehiculo> vehiculosConTrayectosFinalizadosList = vehiculosService.findVehiculosConTrayectosFinalizados();
+        model.addAttribute("vehiculosConTrayectosFinalizadosList", vehiculosConTrayectosFinalizadosList);
+        return "trayecto/editSelectVehiculo";
+    }
+
+    @RequestMapping(value = "/trayecto/editSelectVehiculo", method = RequestMethod.POST)
+    public String selectVehiculo(@RequestParam("vehiculoMatricula") String matricula, Model model) {
+        // Buscar los trayectos finalizados del vehículo
+        Vehiculo v = vehiculosService.getVehiculoByMatricula(matricula);
+        List<Trayecto> trayectosFinalizados = trayectosService.findTrayectosFinalizadosPorVehiculo(v.getId());
+        model.addAttribute("trayectosFinalizados", trayectosFinalizados);
+        return "trayecto/editSelectTrayecto";
+    }
+
+    @RequestMapping("/trayecto/edit/{id}")
+    public String editForm(@PathVariable Long id, Model model) {
+        Trayecto trayecto = trayectosService.getTrayecto(id);
+        // Si está en curso, no permitimos editar
+        if (trayecto.isEstadoTrayecto()) {
+            return "redirect:/trayecto/edit";
+        }
+        model.addAttribute("trayecto", trayecto);
+        return "trayecto/edit";
+    }
+
+    @RequestMapping(value="/trayecto/edit/{id}",  method = RequestMethod.POST)
+    public String editForm(@PathVariable Long id, @Validated @ModelAttribute("trayecto") Trayecto trayecto,
+                           BindingResult result, Model model) {
+        editTrayectoValidator.validate(trayecto, result);
+        if (result.hasErrors()) {
+            return "trayecto/edit";
+        }
+
+        // Recuperamos el trayecto original y lo actualizamos
+        Trayecto trayectoOriginal = trayectosService.getTrayecto(id);
+        if (trayectoOriginal.isEstadoTrayecto()) {
+            return "redirect:/trayecto/edit";
+        }
+        // Actualizamos campos
+        trayectoOriginal.setFechaInicioTrayecto(trayecto.getFechaInicioTrayecto());
+        trayectoOriginal.setFechaFinTrayecto(trayecto.getFechaFinTrayecto());
+        trayectoOriginal.setOdometroInicio(trayecto.getOdometroInicio());
+        trayectoOriginal.setOdometroFin(trayecto.getOdometroFin());
+        trayectoOriginal.setObservaciones(trayecto.getObservaciones());
+        trayectosService.addTrayecto(trayectoOriginal);
+
+        // Redirigimos a la lista de trayectos
+        return "redirect:/trayecto/list";
     }
 }

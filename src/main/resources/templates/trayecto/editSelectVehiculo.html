@@ -1,0 +1,26 @@
+<!DOCTYPE>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"><title th:text="#{title}">Gestión de flotas</title></head>
+<body>
+  <!-- Barra de Navegación superior -->
+  <nav th:replace="fragments/nav"></nav>
+  <div class="container" id="main-container">
+    <h2 th:text="#{nav.trayectos.editSelectVehiculo}">Editar trayecto: Selección de vehículo</h2>
+    <form method="post" th:action="@{'/trayecto/editSelectVehiculo'}">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="vehiculo">Vehículo:</label>
+          <select id="vehiculo" class="form-control" name="vehiculoMatricula">
+            <option th:each="vehiculo : ${vehiculosConTrayectosFinalizadosList}" th:value="${vehiculo.matricula}"
+                    th:text="|${vehiculo.matricula} - ${vehiculo.marca} ${vehiculo.modelo}|">
+              Vehículo
+            </option>
+          </select>
+      </div>
+          <button type="submit" class="btn btn-primary" th:text="#{trayecto.edit.vertrayectos}">
+            Ver trayectos asociados
+          </button>
+    </form>
+  </div>
+  <footer th:replace="fragments/footer"></footer>
+</body>
+</html>

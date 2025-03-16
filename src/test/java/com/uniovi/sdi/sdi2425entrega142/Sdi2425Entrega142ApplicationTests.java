@@ -533,11 +533,8 @@ class Sdi2425Entrega142ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "99999998C", "123456"); // Log in como empleado
         // Navegamos hasta la lista de trayectos:
         driver.navigate().to("http://localhost:8090/trayecto/list");
+        // Buscamos en la tabla una fila que contenga el texto "2404KMG", matrícula del vehículo con trayecto activo
         Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'2404KMG')]")));
-        // Buscamos en la tabla una fila que contenga el texto "1111ZZZ", matrícula del vehículo con trayecto activo
-        // List<WebElement> filasConMatricula = driver.findElements(By.xpath("//table/tbody/tr[contains(.,'1111ZZZ')]"));
-        // Comprobamos que se ha encontrado al menos una fila con esa matrícula
-        // Assertions.assertFalse(filasConMatricula.isEmpty(), "No se encontró ningún trayecto con la matrícula 1111ZZZ");
     }
 
     @Test
@@ -784,7 +781,7 @@ class Sdi2425Entrega142ApplicationTests {
         String currentUrlEdit = driver.getCurrentUrl();
         Assertions.assertEquals("http://localhost:8090/empleado/password", currentUrlEdit);
 
-        String checkText = "La nueva contraseña tiene que tener al menos 12 caracteres, una minuscula, mayuscula, y caracter especial.";
+        String checkText = "La nueva contraseña tiene que tener al menos 12 caracteres, una minúscula, mayúscula, y caracter especial.";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
@@ -912,5 +909,130 @@ class Sdi2425Entrega142ApplicationTests {
         //Se encuentra en el listado de incidencias
         Assertions.assertTrue(PO_IncidenciaView.existeIncidenciaEsperada(driver, "Vehículo estropeado",
                 "Reventó el cristal", "Comprar un nuevo cristal"));
+    }
+
+    @Test
+    @Order(57)
+    public void Prueba57() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456"); // Log in como ADMIN
+        // Navegamos hasta la vista de editar trayectos
+        driver.navigate().to("http://localhost:8090/trayecto/edit");
+        // Consultamos que se muestre el vehículo con matrícula "1234CCC", un Tesla con un único trayecto:
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'1234CCC')]")));
+        // Pulsamos el botón para avanzar a la ventana que nos permita seleccionar el trayecto a modificar:
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/button"));
+        button.click();
+        // Comprobamos que se avanza a la siguiente ventana
+        Assertions.assertEquals("http://localhost:8090/trayecto/editSelectVehiculo", driver.getCurrentUrl());
+        // Debería de aparecer un trayecto asociado al conductor con DNI "12345678B"
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'12345678B')]")));
+        // Pulsamos el enlace para modificar el trayecto:
+        WebElement enlace = driver.findElement(By.xpath("//*[@id=\"main-container\"]/table/tbody/tr/td[5]/a"));
+        enlace.click();
+        // Comprobamos que se avanza a la última ventana de modificación:
+        Assertions.assertEquals("http://localhost:8090/trayecto/edit/19", driver.getCurrentUrl());
+        // Modificamos todos los campos con datos correctos:
+        PO_EditTrayectoView.fillEditForm(driver, "2025-03-16T20:00", "2025-03-17T12:00",
+                "600", "1560", "Trayecto modificado exitosamente");
+
+        // Comprobamos que se redirige a la lista de trayectos
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/list"), "No se redirige a la lista de trayectos");
+    }
+
+    @Test
+    @Order(58)
+    public void Prueba58() {
+        // Inicio de sesión como ADMIN
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456");
+        // Navegamos hasta la vista de editar trayectos
+        driver.navigate().to("http://localhost:8090/trayecto/edit");
+        // Verificamos que aparece el vehículo esperado (por ejemplo, "1234CCC")
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'1234CCC')]")));
+        // Pulsamos el botón para avanzar a la selección de trayectos
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/button"));
+        button.click();
+        Assertions.assertEquals("http://localhost:8090/trayecto/editSelectVehiculo", driver.getCurrentUrl());
+        // Verificamos que se muestra el trayecto asociado al conductor con DNI "12345678B"
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'12345678B')]")));
+        // Pulsamos el enlace para modificar el trayecto
+        WebElement enlace = driver.findElement(By.xpath("//*[@id=\"main-container\"]/table/tbody/tr/td[5]/a"));
+        enlace.click();
+        // Comprobamos que estamos en la ventana de edición
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/edit/"));
+        // Localizamos los campos e introducimos datos inválidos: fechaInicio posterior a fechaFin
+        PO_EditTrayectoView.fillEditForm(driver, "2028-03-16T20:00", "2025-03-17T12:00",
+                "600", "1560", "Trayecto NO modificado (error)");
+        // Como la validación falla, deberíamos seguir en la misma URL de edición
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/edit/"), "Se debería permanecer en la edición al haber error de fechas");
+        // Comprobamos que se lanza el error correspondiente:
+        String checkText = PO_EditTrayectoView.getP().getString("Error.trayecto.edit.fechaFinAntesInicio",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText, driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/div[2]/span")).getText());
+    }
+
+    @Test
+    @Order(59)
+    public void Prueba59() {
+        // Inicio de sesión como ADMIN
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456");
+        // Navegamos hasta la vista de editar trayectos
+        driver.navigate().to("http://localhost:8090/trayecto/edit");
+        // Verificamos que aparece el vehículo esperado (por ejemplo, "1234CCC")
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'1234CCC')]")));
+        // Pulsamos el botón para avanzar a la selección de trayectos
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/button"));
+        button.click();
+        Assertions.assertEquals("http://localhost:8090/trayecto/editSelectVehiculo", driver.getCurrentUrl());
+        // Verificamos que se muestra el trayecto asociado al conductor con DNI "12345678B"
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'12345678B')]")));
+        // Pulsamos el enlace para modificar el trayecto
+        WebElement enlace = driver.findElement(By.xpath("//*[@id=\"main-container\"]/table/tbody/tr/td[5]/a"));
+        enlace.click();
+        // Comprobamos que estamos en la ventana de edición
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/edit/"));
+        // Localizamos los campos e introducimos datos inválidos: fechaInicio posterior a fechaFin
+        PO_EditTrayectoView.fillEditForm(driver, "2025-03-16T20:00", "2025-03-17T12:00",
+                "5000", "1560", "Trayecto NO modificado (error)");
+        // Como la validación falla, deberíamos seguir en la misma URL de edición
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/edit/"), "Se debería permanecer en la edición al haber error de fechas");
+        // Comprobamos que se lanza el error correspondiente:
+        String checkText = PO_EditTrayectoView.getP().getString("Error.trayecto.edit.odometroFinMenorInicio",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText, driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/div[4]/span")).getText());
+    }
+
+    @Test
+    @Order(60)
+    public void Prueba60() {
+        // Inicio de sesión como ADMIN
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "12345678A", "123456");
+        // Navegamos hasta la vista de editar trayectos
+        driver.navigate().to("http://localhost:8090/trayecto/edit");
+        // Verificamos que aparece el vehículo esperado (por ejemplo, "1234CCC")
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'1234CCC')]")));
+        // Pulsamos el botón para avanzar a la selección de trayectos
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/button"));
+        button.click();
+        Assertions.assertEquals("http://localhost:8090/trayecto/editSelectVehiculo", driver.getCurrentUrl());
+        // Verificamos que se muestra el trayecto asociado al conductor con DNI "12345678B"
+        Assertions.assertNotNull(driver.findElement(By.xpath("//*[contains(text(),'12345678B')]")));
+        // Pulsamos el enlace para modificar el trayecto
+        WebElement enlace = driver.findElement(By.xpath("//*[@id=\"main-container\"]/table/tbody/tr/td[5]/a"));
+        enlace.click();
+        // Comprobamos que estamos en la ventana de edición
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/edit/"));
+        // Localizamos los campos e introducimos datos inválidos: fechaInicio posterior a fechaFin
+        PO_EditTrayectoView.fillEditForm(driver, "2025-03-16T20:00", "2025-03-17T12:00",
+                "-10", "-5", "Trayecto NO modificado (error)");
+        // Como la validación falla, deberíamos seguir en la misma URL de edición
+        Assertions.assertTrue(driver.getCurrentUrl().contains("/trayecto/edit/"), "Se debería permanecer en la edición al haber error de fechas");
+        // Comprobamos que se lanza el error correspondiente:
+        String checkText = PO_EditTrayectoView.getP().getString("Error.trayecto.edit.odometroNegativo",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText, driver.findElement(By.xpath("//*[@id=\"main-container\"]/form/div[4]/span")).getText());
     }
 }

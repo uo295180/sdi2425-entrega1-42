@@ -1,5 +1,6 @@
 package com.uniovi.sdi.sdi2425entrega142.services;
 
+import com.uniovi.sdi.sdi2425entrega142.entities.Trayecto;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import com.uniovi.sdi.sdi2425entrega142.repository.TrayectosRepository;
 import com.uniovi.sdi.sdi2425entrega142.repository.VehiculosRepository;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VehiculosService {
@@ -52,5 +55,18 @@ public class VehiculosService {
 
     public List<Vehiculo> findAll() {
         return vehiculosRepository.findAllVehiculos();
+    }
+
+    public List<Vehiculo> findVehiculosConTrayectosFinalizados() {
+        List<Vehiculo> vehiculosList = (List<Vehiculo>) vehiculosRepository.findAll();
+        List<Vehiculo> vehiculosConTrayectosFinalizados = new ArrayList<>();
+        for (Vehiculo vehiculo : vehiculosList) {
+            for (Trayecto trayecto : vehiculo.getTrayectos()) {
+                if (!trayecto.isEstadoTrayecto() && !vehiculosConTrayectosFinalizados.contains(vehiculo)) {
+                    vehiculosConTrayectosFinalizados.add(vehiculo);
+                }
+            }
+        }
+        return vehiculosConTrayectosFinalizados;
     }
 }
