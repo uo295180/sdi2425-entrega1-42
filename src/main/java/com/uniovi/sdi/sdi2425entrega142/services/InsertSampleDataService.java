@@ -16,9 +16,7 @@ public class InsertSampleDataService {
     private final VehiculosService vehiculosService;
     private final RolesService rolesService;
     private final TrayectosService trayectosService;
-
     private final RepostajesService repostajesService;
-
 
     public InsertSampleDataService(EmpleadosService empleadosService, VehiculosService vehiculosService, RolesService rolesService, TrayectosService trayectosService, RepostajesService repostajesService) {
         this.empleadosService = empleadosService;
@@ -76,7 +74,6 @@ public class InsertSampleDataService {
         empleado1.addTrayecto(t1);
         trayectosService.addTrayecto(t1);
 
-
         Vehiculo vehiculo1 = new Vehiculo(100.0, 6.5, "Renault", "1234BBB", "Captur", "123456789abcdefgh", Vehiculo.TipoCombustible.DIESEL);
         Vehiculo vehiculo2 = new Vehiculo(124.0, 7.4, "Mercedes", "0000BCD", "GLE", "000000000abcdefgh", Vehiculo.TipoCombustible.HIBRIDO);
         Vehiculo vehiculo3 = new Vehiculo(60.0, 2.5, "Tesla", "1234CCC", "Model Y", "777777777abcdefgh", Vehiculo.TipoCombustible.ELECTRICO);
@@ -113,10 +110,6 @@ public class InsertSampleDataService {
         vehiculo3.addTrayecto(prueba2);
         empleado2.addTrayecto(prueba2);
         trayectosService.addTrayecto(prueba2);
-
-
-
-
 
         // Dummy data for functional tests of requisites 11, 12
 
@@ -336,7 +329,6 @@ public class InsertSampleDataService {
         vehiculo10.respostar(r15);
         r15.setFechaHoraRepostaje(new Timestamp(System.currentTimeMillis()));
         r15.calculatePrecioTotal();
-
 
         t13_14.endTrayecto(140, "Observaciones");
 

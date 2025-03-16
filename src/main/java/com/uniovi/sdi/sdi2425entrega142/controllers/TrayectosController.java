@@ -100,7 +100,7 @@ public class TrayectosController {
         String dni = principal.getName();
         Empleado empleado = empleadosService.getByDni(dni);
         Optional<Trayecto> opTrayecto = trayectosService.findTrayectoActivoByUser(empleado);
-        if (!opTrayecto.isPresent()) {
+        if (opTrayecto.isEmpty()) {
             return "redirect:/home";
         }
         Trayecto trayecto = opTrayecto.get();
@@ -115,6 +115,9 @@ public class TrayectosController {
         String dni = principal.getName();
         Empleado empleado = empleadosService.getByDni(dni);
         Optional<Trayecto> opTrayecto = trayectosService.findTrayectoActivoByUser(empleado);
+        if (opTrayecto.isEmpty()) {
+            return "redirect:/home";
+        }
         Trayecto originalTrayecto = opTrayecto.get();
         Vehiculo vehiculo = vehiculosService.getVehiculo(originalTrayecto.getVehiculo().getId());
         trayecto.setVehiculo(vehiculo);

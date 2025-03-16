@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class VehiculosService {
@@ -49,6 +48,7 @@ public class VehiculosService {
     public Vehiculo getVehiculoByMatricula(String matricula) {
         return vehiculosRepository.findByMatricula(matricula);
     }
+
     public Vehiculo getVehiculoByNumeroBastidor(String numeroBastidor) {
         return vehiculosRepository.findByNumeroBastidor(numeroBastidor);
     }

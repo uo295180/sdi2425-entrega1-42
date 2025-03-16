@@ -28,6 +28,7 @@ public class IncidenciasService {
     public void addIncidencia(Incidencia incidencia) {
         incidenciasRepository.save(incidencia);
     }
+
     public void deleteIncidencia(Long id) {
         incidenciasRepository.deleteById(id);
     }

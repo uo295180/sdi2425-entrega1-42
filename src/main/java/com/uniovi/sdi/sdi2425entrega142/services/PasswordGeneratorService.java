@@ -14,8 +14,7 @@ public class PasswordGeneratorService {
 
     private static final String ALL_CHARACTERS = UPPERCASE + LOWERCASE + DIGITS + SPECIAL_CHARACTERS;
 
-    private SecureRandom random = new SecureRandom();
-
+    private final SecureRandom random = new SecureRandom();
 
     public String generateStrongPassword(int length) {
         if (length < 12) {

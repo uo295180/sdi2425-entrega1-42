@@ -1,13 +1,9 @@
 package com.uniovi.sdi.sdi2425entrega142.controllers;
 
-import com.uniovi.sdi.sdi2425entrega142.entities.LogEntry;
-import com.uniovi.sdi.sdi2425entrega142.repository.LogRepository;
 import com.uniovi.sdi.sdi2425entrega142.services.LoggingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 public class LogController {
@@ -22,9 +18,7 @@ public class LogController {
         if (tipo != null) {
             model.addAttribute("logs", loggingService.getLogs(tipo));
         }
-
         return "admin/logs";
-
     }
 
     @RequestMapping("/admin/logs/delete")
@@ -33,7 +27,6 @@ public class LogController {
             loggingService.deleteLogs(tipo);
             model.addAttribute("logs", loggingService.getLogs(tipo));
         }
-
         return "admin/logs";
     }
 }

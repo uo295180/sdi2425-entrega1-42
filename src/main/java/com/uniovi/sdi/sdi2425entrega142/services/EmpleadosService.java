@@ -30,6 +30,7 @@ public class EmpleadosService {
     @PostConstruct
     public void init() {
     }
+
     public Page<Empleado> getEmpleados(Pageable pageable) {
         return empleadosRepository.findAll(pageable);
     }
@@ -79,14 +80,11 @@ public class EmpleadosService {
 
     public void changePassword(PasswordDTO dto) {
         Empleado empleado = getEmpleado(dto.getId());
-
         empleado.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
-
         empleadosRepository.save(empleado);
     }
 
     public Optional<Empleado> findEmpleadoByDni(String dni) {
         return empleadosRepository.findEmpleadoByDni(dni);
     }
-
 }

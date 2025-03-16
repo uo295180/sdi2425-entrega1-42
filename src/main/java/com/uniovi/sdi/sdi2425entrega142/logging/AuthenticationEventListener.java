@@ -8,11 +8,9 @@ import org.springframework.security.authentication.event.AuthenticationFailureBa
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +33,6 @@ public class AuthenticationEventListener {
     public static class RequestLoggingFilter extends OncePerRequestFilter {
 
         private final LoggingService loggingService;
-
         // Lista de rutas que queremos registrar (ajústala según tu sistema)
         private static final List<String> CONTROLADOR_PATHS = Arrays.asList(
                 "/login", "/logout", "/empleado", "/admin", "/vehiculo", "/trayecto", "/repostajes"
@@ -61,7 +58,6 @@ public class AuthenticationEventListener {
 
             filterChain.doFilter(request, response);
         }
-
 
         private boolean shouldLog(String uri) {
             // Evita logs de recursos estáticos y endpoints internos de Spring
@@ -112,7 +108,6 @@ public class AuthenticationEventListener {
         }
     }
 
-
     public void logUserCreation(String dni) {
         loggingService.logUserCreation(dni);
         logger.info("👤 Nuevo usuario registrado: {}", dni);
@@ -150,6 +145,4 @@ public class AuthenticationEventListener {
             response.sendRedirect("/login?logout");
         }
     }
-
-
 }

@@ -27,9 +27,6 @@ public class EmpleadoDetailsServiceImpl implements UserDetailsService {
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(empleado.getRole()));
-        if(empleado == null){
-            throw new UsernameNotFoundException(dni);
-        }
         return new org.springframework.security.core.userdetails.User(
                 empleado.getDni(), empleado.getPassword(), grantedAuthorities);
     }

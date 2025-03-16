@@ -17,8 +17,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
@@ -26,7 +24,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -73,8 +70,6 @@ public class UserController {
         return "empleado/list";
     }
 
-
-
     @RequestMapping(value = "/empleado/add")
     public String getUser(Model model) {
 
@@ -84,19 +79,17 @@ public class UserController {
         model.addAttribute("empleado", empleado);
         return "empleado/add";
     }
+
     @RequestMapping(value = "/empleado/add", method = RequestMethod.POST)
     public String setUser(Model model, @Validated Empleado empleado, BindingResult result, HttpSession session) {
-
         empleado.setRole(rolesService.getRoles()[0]);
         addEmpleadoFormValidator.validate(empleado, result);
-
 
         if (result.hasErrors()) {
             return "empleado/add";
         }
         empleadosService.addEmpleado(empleado);
         model.addAttribute("registrado", true);
-
         loggingService.logUserCreation(empleado.getDni());
 
         return "redirect:/empleado/add";
@@ -107,11 +100,13 @@ public class UserController {
         model.addAttribute("empleado", empleadosService.getEmpleado(id));
         return "empleado/details";
     }
+
     @RequestMapping("/empleado/delete/{id}")
     public String delete(@PathVariable Long id) {
         empleadosService.deleteEmpleado(id);
         return "redirect:/empleado/list";
     }
+
     @RequestMapping(value = "/empleado/edit/{id}")
     public String getEdit(Model model, @PathVariable Long id) {
         Empleado empleado = empleadosService.getEmpleado(id);
@@ -119,6 +114,7 @@ public class UserController {
         model.addAttribute("empleado", empleado);
         return "empleado/edit";
     }
+
     @RequestMapping(value = "/empleado/edit/{id}", method = RequestMethod.POST)
     public String setEdit(@PathVariable Long id, @Validated Empleado empleado, BindingResult result, Model model) {
         editEmpleadoFormValidator.validate(empleado, result);
@@ -142,26 +138,21 @@ public class UserController {
 
             if (authentication.getName().equals(originalEmpleado.getDni())) { // Verifica si es el usuario actual
                 List<GrantedAuthority> updatedAuthorities = List.of(new SimpleGrantedAuthority("ROLE_" + empleado.getRole()));
-
                 Authentication newAuth = new UsernamePasswordAuthenticationToken(
                         authentication.getPrincipal(),
                         authentication.getCredentials(),
                         updatedAuthorities
                 );
-
                 SecurityContextHolder.getContext().setAuthentication(newAuth);
             }
-
             return "redirect:/empleado/details/" + id;
         }
-
         empleadosService.addEmpleado(originalEmpleado);
         return "redirect:/empleado/details/" + id;
     }
 
     @RequestMapping("/empleado/list/update")
     public String updateList(Model model, Pageable pageable) {
-
         Page<Empleado> empleados = empleadosService.getEmpleados(pageable);
         model.addAttribute("empleadosList", empleados );
         return "empleado/list :: empleadosTable";
@@ -179,10 +170,8 @@ public class UserController {
         }
 
         Empleado empleado = empleadosService.getByDni(dni);
-
         PasswordDTO dto = new PasswordDTO();
         dto.setId(empleado.getId());
-
         model.addAttribute("passwordDto", dto);
 
         return "/empleado/password";
@@ -191,15 +180,10 @@ public class UserController {
     @RequestMapping(value = "/empleado/password", method = RequestMethod.POST)
     public String changePassword(@ModelAttribute("passwordDto") @Validated PasswordDTO passwordDto, BindingResult result, Model model) {
         changePasswordFormValidator.validate(passwordDto, result);
-
         if (result.hasErrors()) {
             return "/empleado/password";
         }
-
         empleadosService.changePassword(passwordDto);
-
         return "redirect:/home";
     }
-
-
 }

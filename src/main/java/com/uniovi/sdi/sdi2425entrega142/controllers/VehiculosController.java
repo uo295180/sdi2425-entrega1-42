@@ -7,11 +7,8 @@ import com.uniovi.sdi.sdi2425entrega142.services.RepostajesService;
 import com.uniovi.sdi.sdi2425entrega142.services.TrayectosService;
 import com.uniovi.sdi.sdi2425entrega142.services.VehiculosService;
 import com.uniovi.sdi.sdi2425entrega142.validators.VehiculosValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,18 +23,16 @@ import java.util.List;
 @Controller
 public class VehiculosController {
 
-    @Autowired
-    VehiculosValidator vehiculosValidator;
-
     private final VehiculosService vehiculosService;
-    @Autowired
-    private TrayectosService trayectosService;
+    private final RepostajesService repostajesService;
+    private final TrayectosService trayectosService;
+    private final VehiculosValidator vehiculosValidator;
 
-    private RepostajesService repostajesService;
-
-    public VehiculosController(VehiculosService vehiculosService, RepostajesService repostajesService) {
+    public VehiculosController(VehiculosService vehiculosService, RepostajesService repostajesService, TrayectosService trayectosService, VehiculosValidator vehiculosValidator) {
         this.vehiculosService = vehiculosService;
         this.repostajesService = repostajesService;
+        this.trayectosService = trayectosService;
+        this.vehiculosValidator = vehiculosValidator;
     }
 
     @RequestMapping("/vehiculo/list")
@@ -53,6 +48,7 @@ public class VehiculosController {
         vehiculosModel.addAttribute("vehiculo", new Vehiculo());
         return "vehiculo/add";
     }
+
     @RequestMapping(value = "/vehiculo/add", method = RequestMethod.POST)
     public String setVehiculo(@Validated Vehiculo vehiculo, BindingResult result, Model vehiculosModel) {
         vehiculosValidator.validate(vehiculo, result);
@@ -63,11 +59,13 @@ public class VehiculosController {
         vehiculosService.addVehiculo(vehiculo);
         return "redirect:/vehiculo/list";
     }
+
     @RequestMapping("/vehiculo/delete/{id}")
     public String deleteVehiculo(@PathVariable Long id) {
         vehiculosService.deleteVehiculo(id);
         return "redirect:/vehiculo/list";
     }
+
     @RequestMapping(value = "/vehiculo/delete", method = RequestMethod.POST)
     public String deleteMultipleVehiculos(@RequestParam("vehiculosSeleccionados") List<Long> vehiculosIds) {
         for (Long id : vehiculosIds) {
@@ -84,13 +82,10 @@ public class VehiculosController {
         return "vehiculo/list/vehiculosTable::vehiculosTable";
     }
 
-
     @RequestMapping("/vehiculo/listAll")
     public String getTrayectos(@RequestParam(defaultValue = "0", required = false) int page,
                                Model model, Pageable pageable) {
-
         Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
-
 
         // Pasar los datos al modelo
         model.addAttribute("vehiculosList", vehiculos.getContent());
@@ -101,8 +96,7 @@ public class VehiculosController {
 
     @RequestMapping("/vehiculo/trayectos/{matricula}")
     public String trayectosListVehiculo(@PathVariable(required = false) String matricula,
-                             @RequestParam(defaultValue = "0") int page,
-                             Model model, Pageable pageable) {
+                                        @RequestParam(defaultValue = "0") int page, Model model, Pageable pageable) {
 
         Vehiculo vehiculo = vehiculosService.getVehiculoByMatricula(matricula); // Busca el vehículo por matrícula
         Page<Trayecto> trayectosPage = trayectosService.getTrayectosByVehiculo(vehiculo.getId(), pageable); // Paginación de trayectos
@@ -115,11 +109,10 @@ public class VehiculosController {
     }
 
     @RequestMapping("/vehiculo/listAllRepostajes")
-    public String getRepostajes(@RequestParam(defaultValue = "0", required = false) int page,
-                               Model model, Pageable pageable) {
+    public String getRepostajes(@RequestParam(defaultValue = "0", required = false) int page, Model model,
+                                Pageable pageable) {
 
         Page<Vehiculo> vehiculos = vehiculosService.getVehiculos(pageable);
-
 
         // Pasar los datos al modelo
         model.addAttribute("vehiculosList", vehiculos.getContent());
@@ -130,8 +123,7 @@ public class VehiculosController {
 
     @RequestMapping("/vehiculo/repostajes/{matricula}")
     public String repostajesListVehiculo(@PathVariable(required = false) String matricula,
-                             @RequestParam(defaultValue = "0") int page,
-                             Model model, Pageable pageable) {
+                             @RequestParam(defaultValue = "0") int page, Model model, Pageable pageable) {
 
         Vehiculo vehiculo = vehiculosService.getVehiculoByMatricula(matricula); // Busca el vehículo por matrícula
         Page<Repostaje> repostajesPage = repostajesService.getRepostajesByVehiculo(pageable, vehiculo); // Paginación de trayectos

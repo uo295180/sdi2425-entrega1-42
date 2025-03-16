@@ -3,8 +3,6 @@ package com.uniovi.sdi.sdi2425entrega142.repository;
 import com.uniovi.sdi.sdi2425entrega142.entities.Vehiculo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

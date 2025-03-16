@@ -44,7 +44,6 @@ public class ChangePasswordFormValidator implements Validator {
         if (password == null || password.length() < 12) {
             return false;
         }
-
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\\-+]).{12,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.Set;
-
 @Component
 public class EndTrayectoValidator implements Validator {
 
@@ -26,5 +24,4 @@ public class EndTrayectoValidator implements Validator {
             errors.rejectValue("odometroFin", "Error.trayecto.end.odometro");
         }
     }
-
 }
